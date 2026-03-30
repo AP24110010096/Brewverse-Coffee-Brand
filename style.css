@@ -143,6 +143,14 @@ nav a:hover {
   margin-bottom: 15px;
 }
 
+.customerpersona img {
+  width: 100%;
+  height: auto;
+  border-radius: 15px;
+  margin-bottom: 15px;
+}
+
+
 /* VIDEO */
 .video-section {
   text-align: center;
