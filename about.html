@@ -1,17 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Brewverse | About</title>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css">
-<!-- Smooth Scroll & GSAP -->
-<script src="https://unpkg.com/@studio-freight/lenis@1.0.39/dist/lenis.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Brewverse | About</title>
+  <meta name="description" content="Meet the team behind Brewverse – a lifestyle-driven flavoured coffee brand built for modern creators and ambitious professionals.">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Manrope:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <!-- Smooth Scroll & GSAP -->
+  <script src="https://unpkg.com/@studio-freight/lenis@1.0.39/dist/lenis.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 </head>
 <body>
+
 <header>
   <div class="logo">Brewverse</div>
   <nav>
@@ -23,38 +25,47 @@
   </nav>
 </header>
 
-<section id="about" class="section products-section">
-  <h2 class="section-title">About Brewverse</h2>
-  <p class="about-text">
+<section id="about" class="section">
+  <h2 class="section-title gsap-reveal">About <strong>Brewverse</strong></h2>
+  <p class="about-text gsap-reveal">
     Brewverse is a lifestyle-driven flavoured coffee brand built for modern creators,
-    students and ambitious professionals. We blend premium flavour with bold branding.
+    students and ambitious professionals. We blend premium flavour with bold branding
+    to create a truly artisanal experience that fits your everyday ritual.
   </p>
 
   <div class="team-grid">
-    <div class="team-card">
-      <img src="assets/Tanmay.jpeg" alt="Founder">
+    <div class="team-card gsap-reveal">
+      <img src="assets/Tanmay.jpeg" alt="Tanmay – Founder">
       <h4>Tanmay</h4>
     </div>
-
-    <div class="team-card">
-      <img src="assets/tanuj.jpeg" alt="Marketing Lead">
+    <div class="team-card gsap-reveal">
+      <img src="assets/tanuj.jpeg" alt="Tanuj – Marketing Lead">
       <h4>Tanuj</h4>
     </div>
-
-    <div class="team-card">
-      <img src="assets/Srujan.jpeg" alt="Product Designer">
+    <div class="team-card gsap-reveal">
+      <img src="assets/Srujan.jpeg" alt="Srujan – Product Designer">
       <h4>Srujan</h4>
     </div>
-
-    <div class="team-card">
-      <img src="assets/Kashif.jpeg" alt="Operations">
+    <div class="team-card gsap-reveal">
+      <img src="assets/Kashif.jpeg" alt="Kashif – Operations">
       <h4>Kashif</h4>
     </div>
   </div>
 </section>
 
 <footer>
-  © 2026 Brewverse. All Rights Reserved.
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <div class="footer-logo">Brewverse</div>
+      <p class="footer-copy">© 2026 Brewverse Coffee. The Modern Sommelier Experience.</p>
+    </div>
+    <div class="footer-links">
+      <a href="#">Instagram</a>
+      <a href="#">TikTok</a>
+      <a href="#">Twitter</a>
+      <a href="#">Privacy</a>
+    </div>
+  </div>
 </footer>
 
 <script src="script.js"></script>

@@ -12,6 +12,9 @@ document.addEventListener("DOMContentLoaded", () => {
     infinite: false,
   })
 
+  // Expose globally for product showcase nav
+  window.__lenis = lenis;
+
   function raf(time) {
     lenis.raf(time)
     requestAnimationFrame(raf)

@@ -1,17 +1,331 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Brewverse | Products</title>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css">
-<!-- Smooth Scroll & GSAP -->
-<script src="https://unpkg.com/@studio-freight/lenis@1.0.39/dist/lenis.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Brewverse | Products</title>
+  <meta name="description" content="Explore Brewverse's signature flavoured coffee roasts — Hazelnut, Vanilla, Mocha, and Butterscotch.">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Manrope:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <!-- Smooth Scroll & GSAP -->
+  <script src="https://unpkg.com/@studio-freight/lenis@1.0.39/dist/lenis.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <style>
+    /* ─── SCROLL SHOWCASE ─────────────────────────────────── */
+    .showcase-container {
+      position: relative;
+      background: #1a120b;
+      overflow: hidden;
+    }
+
+    /* The pinned viewport — this is the "screen" the user sees */
+    .showcase-viewport {
+      height: 100vh;
+      width: 100%;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Each slide is positioned absolutely inside the pinned viewport */
+    .showcase-slide {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      visibility: hidden;
+      padding: 0 8%;
+    }
+
+    .showcase-slide.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    /* Content grid inside each slide */
+    .slide-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+      max-width: 1300px;
+      width: 100%;
+    }
+
+    /* Image side */
+    .slide-image-wrap {
+      position: relative;
+      width: 80%;
+      margin: 0 auto;
+      aspect-ratio: 4/5;
+      border-radius: 32px;
+      overflow: hidden;
+      box-shadow: 0 40px 80px rgba(0, 0, 0, 0.6);
+    }
+
+    .slide-image-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Flavor tag pill on image */
+    .slide-flavor-tag {
+      position: absolute;
+      top: 24px;
+      left: 24px;
+      background: rgba(26, 18, 11, 0.7);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      color: #ffb785;
+      font-family: 'Manrope', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 8px 20px;
+      border-radius: 100px;
+      border: 1px solid rgba(255, 183, 133, 0.2);
+    }
+
+    /* Text side */
+    .slide-text {
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+      position: relative;
+    }
+
+    .slide-number {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: clamp(5rem, 10vw, 8rem);
+      font-weight: 800;
+      color: rgba(255, 183, 133, 0.07);
+      line-height: 1;
+      letter-spacing: -4px;
+      position: absolute;
+      top: -20px;
+      left: -10px;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    .slide-title {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: clamp(2.8rem, 5vw, 4.5rem);
+      font-weight: 800;
+      color: #f1dfd3;
+      line-height: 1.05;
+      letter-spacing: -2px;
+      position: relative;
+    }
+
+    .slide-title em {
+      font-style: italic;
+      color: #ffb785;
+    }
+
+    .slide-desc {
+      font-family: 'Manrope', sans-serif;
+      font-size: 1.15rem;
+      color: rgba(219, 193, 178, 0.7);
+      line-height: 1.7;
+      max-width: 480px;
+    }
+
+    /* Tasting notes row */
+    .slide-notes {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .slide-note {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255, 183, 133, 0.06);
+      border: 1px solid rgba(255, 183, 133, 0.12);
+      border-radius: 100px;
+      padding: 10px 20px;
+      font-family: 'Manrope', sans-serif;
+      font-size: 0.85rem;
+      color: #dbc1b2;
+      letter-spacing: 0.5px;
+    }
+
+    .note-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #ffb785;
+      flex-shrink: 0;
+    }
+
+    /* Roast level indicator */
+    .slide-roast-level {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .roast-label {
+      font-family: 'Manrope', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: #ffb785;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      white-space: nowrap;
+    }
+
+    .roast-bar-track {
+      width: 120px;
+      height: 3px;
+      background: rgba(255, 183, 133, 0.1);
+      border-radius: 100px;
+      overflow: hidden;
+    }
+
+    .roast-bar-fill {
+      height: 100%;
+      background: linear-gradient(to right, #ffb785, #d97724);
+      border-radius: 100px;
+      transition: width 1s ease;
+    }
+
+    /* Progress dots nav */
+    .showcase-progress {
+      position: absolute;
+      right: 40px;
+      top: 50%;
+      transform: translateY(-50%);
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      z-index: 100;
+    }
+
+    .progress-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: rgba(255, 183, 133, 0.2);
+      border: 1px solid rgba(255, 183, 133, 0.15);
+      cursor: pointer;
+      transition: all 0.4s ease;
+      position: relative;
+    }
+
+    .progress-dot::before {
+      content: '';
+      position: absolute;
+      top: -12px;
+      bottom: -12px;
+      left: -12px;
+      right: -12px;
+      border-radius: 50%;
+    }
+
+    .progress-dot.active {
+      background: #ffb785;
+      border-color: #ffb785;
+      transform: scale(1.3);
+      box-shadow: 0 0 12px rgba(255, 183, 133, 0.4);
+    }
+
+    /* Scroll progress bar at bottom */
+    .showcase-scroll-hint {
+      position: absolute;
+      bottom: 32px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      z-index: 10;
+      transition: opacity 0.4s ease;
+    }
+
+    .scroll-hint-text {
+      font-family: 'Manrope', sans-serif;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      color: rgba(255, 183, 133, 0.4);
+      animation: textPulse 2s ease infinite;
+    }
+
+    @keyframes textPulse {
+      0%, 100% { opacity: 0.3; }
+      50% { opacity: 1; text-shadow: 0 0 8px rgba(255, 183, 133, 0.4); }
+    }
+
+    .scroll-hint-line {
+      width: 1px;
+      height: 40px;
+      background: linear-gradient(to bottom, rgba(255,183,133,0.4), transparent);
+      animation: scrollPulse 2s ease infinite;
+    }
+
+    @keyframes scrollPulse {
+      0%, 100% { opacity: 0.3; transform: scaleY(1); }
+      50% { opacity: 1; transform: scaleY(1.2); }
+    }
+
+    /* Ambient glow per slide */
+    .slide-glow {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.8s ease;
+    }
+
+    .showcase-slide.active .slide-glow {
+      opacity: 1;
+    }
+
+    /* ─── Responsive ──────────────────────────────────────── */
+    @media (max-width: 768px) {
+      .slide-inner {
+        grid-template-columns: 1fr;
+        gap: 32px;
+        padding-top: 80px;
+      }
+
+      .slide-image-wrap {
+        width: 100%;
+        aspect-ratio: 1/1;
+        max-height: 35vh;
+        border-radius: 20px;
+      }
+
+      .slide-number {
+        display: none;
+      }
+
+      .showcase-progress {
+        display: none;
+      }
+
+      .slide-text {
+        gap: 16px;
+      }
+
+      .slide-title {
+        font-size: 2rem;
+      }
+    }
+  </style>
 </head>
 <body>
+
 <header>
   <div class="logo">Brewverse</div>
   <nav>
@@ -23,46 +337,308 @@
   </nav>
 </header>
 
-<section id="products" class="section products-section">
-  <h2 class="section-title">Our Flavours</h2>
-  <p class="about-text">
-    Brewverse pairs premium coffee with bold flavour profiles designed for everyday rituals,
-    weekend café moods, and a little bit of indulgence.
-    <br>
-    <br>
-  </p>
+<!-- Products Hero Banner -->
+<section class="products-hero">
+  <div class="products-hero-content">
+    <div class="reveal-line-wrap"><h1 class="reveal-line">Our Signature <em>Roasts</em></h1></div>
+    <div class="reveal-line-wrap"><p class="reveal-line">Scroll to explore each roast — crafted for everyday rituals and moments of pure indulgence.</p></div>
+  </div>
+</section>
 
-  <div class="products-grid">
-    <div class="product-card">
-      <img src="assets/hazlenut.jpeg" alt="Hazelnut Coffee">
-      <h3>Hazelnut</h3>
-      <p>Smooth, nutty & rich.</p>
+<!-- Scroll-Triggered Product Showcase (pinned container) -->
+<section class="showcase-container" id="showcaseContainer">
+  <div class="showcase-viewport" id="showcaseViewport">
+
+    <!-- Progress dots -->
+    <nav class="showcase-progress" id="showcaseProgress">
+      <div class="progress-dot active" data-index="0" data-label="Hazelnut"></div>
+      <div class="progress-dot" data-index="1" data-label="Vanilla"></div>
+      <div class="progress-dot" data-index="2" data-label="Mocha"></div>
+      <div class="progress-dot" data-index="3" data-label="Butterscotch"></div>
+    </nav>
+
+    <!-- Slide 1 — Hazelnut -->
+    <div class="showcase-slide active" data-index="0">
+      <div class="slide-glow" style="background: radial-gradient(ellipse at 30% 50%, rgba(180,130,70,0.1) 0%, transparent 65%);"></div>
+      <div class="slide-inner">
+        <div class="slide-image-wrap">
+          <img src="assets/hazlenut.jpeg" alt="Hazelnut Brewverse Coffee">
+          <div class="slide-flavor-tag">Signature Roast</div>
+        </div>
+        <div class="slide-text">
+          <span class="slide-number">01</span>
+          <h2 class="slide-title">Hazelnut <em>Signature</em></h2>
+          <p class="slide-desc">A smooth, medium roast infused with the toasted, nutty essence of wild hazelnuts and a hint of sweet cream. Our most beloved everyday companion.</p>
+          <div class="slide-notes">
+            <div class="slide-note"><span class="note-dot"></span> Nutty</div>
+            <div class="slide-note"><span class="note-dot"></span> Smooth</div>
+            <div class="slide-note"><span class="note-dot"></span> Creamy</div>
+          </div>
+          <div class="slide-roast-level">
+            <span class="roast-label">Medium Roast</span>
+            <div class="roast-bar-track"><div class="roast-bar-fill" style="width: 50%;"></div></div>
+          </div>
+        </div>
+      </div>
     </div>
 
-    <div class="product-card">
-      <img src="assets/vanilla.jpeg" alt="Vanilla Coffee">
-      <h3>Vanilla</h3>
-      <p>Sweet & creamy.</p>
+    <!-- Slide 2 — Vanilla -->
+    <div class="showcase-slide" data-index="1">
+      <div class="slide-glow" style="background: radial-gradient(ellipse at 30% 50%, rgba(220,200,160,0.08) 0%, transparent 65%);"></div>
+      <div class="slide-inner">
+        <div class="slide-image-wrap">
+          <img src="assets/vanilla.jpeg" alt="Vanilla Brewverse Coffee">
+          <div class="slide-flavor-tag">Signature Roast</div>
+        </div>
+        <div class="slide-text">
+          <span class="slide-number">02</span>
+          <h2 class="slide-title">Vanilla <em>Velvet</em></h2>
+          <p class="slide-desc">Pure Madagascar vanilla bean notes paired with a light, floral bean for a delicate and sophisticated morning cup. Elegance in every sip.</p>
+          <div class="slide-notes">
+            <div class="slide-note"><span class="note-dot"></span> Floral</div>
+            <div class="slide-note"><span class="note-dot"></span> Sweet</div>
+            <div class="slide-note"><span class="note-dot"></span> Aromatic</div>
+          </div>
+          <div class="slide-roast-level">
+            <span class="roast-label">Light Roast</span>
+            <div class="roast-bar-track"><div class="roast-bar-fill" style="width: 30%;"></div></div>
+          </div>
+        </div>
+      </div>
     </div>
 
-    <div class="product-card">
-      <img src="assets/mocha.jpeg" alt="Mocha Coffee">
-      <h3>Mocha</h3>
-      <p>Premium taste.</p>
+    <!-- Slide 3 — Mocha -->
+    <div class="showcase-slide" data-index="2">
+      <div class="slide-glow" style="background: radial-gradient(ellipse at 30% 50%, rgba(100,60,30,0.12) 0%, transparent 65%);"></div>
+      <div class="slide-inner">
+        <div class="slide-image-wrap">
+          <img src="assets/mocha.jpeg" alt="Mocha Brewverse Coffee">
+          <div class="slide-flavor-tag">Signature Roast</div>
+        </div>
+        <div class="slide-text">
+          <span class="slide-number">03</span>
+          <h2 class="slide-title">Dark Mocha <em>Bloom</em></h2>
+          <p class="slide-desc">A bold, dark roast with heavy chocolate undertones and a velvety mouthfeel. Crafted for espresso enthusiasts who crave intensity.</p>
+          <div class="slide-notes">
+            <div class="slide-note"><span class="note-dot"></span> Chocolate</div>
+            <div class="slide-note"><span class="note-dot"></span> Bold</div>
+            <div class="slide-note"><span class="note-dot"></span> Intense</div>
+          </div>
+          <div class="slide-roast-level">
+            <span class="roast-label">Dark Roast</span>
+            <div class="roast-bar-track"><div class="roast-bar-fill" style="width: 85%;"></div></div>
+          </div>
+        </div>
+      </div>
     </div>
 
-    <div class="product-card">
-      <img src="assets/butterscotch.jpeg" alt="Butterscotch Coffee">
-      <h3>Butterscotch</h3>
-      <p>Buttery boldness.</p>
+    <!-- Slide 4 — Butterscotch -->
+    <div class="showcase-slide" data-index="3">
+      <div class="slide-glow" style="background: radial-gradient(ellipse at 30% 50%, rgba(200,160,50,0.09) 0%, transparent 65%);"></div>
+      <div class="slide-inner">
+        <div class="slide-image-wrap">
+          <img src="assets/butterscotch.jpeg" alt="Butterscotch Brewverse Coffee">
+          <div class="slide-flavor-tag">Signature Roast</div>
+        </div>
+        <div class="slide-text">
+          <span class="slide-number">04</span>
+          <h2 class="slide-title">Golden <em>Butterscotch</em></h2>
+          <p class="slide-desc">The ultimate indulgence. Rich caramel and sea salt notes balanced by a hearty, medium-dark bean. A dessert in a cup.</p>
+          <div class="slide-notes">
+            <div class="slide-note"><span class="note-dot"></span> Caramel</div>
+            <div class="slide-note"><span class="note-dot"></span> Salty-Sweet</div>
+            <div class="slide-note"><span class="note-dot"></span> Rich</div>
+          </div>
+          <div class="slide-roast-level">
+            <span class="roast-label">Medium-Dark</span>
+            <div class="roast-bar-track"><div class="roast-bar-fill" style="width: 65%;"></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scroll hint -->
+    <div class="showcase-scroll-hint" id="scrollHint">
+      <span class="scroll-hint-text">Scroll to explore</span>
+      <div class="scroll-hint-line"></div>
+    </div>
+
+  </div>
+</section>
+
+<!-- Subscription Section -->
+<section class="section subscription-section">
+  <div class="subscription-inner gsap-reveal">
+    <div class="sub-bg-shape shape-1"></div>
+    <div class="sub-bg-shape shape-2"></div>
+    <div class="subscription-content">
+      <h2 class="sub-title">Never Miss a <em>Roast</em></h2>
+      <p class="sub-text">
+        Subscribe to our monthly curation. Freshly roasted beans delivered to your door before they hit the shop.
+      </p>
+      <form class="sub-form">
+        <input class="sub-input" placeholder="Enter your email" type="email" required />
+        <button class="button button-solid sub-button" type="submit">
+          Subscribe Now
+        </button>
+      </form>
+      <p class="sub-microcopy">No spam. Only the finest coffee news. Unsubscribe anytime.</p>
     </div>
   </div>
 </section>
 
+<!-- Footer -->
 <footer>
-  © 2026 Brewverse. All Rights Reserved.
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <div class="footer-logo">Brewverse</div>
+      <p class="footer-copy">© 2026 Brewverse Coffee. The Modern Sommelier Experience.</p>
+    </div>
+    <div class="footer-links">
+      <a href="#">Instagram</a>
+      <a href="#">TikTok</a>
+      <a href="#">Twitter</a>
+      <a href="#">Privacy</a>
+    </div>
+  </div>
 </footer>
 
 <script src="script.js"></script>
+<script>
+  // ─── PRODUCTS SHOWCASE — PINNED + CROSSFADE ─────────────
+  document.addEventListener("DOMContentLoaded", () => {
+    const container = document.getElementById('showcaseContainer');
+    const viewport  = document.getElementById('showcaseViewport');
+    const slides    = document.querySelectorAll('.showcase-slide');
+    const dots      = document.querySelectorAll('.progress-dot');
+    const scrollHint = document.getElementById('scrollHint');
+    const numSlides = slides.length;
+    
+    if (!container || !viewport || !numSlides) return;
+
+    // Pin the viewport while scrolling through all slides
+    const pinTrigger = ScrollTrigger.create({
+      trigger: container,
+      start: "top top",
+      // each slide gets 100vh of scroll distance
+      end: () => `+=${numSlides * 100}vh`,
+      pin: viewport,
+      pinSpacing: true,
+      scrub: 0.5,
+      onUpdate: (self) => {
+        const progress = self.progress; // 0 → 1
+        const rawIndex = progress * numSlides;
+        const activeIndex = Math.min(Math.floor(rawIndex), numSlides - 1);
+
+        // Switch slides
+        slides.forEach((slide, i) => {
+          if (i === activeIndex) {
+            if (!slide.classList.contains('active')) {
+              slide.classList.add('active');
+              animateSlideIn(slide);
+            }
+          } else {
+            if (slide.classList.contains('active')) {
+              slide.classList.remove('active');
+              animateSlideOut(slide);
+            }
+          }
+        });
+
+        // Update dots
+        dots.forEach((dot, i) => {
+          dot.classList.toggle('active', i === activeIndex);
+        });
+
+        // Hide scroll hint on the final product
+        if (scrollHint) {
+          scrollHint.style.opacity = (activeIndex === numSlides - 1) ? 0 : 1;
+        }
+      }
+    });
+
+    // Animate slide in
+    function animateSlideIn(slide) {
+      const img   = slide.querySelector('.slide-image-wrap');
+      const title = slide.querySelector('.slide-title');
+      const desc  = slide.querySelector('.slide-desc');
+      const notes = slide.querySelectorAll('.slide-note');
+      const roast = slide.querySelector('.slide-roast-level');
+      const num   = slide.querySelector('.slide-number');
+
+      const tl = gsap.timeline();
+
+      tl.fromTo(img,
+        { opacity: 0, x: -50, scale: 0.92 },
+        { opacity: 1, x: 0, scale: 1, duration: 0.8, ease: "power3.out" }
+      )
+      .fromTo(num,
+        { opacity: 0, scale: 0.7 },
+        { opacity: 1, scale: 1, duration: 0.5, ease: "power2.out" },
+        "-=0.6"
+      )
+      .fromTo(title,
+        { opacity: 0, y: 30 },
+        { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" },
+        "-=0.5"
+      )
+      .fromTo(desc,
+        { opacity: 0, y: 20 },
+        { opacity: 1, y: 0, duration: 0.5, ease: "power3.out" },
+        "-=0.4"
+      )
+      .fromTo(notes,
+        { opacity: 0, y: 15 },
+        { opacity: 1, y: 0, duration: 0.4, stagger: 0.08, ease: "power2.out" },
+        "-=0.3"
+      )
+      .fromTo(roast,
+        { opacity: 0 },
+        { opacity: 1, duration: 0.4, ease: "power2.out" },
+        "-=0.2"
+      );
+    }
+
+    // Animate slide out
+    function animateSlideOut(slide) {
+      const img   = slide.querySelector('.slide-image-wrap');
+      const title = slide.querySelector('.slide-title');
+      const desc  = slide.querySelector('.slide-desc');
+      const notes = slide.querySelectorAll('.slide-note');
+      const roast = slide.querySelector('.slide-roast-level');
+      const num   = slide.querySelector('.slide-number');
+
+      gsap.to([img, title, desc, roast, num], {
+        opacity: 0,
+        duration: 0.3,
+        ease: "power2.in"
+      });
+      gsap.to(notes, {
+        opacity: 0,
+        duration: 0.2,
+        ease: "power2.in"
+      });
+    }
+
+    // Animate first slide on load
+    animateSlideIn(slides[0]);
+
+    // Dot click navigation
+    dots.forEach((dot) => {
+      dot.addEventListener('click', () => {
+        const i = parseInt(dot.dataset.index);
+        // Target scroll location + 10px buffer to ensure we pass the slide's threshold accurately
+        const scrollTarget = pinTrigger.start + (i / numSlides) * (pinTrigger.end - pinTrigger.start) + 10;
+        
+        const lenis = window.__lenis;
+        if (lenis) {
+          lenis.scrollTo(scrollTarget, { duration: 1.5 });
+        } else {
+          window.scrollTo({ top: scrollTarget, behavior: 'smooth' });
+        }
+      });
+    });
+  });
+</script>
 </body>
 </html>
