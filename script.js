@@ -138,4 +138,71 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     );
   })
+
+  // ─── CUSTOM CURSOR (Premium) ────────────────────────────────
+  const dot  = document.getElementById('cursor-dot');
+  const ring = document.getElementById('cursor-ring');
+
+  if (dot && ring && window.matchMedia('(hover: hover)').matches) {
+    let mx = window.innerWidth / 2, my = window.innerHeight / 2;
+    let rx = mx, ry = my;
+    const LERP = 0.14; // lower = more lag on ring
+
+    window.addEventListener('mousemove', e => {
+      mx = e.clientX;
+      my = e.clientY;
+      // dot follows instantly via GSAP set
+      gsap.set(dot, { left: mx, top: my });
+    });
+
+    // Ring follows with inertia
+    function cursorLoop() {
+      rx += (mx - rx) * LERP;
+      ry += (my - ry) * LERP;
+      gsap.set(ring, { left: rx, top: ry });
+      requestAnimationFrame(cursorLoop);
+    }
+    cursorLoop();
+
+    // Hover state on interactive elements
+    const hoverTargets = document.querySelectorAll('a, button, .button, .progress-dot, input, .signature-card, .page-link-card, .product-card');
+    hoverTargets.forEach(el => {
+      el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
+      el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
+    });
+
+    // Click visual
+    window.addEventListener('mousedown', () => document.body.classList.add('cursor-click'));
+    window.addEventListener('mouseup',   () => document.body.classList.remove('cursor-click'));
+
+    // Image hover — switch to dark mocha theme
+    const imgTargets = document.querySelectorAll('img, .slide-image-wrap, .team-card img, .hero-img');
+    imgTargets.forEach(el => {
+      el.addEventListener('mouseenter', () => document.body.classList.add('cursor-on-image'));
+      el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-on-image'));
+    });
+
+    // Button hover — switch to bright amber theme
+    const btnTargets = document.querySelectorAll('a, button, .button');
+    btnTargets.forEach(el => {
+      el.addEventListener('mouseenter', () => document.body.classList.add('cursor-on-button'));
+      el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-on-button'));
+    });
+  }
+
+  // ─── MAGNETIC BUTTONS ───────────────────────────────────────
+  const magneticBtns = document.querySelectorAll('.button');
+  magneticBtns.forEach(btn => {
+    btn.addEventListener('mousemove', (e) => {
+      const rect = btn.getBoundingClientRect();
+      const cx = rect.left + rect.width / 2;
+      const cy = rect.top + rect.height / 2;
+      const dx = (e.clientX - cx) * 0.25;
+      const dy = (e.clientY - cy) * 0.25;
+      gsap.to(btn, { x: dx, y: dy, duration: 0.4, ease: 'power3.out' });
+    });
+    btn.addEventListener('mouseleave', () => {
+      gsap.to(btn, { x: 0, y: 0, duration: 0.6, ease: 'elastic.out(1, 0.4)' });
+    });
+  });
 });

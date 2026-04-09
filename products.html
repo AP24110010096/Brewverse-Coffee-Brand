@@ -1,11 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Brewverse | Products</title>
-  <meta name="description" content="Explore Brewverse's signature flavoured coffee roasts — Hazelnut, Vanilla, Mocha, and Butterscotch.">
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Manrope:wght@400;500;700&display=swap" rel="stylesheet">
+  <meta name="description"
+    content="Explore Brewverse's signature flavoured coffee roasts — Hazelnut, Vanilla, Mocha, and Butterscotch.">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Manrope:wght@400;500;700&display=swap"
+    rel="stylesheet">
   <link rel="stylesheet" href="style.css">
   <!-- Smooth Scroll & GSAP -->
   <script src="https://unpkg.com/@studio-freight/lenis@1.0.39/dist/lenis.min.js"></script>
@@ -15,11 +19,27 @@
     /* ─── SCROLL SHOWCASE ─────────────────────────────────── */
     .showcase-container {
       position: relative;
-      background: #1a120b;
       overflow: hidden;
+      /* bg color will be animated via JS */
+      background: #1a120b;
+      transition: background-color 1.2s cubic-bezier(0.25, 1, 0.5, 1);
     }
 
-    /* The pinned viewport — this is the "screen" the user sees */
+    /* Ambient glow layer behind everything */
+    .showcase-ambient {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 1.4s ease;
+    }
+
+    .showcase-ambient.visible {
+      opacity: 1;
+    }
+
+    /* The pinned viewport */
     .showcase-viewport {
       height: 100vh;
       width: 100%;
@@ -27,21 +47,28 @@
       overflow: hidden;
     }
 
-    /* Each slide is positioned absolutely inside the pinned viewport */
+    /* Each slide */
     .showcase-slide {
       position: absolute;
-      inset: 0;
+      top: 80px; /* clear fixed navbar */
+      left: 0;
+      right: 0;
+      bottom: 0;
       display: flex;
       align-items: center;
       justify-content: center;
+      padding: 0 8%;
+      will-change: transform, opacity;
       opacity: 0;
       visibility: hidden;
-      padding: 0 8%;
+      transition: opacity 1s cubic-bezier(0.25, 1, 0.5, 1), visibility 1s;
+      z-index: 1;
     }
 
     .showcase-slide.active {
       opacity: 1;
       visibility: visible;
+      z-index: 5;
     }
 
     /* Content grid inside each slide */
@@ -54,7 +81,7 @@
       width: 100%;
     }
 
-    /* Image side */
+    /* Image side — parallax container */
     .slide-image-wrap {
       position: relative;
       width: 80%;
@@ -62,33 +89,68 @@
       aspect-ratio: 4/5;
       border-radius: 32px;
       overflow: hidden;
-      box-shadow: 0 40px 80px rgba(0, 0, 0, 0.6);
+      box-shadow:
+        0 40px 80px rgba(0, 0, 0, 0.6),
+        0 0 0 1px rgba(255, 183, 133, 0.06);
+      will-change: transform;
     }
 
     .slide-image-wrap img {
       width: 100%;
       height: 100%;
       object-fit: cover;
+      object-position: center 20%; /* Bias towards the top so top of products aren't cut off */
       display: block;
+      position: absolute;
+      inset: 0;
+      transform: scale(1.06); /* Provide parallax buffer via scaling rather than top/left offset */
+      will-change: transform;
     }
 
     /* Flavor tag pill on image */
     .slide-flavor-tag {
       position: absolute;
-      top: 24px;
-      left: 24px;
+      top: 18px;
+      left: 18px;
       background: rgba(26, 18, 11, 0.7);
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
       color: #ffb785;
       font-family: 'Manrope', sans-serif;
-      font-size: 0.75rem;
+      font-size: 0.65rem;
       font-weight: 600;
       letter-spacing: 2px;
       text-transform: uppercase;
-      padding: 8px 20px;
+      padding: 6px 14px;
       border-radius: 100px;
       border: 1px solid rgba(255, 183, 133, 0.2);
+      z-index: 4;
+    }
+
+    /* A subtle shine sweep across image on reveal */
+    .slide-image-wrap::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(105deg,
+          transparent 40%,
+          rgba(255, 220, 180, 0.08) 45%,
+          rgba(255, 220, 180, 0.15) 50%,
+          rgba(255, 220, 180, 0.08) 55%,
+          transparent 60%);
+      z-index: 3;
+      transform: translateX(-120%);
+      pointer-events: none;
+    }
+
+    .showcase-slide.active .slide-image-wrap::after {
+      animation: imageShineSweep 1.6s 0.4s ease-out forwards;
+    }
+
+    @keyframes imageShineSweep {
+      to {
+        transform: translateX(120%);
+      }
     }
 
     /* Text side */
@@ -128,11 +190,23 @@
       color: #ffb785;
     }
 
+    /* Title words will be wrapped in spans for staggered animation */
+    .slide-title .word {
+      display: inline-block;
+      overflow: hidden;
+      vertical-align: top;
+    }
+
+    .slide-title .word-inner {
+      display: inline-block;
+      will-change: transform;
+    }
+
     .slide-desc {
       font-family: 'Manrope', sans-serif;
-      font-size: 1.15rem;
+      font-size: 0.95rem;
       color: rgba(219, 193, 178, 0.7);
-      line-height: 1.7;
+      line-height: 1.65;
       max-width: 480px;
     }
 
@@ -146,13 +220,13 @@
     .slide-note {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 6px;
       background: rgba(255, 183, 133, 0.06);
       border: 1px solid rgba(255, 183, 133, 0.12);
       border-radius: 100px;
-      padding: 10px 20px;
+      padding: 7px 14px;
       font-family: 'Manrope', sans-serif;
-      font-size: 0.85rem;
+      font-size: 0.75rem;
       color: #dbc1b2;
       letter-spacing: 0.5px;
     }
@@ -174,7 +248,7 @@
 
     .roast-label {
       font-family: 'Manrope', sans-serif;
-      font-size: 0.8rem;
+      font-size: 0.68rem;
       font-weight: 600;
       color: #ffb785;
       text-transform: uppercase;
@@ -194,53 +268,67 @@
       height: 100%;
       background: linear-gradient(to right, #ffb785, #d97724);
       border-radius: 100px;
-      transition: width 1s ease;
+      width: 0%;
+      transition: width 1.2s cubic-bezier(0.25, 1, 0.5, 1);
     }
 
-    /* Progress dots nav */
+    /* ─── PROGRESS NAV (Right Side) — hidden, using progress bar instead ── */
     .showcase-progress {
-      position: absolute;
-      right: 40px;
-      top: 50%;
-      transform: translateY(-50%);
+      display: none;
+    }
+
+    /* ─── SLIDE COUNTER (under dots, right side) ──────────────── */
+    .showcase-counter {
+      z-index: 100;
       display: flex;
-      flex-direction: column;
-      gap: 16px;
+      align-items: baseline;
+      justify-content: center;
+      gap: 3px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    .counter-current {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #ffb785;
+      line-height: 1;
+    }
+
+    .counter-sep {
+      font-size: 0.7rem;
+      color: rgba(255, 183, 133, 0.3);
+      font-weight: 400;
+    }
+
+    .counter-total {
+      font-size: 0.7rem;
+      font-weight: 400;
+      color: rgba(255, 183, 133, 0.4);
+    }
+
+    /* ─── PROGRESS BAR (bottom) ──────────────────────────────── */
+    .showcase-progress-bar {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: rgba(255, 183, 133, 0.06);
       z-index: 100;
     }
 
-    .progress-dot {
-      width: 12px;
-      height: 12px;
-      border-radius: 50%;
-      background: rgba(255, 183, 133, 0.2);
-      border: 1px solid rgba(255, 183, 133, 0.15);
-      cursor: pointer;
-      transition: all 0.4s ease;
-      position: relative;
+    .showcase-progress-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(to right, #d97724, #ffb785);
+      border-radius: 0 100px 100px 0;
+      transition: width 0.15s linear;
     }
 
-    .progress-dot::before {
-      content: '';
-      position: absolute;
-      top: -12px;
-      bottom: -12px;
-      left: -12px;
-      right: -12px;
-      border-radius: 50%;
-    }
-
-    .progress-dot.active {
-      background: #ffb785;
-      border-color: #ffb785;
-      transform: scale(1.3);
-      box-shadow: 0 0 12px rgba(255, 183, 133, 0.4);
-    }
-
-    /* Scroll progress bar at bottom */
+    /* Scroll hint */
     .showcase-scroll-hint {
       position: absolute;
-      bottom: 32px;
+      bottom: 10px;
       left: 50%;
       transform: translateX(-50%);
       display: flex;
@@ -261,20 +349,37 @@
     }
 
     @keyframes textPulse {
-      0%, 100% { opacity: 0.3; }
-      50% { opacity: 1; text-shadow: 0 0 8px rgba(255, 183, 133, 0.4); }
+
+      0%,
+      100% {
+        opacity: 0.3;
+      }
+
+      50% {
+        opacity: 1;
+        text-shadow: 0 0 8px rgba(255, 183, 133, 0.4);
+      }
     }
 
     .scroll-hint-line {
       width: 1px;
       height: 40px;
-      background: linear-gradient(to bottom, rgba(255,183,133,0.4), transparent);
+      background: linear-gradient(to bottom, rgba(255, 183, 133, 0.4), transparent);
       animation: scrollPulse 2s ease infinite;
     }
 
     @keyframes scrollPulse {
-      0%, 100% { opacity: 0.3; transform: scaleY(1); }
-      50% { opacity: 1; transform: scaleY(1.2); }
+
+      0%,
+      100% {
+        opacity: 0.3;
+        transform: scaleY(1);
+      }
+
+      50% {
+        opacity: 1;
+        transform: scaleY(1.2);
+      }
     }
 
     /* Ambient glow per slide */
@@ -314,6 +419,10 @@
         display: none;
       }
 
+      .showcase-counter {
+        display: none;
+      }
+
       .slide-text {
         gap: 16px;
       }
@@ -324,323 +433,413 @@
     }
   </style>
 </head>
+
 <body>
 
-<header>
-  <div class="logo">Brewverse</div>
-  <nav>
-    <a href="index.html">Home</a>
-    <a href="products.html" aria-current="page">Products</a>
-    <a href="persona.html">Customer Persona</a>
-    <a href="content-calendar.html">Content Calendar</a>
-    <a href="about.html">About</a>
-  </nav>
-</header>
+  <!-- Custom Cursor -->
+  <div id="cursor-dot"></div>
+  <div id="cursor-ring"></div>
 
-<!-- Products Hero Banner -->
-<section class="products-hero">
-  <div class="products-hero-content">
-    <div class="reveal-line-wrap"><h1 class="reveal-line">Our Signature <em>Roasts</em></h1></div>
-    <div class="reveal-line-wrap"><p class="reveal-line">Scroll to explore each roast — crafted for everyday rituals and moments of pure indulgence.</p></div>
-  </div>
-</section>
-
-<!-- Scroll-Triggered Product Showcase (pinned container) -->
-<section class="showcase-container" id="showcaseContainer">
-  <div class="showcase-viewport" id="showcaseViewport">
-
-    <!-- Progress dots -->
-    <nav class="showcase-progress" id="showcaseProgress">
-      <div class="progress-dot active" data-index="0" data-label="Hazelnut"></div>
-      <div class="progress-dot" data-index="1" data-label="Vanilla"></div>
-      <div class="progress-dot" data-index="2" data-label="Mocha"></div>
-      <div class="progress-dot" data-index="3" data-label="Butterscotch"></div>
+  <header>
+    <div class="logo">Brewverse</div>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="products.html" aria-current="page">Products</a>
+      <a href="persona.html">Customer Persona</a>
+      <a href="content-calendar.html">Content Calendar</a>
+      <a href="about.html">About</a>
     </nav>
+  </header>
 
-    <!-- Slide 1 — Hazelnut -->
-    <div class="showcase-slide active" data-index="0">
-      <div class="slide-glow" style="background: radial-gradient(ellipse at 30% 50%, rgba(180,130,70,0.1) 0%, transparent 65%);"></div>
-      <div class="slide-inner">
-        <div class="slide-image-wrap">
-          <img src="assets/hazlenut.jpeg" alt="Hazelnut Brewverse Coffee">
-          <div class="slide-flavor-tag">Signature Roast</div>
-        </div>
-        <div class="slide-text">
-          <span class="slide-number">01</span>
-          <h2 class="slide-title">Hazelnut <em>Signature</em></h2>
-          <p class="slide-desc">A smooth, medium roast infused with the toasted, nutty essence of wild hazelnuts and a hint of sweet cream. Our most beloved everyday companion.</p>
-          <div class="slide-notes">
-            <div class="slide-note"><span class="note-dot"></span> Nutty</div>
-            <div class="slide-note"><span class="note-dot"></span> Smooth</div>
-            <div class="slide-note"><span class="note-dot"></span> Creamy</div>
+  <!-- Products Hero Banner -->
+  <section class="products-hero">
+    <div class="products-hero-content">
+      <div class="reveal-line-wrap">
+        <h1 class="reveal-line">Our Signature <em>Roasts</em></h1>
+      </div>
+      <div class="reveal-line-wrap">
+        <p class="reveal-line">Scroll to explore each roast — crafted for everyday rituals and moments of pure
+          indulgence.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Scroll-Triggered Product Showcase (pinned container) -->
+  <section class="showcase-container" id="showcaseContainer">
+
+    <!-- Ambient background that morphs -->
+    <div class="showcase-ambient" id="showcaseAmbient"></div>
+
+    <div class="showcase-viewport" id="showcaseViewport">
+
+
+      <!-- Hidden counter (still updated by JS but not displayed) -->
+      <span id="counterCurrent" style="display:none">01</span>
+
+      <!-- Slide 1 — Hazelnut -->
+      <div class="showcase-slide active" data-index="0" data-bg="#1a120b" data-ambient="rgba(180,130,70,0.12)">
+        <div class="slide-glow"
+          style="background: radial-gradient(ellipse at 30% 50%, rgba(180,130,70,0.1) 0%, transparent 65%);"></div>
+        <div class="slide-inner">
+          <div class="slide-image-wrap">
+            <img src="assets/hazlenut.jpeg" alt="Hazelnut Brewverse Coffee">
+            <div class="slide-flavor-tag">Signature Roast</div>
           </div>
-          <div class="slide-roast-level">
-            <span class="roast-label">Medium Roast</span>
-            <div class="roast-bar-track"><div class="roast-bar-fill" style="width: 50%;"></div></div>
+          <div class="slide-text">
+            <span class="slide-number">01</span>
+            <h2 class="slide-title">Hazelnut <em>Signature</em></h2>
+            <p class="slide-desc">A smooth, medium roast infused with the toasted, nutty essence of wild hazelnuts and a
+              hint of sweet cream. Our most beloved everyday companion.</p>
+            <div class="slide-notes">
+              <div class="slide-note"><span class="note-dot"></span> Nutty</div>
+              <div class="slide-note"><span class="note-dot"></span> Smooth</div>
+              <div class="slide-note"><span class="note-dot"></span> Creamy</div>
+            </div>
+            <div class="slide-roast-level">
+              <span class="roast-label">Medium Roast</span>
+              <div class="roast-bar-track">
+                <div class="roast-bar-fill" data-width="50%"></div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-    </div>
 
-    <!-- Slide 2 — Vanilla -->
-    <div class="showcase-slide" data-index="1">
-      <div class="slide-glow" style="background: radial-gradient(ellipse at 30% 50%, rgba(220,200,160,0.08) 0%, transparent 65%);"></div>
-      <div class="slide-inner">
-        <div class="slide-image-wrap">
-          <img src="assets/vanilla.jpeg" alt="Vanilla Brewverse Coffee">
-          <div class="slide-flavor-tag">Signature Roast</div>
-        </div>
-        <div class="slide-text">
-          <span class="slide-number">02</span>
-          <h2 class="slide-title">Vanilla <em>Velvet</em></h2>
-          <p class="slide-desc">Pure Madagascar vanilla bean notes paired with a light, floral bean for a delicate and sophisticated morning cup. Elegance in every sip.</p>
-          <div class="slide-notes">
-            <div class="slide-note"><span class="note-dot"></span> Floral</div>
-            <div class="slide-note"><span class="note-dot"></span> Sweet</div>
-            <div class="slide-note"><span class="note-dot"></span> Aromatic</div>
+      <!-- Slide 2 — Vanilla -->
+      <div class="showcase-slide" data-index="1" data-bg="#18130d" data-ambient="rgba(220,200,160,0.1)">
+        <div class="slide-glow"
+          style="background: radial-gradient(ellipse at 30% 50%, rgba(220,200,160,0.08) 0%, transparent 65%);"></div>
+        <div class="slide-inner">
+          <div class="slide-image-wrap">
+            <img src="assets/vanilla.jpeg" alt="Vanilla Brewverse Coffee">
+            <div class="slide-flavor-tag">Signature Roast</div>
           </div>
-          <div class="slide-roast-level">
-            <span class="roast-label">Light Roast</span>
-            <div class="roast-bar-track"><div class="roast-bar-fill" style="width: 30%;"></div></div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Slide 3 — Mocha -->
-    <div class="showcase-slide" data-index="2">
-      <div class="slide-glow" style="background: radial-gradient(ellipse at 30% 50%, rgba(100,60,30,0.12) 0%, transparent 65%);"></div>
-      <div class="slide-inner">
-        <div class="slide-image-wrap">
-          <img src="assets/mocha.jpeg" alt="Mocha Brewverse Coffee">
-          <div class="slide-flavor-tag">Signature Roast</div>
-        </div>
-        <div class="slide-text">
-          <span class="slide-number">03</span>
-          <h2 class="slide-title">Dark Mocha <em>Bloom</em></h2>
-          <p class="slide-desc">A bold, dark roast with heavy chocolate undertones and a velvety mouthfeel. Crafted for espresso enthusiasts who crave intensity.</p>
-          <div class="slide-notes">
-            <div class="slide-note"><span class="note-dot"></span> Chocolate</div>
-            <div class="slide-note"><span class="note-dot"></span> Bold</div>
-            <div class="slide-note"><span class="note-dot"></span> Intense</div>
-          </div>
-          <div class="slide-roast-level">
-            <span class="roast-label">Dark Roast</span>
-            <div class="roast-bar-track"><div class="roast-bar-fill" style="width: 85%;"></div></div>
+          <div class="slide-text">
+            <span class="slide-number">02</span>
+            <h2 class="slide-title">Vanilla <em>Velvet</em></h2>
+            <p class="slide-desc">Pure Madagascar vanilla bean notes paired with a light, floral bean for a delicate and
+              sophisticated morning cup. Elegance in every sip.</p>
+            <div class="slide-notes">
+              <div class="slide-note"><span class="note-dot"></span> Floral</div>
+              <div class="slide-note"><span class="note-dot"></span> Sweet</div>
+              <div class="slide-note"><span class="note-dot"></span> Aromatic</div>
+            </div>
+            <div class="slide-roast-level">
+              <span class="roast-label">Light Roast</span>
+              <div class="roast-bar-track">
+                <div class="roast-bar-fill" data-width="30%"></div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-    </div>
 
-    <!-- Slide 4 — Butterscotch -->
-    <div class="showcase-slide" data-index="3">
-      <div class="slide-glow" style="background: radial-gradient(ellipse at 30% 50%, rgba(200,160,50,0.09) 0%, transparent 65%);"></div>
-      <div class="slide-inner">
-        <div class="slide-image-wrap">
-          <img src="assets/butterscotch.jpeg" alt="Butterscotch Brewverse Coffee">
-          <div class="slide-flavor-tag">Signature Roast</div>
-        </div>
-        <div class="slide-text">
-          <span class="slide-number">04</span>
-          <h2 class="slide-title">Golden <em>Butterscotch</em></h2>
-          <p class="slide-desc">The ultimate indulgence. Rich caramel and sea salt notes balanced by a hearty, medium-dark bean. A dessert in a cup.</p>
-          <div class="slide-notes">
-            <div class="slide-note"><span class="note-dot"></span> Caramel</div>
-            <div class="slide-note"><span class="note-dot"></span> Salty-Sweet</div>
-            <div class="slide-note"><span class="note-dot"></span> Rich</div>
+      <!-- Slide 3 — Mocha -->
+      <div class="showcase-slide" data-index="2" data-bg="#140d08" data-ambient="rgba(100,60,30,0.14)">
+        <div class="slide-glow"
+          style="background: radial-gradient(ellipse at 30% 50%, rgba(100,60,30,0.12) 0%, transparent 65%);"></div>
+        <div class="slide-inner">
+          <div class="slide-image-wrap">
+            <img src="assets/mocha.jpeg" alt="Mocha Brewverse Coffee">
+            <div class="slide-flavor-tag">Signature Roast</div>
           </div>
-          <div class="slide-roast-level">
-            <span class="roast-label">Medium-Dark</span>
-            <div class="roast-bar-track"><div class="roast-bar-fill" style="width: 65%;"></div></div>
+          <div class="slide-text">
+            <span class="slide-number">03</span>
+            <h2 class="slide-title">Dark Mocha <em>Bloom</em></h2>
+            <p class="slide-desc">A bold, dark roast with heavy chocolate undertones and a velvety mouthfeel. Crafted
+              for espresso enthusiasts who crave intensity.</p>
+            <div class="slide-notes">
+              <div class="slide-note"><span class="note-dot"></span> Chocolate</div>
+              <div class="slide-note"><span class="note-dot"></span> Bold</div>
+              <div class="slide-note"><span class="note-dot"></span> Intense</div>
+            </div>
+            <div class="slide-roast-level">
+              <span class="roast-label">Dark Roast</span>
+              <div class="roast-bar-track">
+                <div class="roast-bar-fill" data-width="85%"></div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
+
+      <!-- Slide 4 — Butterscotch -->
+      <div class="showcase-slide" data-index="3" data-bg="#17100a" data-ambient="rgba(200,160,50,0.11)">
+        <div class="slide-glow"
+          style="background: radial-gradient(ellipse at 30% 50%, rgba(200,160,50,0.09) 0%, transparent 65%);"></div>
+        <div class="slide-inner">
+          <div class="slide-image-wrap">
+            <img src="assets/butterscotch.jpeg" alt="Butterscotch Brewverse Coffee">
+            <div class="slide-flavor-tag">Signature Roast</div>
+          </div>
+          <div class="slide-text">
+            <span class="slide-number">04</span>
+            <h2 class="slide-title">Golden <em>Butterscotch</em></h2>
+            <p class="slide-desc">The ultimate indulgence. Rich caramel and sea salt notes balanced by a hearty,
+              medium-dark bean. A dessert in a cup.</p>
+            <div class="slide-notes">
+              <div class="slide-note"><span class="note-dot"></span> Caramel</div>
+              <div class="slide-note"><span class="note-dot"></span> Salty-Sweet</div>
+              <div class="slide-note"><span class="note-dot"></span> Rich</div>
+            </div>
+            <div class="slide-roast-level">
+              <span class="roast-label">Medium-Dark</span>
+              <div class="roast-bar-track">
+                <div class="roast-bar-fill" data-width="65%"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Scroll hint -->
+      <div class="showcase-scroll-hint" id="scrollHint">
+        <span class="scroll-hint-text">Scroll to explore</span>
+        <div class="scroll-hint-line"></div>
+      </div>
+
+      <!-- Progress bar -->
+      <div class="showcase-progress-bar">
+        <div class="showcase-progress-fill" id="progressFill"></div>
+      </div>
+
     </div>
+  </section>
 
-    <!-- Scroll hint -->
-    <div class="showcase-scroll-hint" id="scrollHint">
-      <span class="scroll-hint-text">Scroll to explore</span>
-      <div class="scroll-hint-line"></div>
+  <!-- Subscription Section -->
+  <section class="section subscription-section">
+    <div class="subscription-inner gsap-reveal">
+      <div class="sub-bg-shape shape-1"></div>
+      <div class="sub-bg-shape shape-2"></div>
+      <div class="subscription-content">
+        <h2 class="sub-title">Never Miss a <em>Roast</em></h2>
+        <p class="sub-text">
+          Subscribe to our monthly curation. Freshly roasted beans delivered to your door before they hit the shop.
+        </p>
+        <form class="sub-form">
+          <input class="sub-input" placeholder="Enter your email" type="email" required />
+          <button class="button button-solid sub-button" type="submit">
+            Subscribe Now
+          </button>
+        </form>
+        <p class="sub-microcopy">No spam. Only the finest coffee news. Unsubscribe anytime.</p>
+      </div>
     </div>
+  </section>
 
-  </div>
-</section>
-
-<!-- Subscription Section -->
-<section class="section subscription-section">
-  <div class="subscription-inner gsap-reveal">
-    <div class="sub-bg-shape shape-1"></div>
-    <div class="sub-bg-shape shape-2"></div>
-    <div class="subscription-content">
-      <h2 class="sub-title">Never Miss a <em>Roast</em></h2>
-      <p class="sub-text">
-        Subscribe to our monthly curation. Freshly roasted beans delivered to your door before they hit the shop.
-      </p>
-      <form class="sub-form">
-        <input class="sub-input" placeholder="Enter your email" type="email" required />
-        <button class="button button-solid sub-button" type="submit">
-          Subscribe Now
-        </button>
-      </form>
-      <p class="sub-microcopy">No spam. Only the finest coffee news. Unsubscribe anytime.</p>
+  <!-- Footer -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <div class="footer-logo">Brewverse</div>
+        <p class="footer-copy">© 2026 Brewverse Coffee. The Modern Sommelier Experience.</p>
+      </div>
+      <div class="footer-links">
+        <a href="#">Instagram</a>
+        <a href="#">TikTok</a>
+        <a href="#">Twitter</a>
+        <a href="#">Privacy</a>
+      </div>
     </div>
-  </div>
-</section>
+  </footer>
 
-<!-- Footer -->
-<footer>
-  <div class="footer-inner">
-    <div class="footer-brand">
-      <div class="footer-logo">Brewverse</div>
-      <p class="footer-copy">© 2026 Brewverse Coffee. The Modern Sommelier Experience.</p>
-    </div>
-    <div class="footer-links">
-      <a href="#">Instagram</a>
-      <a href="#">TikTok</a>
-      <a href="#">Twitter</a>
-      <a href="#">Privacy</a>
-    </div>
-  </div>
-</footer>
+  <script src="script.js"></script>
+  <script>
+    // ─── PRODUCTS SHOWCASE — CINEMATIC PARALLAX ─────────────
+    document.addEventListener("DOMContentLoaded", () => {
+      const container = document.getElementById('showcaseContainer');
+      const viewport = document.getElementById('showcaseViewport');
+      const slides = document.querySelectorAll('.showcase-slide');
+      const dots = document.querySelectorAll('.progress-dot');
+      const scrollHint = document.getElementById('scrollHint');
+      const ambient = document.getElementById('showcaseAmbient');
+      const counterEl = document.getElementById('counterCurrent');
+      const progressFill = document.getElementById('progressFill');
+      const numSlides = slides.length;
+      let currentIndex = 0;
 
-<script src="script.js"></script>
-<script>
-  // ─── PRODUCTS SHOWCASE — PINNED + CROSSFADE ─────────────
-  document.addEventListener("DOMContentLoaded", () => {
-    const container = document.getElementById('showcaseContainer');
-    const viewport  = document.getElementById('showcaseViewport');
-    const slides    = document.querySelectorAll('.showcase-slide');
-    const dots      = document.querySelectorAll('.progress-dot');
-    const scrollHint = document.getElementById('scrollHint');
-    const numSlides = slides.length;
-    
-    if (!container || !viewport || !numSlides) return;
+      if (!container || !viewport || !numSlides) return;
 
-    // Pin the viewport while scrolling through all slides
-    const pinTrigger = ScrollTrigger.create({
-      trigger: container,
-      start: "top top",
-      // each slide gets 100vh of scroll distance
-      end: () => `+=${numSlides * 100}vh`,
-      pin: viewport,
-      pinSpacing: true,
-      scrub: 0.5,
-      onUpdate: (self) => {
-        const progress = self.progress; // 0 → 1
-        const rawIndex = progress * numSlides;
-        const activeIndex = Math.min(Math.floor(rawIndex), numSlides - 1);
+      // (No word-split prep — text animates as unified blocks)
 
-        // Switch slides
-        slides.forEach((slide, i) => {
-          if (i === activeIndex) {
-            if (!slide.classList.contains('active')) {
-              slide.classList.add('active');
-              animateSlideIn(slide);
-            }
-          } else {
-            if (slide.classList.contains('active')) {
-              slide.classList.remove('active');
-              animateSlideOut(slide);
-            }
-          }
-        });
+      // ─── ANIMATE SLIDE IN ──────────────────────────────────────
+      function animateSlideIn(slide) {
+        gsap.killTweensOf(slide.querySelectorAll('.slide-image-wrap, .slide-title, .slide-desc, .slide-note, .slide-roast-level, .slide-number'));
 
-        // Update dots
-        dots.forEach((dot, i) => {
-          dot.classList.toggle('active', i === activeIndex);
-        });
+        const img = slide.querySelector('.slide-image-wrap');
+        const title = slide.querySelector('.slide-title');
+        const desc = slide.querySelector('.slide-desc');
+        const notes = slide.querySelectorAll('.slide-note');
+        const roast = slide.querySelector('.slide-roast-level');
+        const num = slide.querySelector('.slide-number');
+        const bar = slide.querySelector('.roast-bar-fill');
 
-        // Hide scroll hint on the final product
-        if (scrollHint) {
-          scrollHint.style.opacity = (activeIndex === numSlides - 1) ? 0 : 1;
+        const tl = gsap.timeline();
+
+        // Image fades in cleanly
+        tl.fromTo(img,
+          { opacity: 0, y: 30 },
+          { opacity: 1, y: 0, duration: 0.9, ease: "power3.out" }
+        )
+          // Number
+          .fromTo(num,
+            { opacity: 0, y: 10 },
+            { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" },
+            "-=0.7"
+          )
+          // Title as one unified block
+          .fromTo(title,
+            { opacity: 0, y: 20 },
+            { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" },
+            "-=0.55"
+          )
+          // Description
+          .fromTo(desc,
+            { opacity: 0, y: 16 },
+            { opacity: 1, y: 0, duration: 0.55, ease: "power3.out" },
+            "-=0.4"
+          )
+          // Notes all together
+          .fromTo(notes,
+            { opacity: 0, y: 12 },
+            { opacity: 1, y: 0, duration: 0.45, ease: "power2.out" },
+            "-=0.35"
+          )
+          // Roast level
+          .fromTo(roast,
+            { opacity: 0, y: 10 },
+            { opacity: 1, y: 0, duration: 0.4, ease: "power2.out" },
+            "-=0.3"
+          );
+
+        // Animate roast bar fill
+        if (bar) {
+          const target = bar.dataset.width || '50%';
+          bar.style.width = '0%';
+          setTimeout(() => { bar.style.width = target; }, 500);
         }
       }
-    });
 
-    // Animate slide in
-    function animateSlideIn(slide) {
-      gsap.killTweensOf(slide.querySelectorAll('*'));
-      const img   = slide.querySelector('.slide-image-wrap');
-      const title = slide.querySelector('.slide-title');
-      const desc  = slide.querySelector('.slide-desc');
-      const notes = slide.querySelectorAll('.slide-note');
-      const roast = slide.querySelector('.slide-roast-level');
-      const num   = slide.querySelector('.slide-number');
+      // ─── ANIMATE SLIDE OUT ─────────────────────────────────────
+      function animateSlideOut(slide) {
+        gsap.killTweensOf(slide.querySelectorAll('.slide-image-wrap, .slide-title, .slide-desc, .slide-note, .slide-roast-level, .slide-number'));
 
-      const tl = gsap.timeline();
+        const img = slide.querySelector('.slide-image-wrap');
+        const title = slide.querySelector('.slide-title');
+        const desc = slide.querySelector('.slide-desc');
+        const notes = slide.querySelectorAll('.slide-note');
+        const roast = slide.querySelector('.slide-roast-level');
+        const num = slide.querySelector('.slide-number');
 
-      tl.fromTo(img,
-        { opacity: 0, x: -50, scale: 0.92 },
-        { opacity: 1, x: 0, scale: 1, duration: 0.8, ease: "power3.out" }
-      )
-      .fromTo(num,
-        { opacity: 0, scale: 0.7 },
-        { opacity: 1, scale: 1, duration: 0.5, ease: "power2.out" },
-        "-=0.6"
-      )
-      .fromTo(title,
-        { opacity: 0, y: 30 },
-        { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" },
-        "-=0.5"
-      )
-      .fromTo(desc,
-        { opacity: 0, y: 20 },
-        { opacity: 1, y: 0, duration: 0.5, ease: "power3.out" },
-        "-=0.4"
-      )
-      .fromTo(notes,
-        { opacity: 0, y: 15 },
-        { opacity: 1, y: 0, duration: 0.4, stagger: 0.08, ease: "power2.out" },
-        "-=0.3"
-      )
-      .fromTo(roast,
-        { opacity: 0 },
-        { opacity: 1, duration: 0.4, ease: "power2.out" },
-        "-=0.2"
-      );
-    }
+        const tl = gsap.timeline();
 
-    // Animate slide out
-    function animateSlideOut(slide) {
-      gsap.killTweensOf(slide.querySelectorAll('*'));
-      const img   = slide.querySelector('.slide-image-wrap');
-      const title = slide.querySelector('.slide-title');
-      const desc  = slide.querySelector('.slide-desc');
-      const notes = slide.querySelectorAll('.slide-note');
-      const roast = slide.querySelector('.slide-roast-level');
-      const num   = slide.querySelector('.slide-number');
+        tl.to([title, desc, roast, num, notes], {
+          opacity: 0, y: -12, duration: 0.35, ease: "power2.in"
+        })
+          .to(img, {
+            opacity: 0, y: -20, duration: 0.35, ease: "power3.in"
+          }, "-=0.25");
+      }
 
-      gsap.to([img, title, desc, roast, num], {
-        opacity: 0,
-        duration: 0.3,
-        ease: "power2.in"
-      });
-      gsap.to(notes, {
-        opacity: 0,
-        duration: 0.2,
-        ease: "power2.in"
-      });
-    }
+      // ─── SWITCH SLIDES (no setTimeout — immediate, GPU-friendly) ──
+      function goToSlide(newIndex) {
+        if (newIndex === currentIndex) return;
 
-    // Animate first slide on load
-    animateSlideIn(slides[0]);
+        const oldSlide = slides[currentIndex];
+        const newSlide = slides[newIndex];
 
-    // Dot click navigation
-    dots.forEach((dot) => {
-      dot.addEventListener('click', () => {
-        const i = parseInt(dot.dataset.index);
-        // Target scroll location + 10px buffer to ensure we pass the slide's threshold accurately
-        const scrollTarget = pinTrigger.start + (i / numSlides) * (pinTrigger.end - pinTrigger.start) + 10;
-        
-        const lenis = window.__lenis;
-        if (lenis) {
-          lenis.scrollTo(scrollTarget, { duration: 1.5 });
-        } else {
-          window.scrollTo({ top: scrollTarget, behavior: 'smooth' });
+        // Immediately animate out old slide elements
+        animateSlideOut(oldSlide);
+
+        // Immediately swap visibility (no clip-path, just opacity+transform via GSAP)
+        oldSlide.classList.remove('active');
+        newSlide.classList.add('active');
+
+        // Background color morph
+        const bgColor = newSlide.dataset.bg || '#1a120b';
+        gsap.to(container, { backgroundColor: bgColor, duration: 0.8, ease: 'power2.out' });
+
+        // Ambient glow
+        const ambientColor = newSlide.dataset.ambient || 'transparent';
+        ambient.style.background = `radial-gradient(ellipse at 40% 50%, ${ambientColor} 0%, transparent 70%)`;
+        ambient.classList.add('visible');
+
+        // Animate in new
+        animateSlideIn(newSlide);
+
+        currentIndex = newIndex;
+
+        // Update counter
+        counterEl.textContent = String(newIndex + 1).padStart(2, '0');
+
+        // Update dots
+        dots.forEach((dot, i) => dot.classList.toggle('active', i === newIndex));
+
+        // Hide scroll hint on last slide
+        if (scrollHint) {
+          scrollHint.style.opacity = (newIndex === numSlides - 1) ? 0 : 1;
+        }
+      }
+
+      // ─── SCROLL TRIGGER PIN & SCRUB ────────────────────────────
+      const pinTrigger = ScrollTrigger.create({
+        trigger: container,
+        start: "top top",
+        end: () => `+=${(numSlides - 1) * 100}vh`, /* pin releases right as last slide exits */
+        pin: viewport,
+        pinSpacing: true,
+        scrub: 0.2,
+        onUpdate: (self) => {
+          const progress = self.progress;
+          
+          // Distribute slides across (numSlides-1) transitions
+          // Last slide triggers at ~97% progress — near pin end, minimal dead scroll
+          const rawIndex = progress * (numSlides - 1);
+          const activeIndex = rawIndex >= (numSlides - 1) - 0.1
+            ? numSlides - 1
+            : Math.floor(rawIndex);
+
+          // Progress bar — snap to 100% when last slide appears
+          if (progressFill) {
+            const fill = progress >= 0.97 ? 100 : progress * 100;
+            progressFill.style.width = `${fill}%`;
+          }
+
+          // Switch slide if needed
+          if (activeIndex !== currentIndex) {
+            goToSlide(activeIndex);
+          }
         }
       });
+
+      // ─── INITIAL STATE ─────────────────────────────────────────
+      // Clip-path for first slide is already active via CSS class
+      animateSlideIn(slides[0]);
+      // Set initial roast bar
+      const firstBar = slides[0].querySelector('.roast-bar-fill');
+      if (firstBar) {
+        setTimeout(() => { firstBar.style.width = firstBar.dataset.width || '50%'; }, 600);
+      }
+      ambient.classList.add('visible');
+      ambient.style.background = `radial-gradient(ellipse at 40% 50%, ${slides[0].dataset.ambient} 0%, transparent 70%)`;
+
+      // ─── DOT CLICK NAVIGATION ──────────────────────────────────
+      dots.forEach((dot) => {
+        dot.addEventListener('click', () => {
+          const i = parseInt(dot.dataset.index);
+          // Target the exact start of the segment + 10px buffer
+          const scrollTarget = pinTrigger.start + (i / numSlides) * (pinTrigger.end - pinTrigger.start) + 10;
+
+          const lenis = window.__lenis;
+          if (lenis) {
+            lenis.scrollTo(scrollTarget, { duration: 1.5 });
+          } else {
+            window.scrollTo({ top: scrollTarget, behavior: 'smooth' });
+          }
+        });
+      });
     });
-  });
-</script>
+  </script>
 </body>
+
 </html>
