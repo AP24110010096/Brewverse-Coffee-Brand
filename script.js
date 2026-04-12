@@ -44,13 +44,10 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // 3. Hero Entrance Animations
-  const heroTl = gsap.timeline();
-  
-  // Animate lines if they exist
+  // 2.5 General Reveal Animations (for non-canvas heroes)
   const revealLines = document.querySelectorAll('.reveal-line');
-  if(revealLines.length > 0) {
-    heroTl.to(revealLines, {
+  if (revealLines.length > 0) {
+    gsap.to(revealLines, {
       y: '0%',
       opacity: 1,
       duration: 1.2,
@@ -60,33 +57,93 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Animate other hero actions
-  const heroActions = document.querySelectorAll('.hero-actions.gsap-reveal');
-  if(heroActions.length > 0) {
-    heroTl.fromTo(heroActions, 
-      { opacity: 0, y: 20, visibility: 'hidden' }, 
-      {
-        opacity: 1,
-        y: 0,
-        visibility: 'visible',
-        duration: 1,
-        ease: 'power3.out'
-      }, 
-    "-=0.8");
-  }
 
-  // 4. Parallax effect for hero image
-  const heroImg = document.getElementById('hero-img');
-  if (heroImg) {
-    gsap.to(heroImg, {
-      yPercent: 15, // Move image down slightly as we scroll down
-      ease: "none",
+  // 3. Canvas Image Sequence Animation
+  const canvas = document.getElementById("hero-canvas");
+  if (canvas) {
+    const context = canvas.getContext("2d");
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    window.addEventListener("resize", () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      render();
+    });
+
+    const frameCount = 300; // Updated to 300 to match folder contents
+    // Path to the local ezgif frames in assets folder
+    const currentFrame = index => (
+      `assets/ezgif-frame-${(index + 1).toString().padStart(3, '0')}.jpg`
+    );
+
+    const images = [];
+    const imageSeq = { frame: 0 };
+
+    for (let i = 0; i < frameCount; i++) {
+        const img = new Image();
+        img.src = currentFrame(i);
+        images.push(img);
+    }
+
+    images[0].onload = render;
+
+    function render() {
+      if(images[imageSeq.frame]) {
+        const img = images[imageSeq.frame];
+        const scale = Math.max(canvas.width / img.width, canvas.height / img.height) || 1;
+        const x = (canvas.width / 2) - (img.width / 2) * scale;
+        const y = (canvas.height / 2) - (img.height / 2) * scale;
+        context.clearRect(0, 0, canvas.width, canvas.height);
+        if (img.complete) {
+            context.drawImage(img, x, y, img.width * scale, img.height * scale);
+        }
+      }
+    }
+
+    const tl = gsap.timeline({
       scrollTrigger: {
-        trigger: ".hero",
+        trigger: ".canvas-hero",
         start: "top top",
-        end: "bottom top",
-        scrub: true
-      } 
+        end: "+=400%",
+        scrub: 1, // Heavy and smooth
+        pin: true
+      }
+    });
+
+    // Animate the image sequence frames
+    tl.to(imageSeq, {
+      frame: frameCount - 1,
+      snap: "frame",
+      ease: "none",
+      onUpdate: render,
+      duration: 100 // Anchor duration mapping to scroll progress
+    }, 0);
+
+    // 4. Text Overlay Checkpoint Animations
+    const texts = document.querySelectorAll(".canvas-text-section");
+    
+    // Set initial states
+    gsap.set(texts, { autoAlpha: 0, y: 30 });
+    gsap.set(texts[0], { autoAlpha: 1, y: 0 }); // First text visible immediately
+
+    texts.forEach((text, index) => {
+      let startTime, exitTime;
+      // Checkpoints: 0%, 33%, 66%, 90%
+      if (index === 0)      { startTime = 0;  exitTime = 25; }
+      else if (index === 1) { startTime = 33; exitTime = 58; }
+      else if (index === 2) { startTime = 66; exitTime = 85; }
+      else                  { startTime = 90; exitTime = 100; }
+
+      // Enter animation (skip first as it's already visible)
+      if (index > 0) {
+        tl.to(text, { autoAlpha: 1, y: 0, duration: 5, ease: "power2.out" }, startTime);
+      }
+      
+      // Exit animation (skip last so it stays visible)
+      if (index < texts.length - 1) {
+        tl.to(text, { autoAlpha: 0, y: -30, duration: 5, ease: "power2.in" }, exitTime);
+      }
     });
   }
 
