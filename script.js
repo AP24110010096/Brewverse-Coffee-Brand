@@ -57,6 +57,21 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  const heroActions = document.querySelectorAll('.hero-actions.gsap-reveal');
+  if (heroActions.length > 0) {
+    gsap.fromTo(heroActions, 
+      { opacity: 0, y: 20, visibility: 'hidden' }, 
+      {
+        opacity: 1,
+        y: 0,
+        visibility: 'visible',
+        duration: 1,
+        delay: 0.6,
+        ease: 'power3.out'
+      }
+    );
+  }
+
 
   // 3. Canvas Image Sequence Animation
   const canvas = document.getElementById("hero-canvas");
