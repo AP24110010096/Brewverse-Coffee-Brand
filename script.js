@@ -76,6 +76,9 @@ document.addEventListener("DOMContentLoaded", () => {
   // 3. Canvas Image Sequence Animation
   const canvas = document.getElementById("hero-canvas");
   if (canvas) {
+    // Disable right-click options (Save image as)
+    canvas.addEventListener('contextmenu', e => e.preventDefault());
+
     const context = canvas.getContext("2d");
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
@@ -87,70 +90,34 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     const frameCount = 300; // Updated to 300 to match folder contents
-    const currentFrame = index => `assets/ezgif-frame-${(index + 1).toString().padStart(3, '0')}.jpg`;
+    // Path to the local ezgif frames in assets folder
+    const currentFrame = index => (
+      `assets/ezgif-frame-${(index + 1).toString().padStart(3, '0')}.jpg`
+    );
 
-    // Progressive loading array
-    const images = new Array(frameCount).fill(null);
+    const images = [];
     const imageSeq = { frame: 0 };
-    let renderRequested = false;
 
-    function requestRender() {
-      if (!renderRequested) {
-        renderRequested = true;
-        requestAnimationFrame(render);
-      }
+    for (let i = 0; i < frameCount; i++) {
+        const img = new Image();
+        img.src = currentFrame(i);
+        images.push(img);
     }
 
+    images[0].onload = render;
+
     function render() {
-      renderRequested = false;
-      const frameIndex = Math.round(imageSeq.frame);
-      const img = images[frameIndex];
-      if (img) {
+      if(images[imageSeq.frame]) {
+        const img = images[imageSeq.frame];
         const scale = Math.max(canvas.width / img.width, canvas.height / img.height) || 1;
         const x = (canvas.width / 2) - (img.width / 2) * scale;
         const y = (canvas.height / 2) - (img.height / 2) * scale;
         context.clearRect(0, 0, canvas.width, canvas.height);
-        context.drawImage(img, x, y, img.width * scale, img.height * scale);
+        if (img.complete) {
+            context.drawImage(img, x, y, img.width * scale, img.height * scale);
+        }
       }
     }
-
-    async function loadFrame(index) {
-      if (images[index]) return images[index];
-      try {
-        const img = new Image();
-        await new Promise((resolve, reject) => {
-          img.onload = resolve;
-          img.onerror = reject;
-          img.src = currentFrame(index);
-        });
-
-        // Use the loaded image element to generate the ImageBitmap for GPU offloading
-        if (window.createImageBitmap) {
-          images[index] = await createImageBitmap(img);
-        } else {
-          images[index] = img;
-        }
-
-        // Force render if on current frame
-        if (index === Math.round(imageSeq.frame)) {
-          requestRender();
-        }
-      } catch (e) {
-        // Silently skip
-        console.error("Frame failed:", index, e);
-      }
-    }
-
-    // Init: Load first frame right away, pre-load next 20, then lazy load rest
-    loadFrame(0).then(() => {
-      requestRender();
-      for (let i = 1; i <= 20; i++) {
-        if (i < frameCount) loadFrame(i);
-      }
-      setTimeout(() => {
-        for (let i = 21; i < frameCount; i++) loadFrame(i);
-      }, 800);
-    });
 
     const tl = gsap.timeline({
       scrollTrigger: {
@@ -167,14 +134,7 @@ document.addEventListener("DOMContentLoaded", () => {
       frame: frameCount - 1,
       snap: "frame",
       ease: "none",
-      onUpdate: () => {
-        const frameIndex = Math.round(imageSeq.frame);
-        if (!images[frameIndex]) {
-           loadFrame(frameIndex);
-        } else {
-           requestRender();
-        }
-      },
+      onUpdate: render,
       duration: 100 // Anchor duration mapping to scroll progress
     }, 0);
 
