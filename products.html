@@ -50,7 +50,8 @@
     /* Each slide */
     .showcase-slide {
       position: absolute;
-      top: 80px; /* clear fixed navbar */
+      top: 80px;
+      /* clear fixed navbar */
       left: 0;
       right: 0;
       bottom: 0;
@@ -99,11 +100,13 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
-      object-position: center 20%; /* Bias towards the top so top of products aren't cut off */
+      object-position: center 20%;
+      /* Bias towards the top so top of products aren't cut off */
       display: block;
       position: absolute;
       inset: 0;
-      transform: scale(1.06); /* Provide parallax buffer via scaling rather than top/left offset */
+      transform: scale(1.06);
+      /* Provide parallax buffer via scaling rather than top/left offset */
       will-change: transform;
     }
 
@@ -476,37 +479,8 @@
       <!-- Hidden counter (still updated by JS but not displayed) -->
       <span id="counterCurrent" style="display:none">01</span>
 
-      <!-- Slide 1 — Hazelnut -->
-      <div class="showcase-slide active" data-index="0" data-bg="#1a120b" data-ambient="rgba(180,130,70,0.12)">
-        <div class="slide-glow"
-          style="background: radial-gradient(ellipse at 30% 50%, rgba(180,130,70,0.1) 0%, transparent 65%);"></div>
-        <div class="slide-inner">
-          <div class="slide-image-wrap">
-            <img src="assets/hazlenut.jpeg" alt="Hazelnut Brewverse Coffee">
-            <div class="slide-flavor-tag">Signature Roast</div>
-          </div>
-          <div class="slide-text">
-            <span class="slide-number">01</span>
-            <h2 class="slide-title">Hazelnut <em>Signature</em></h2>
-            <p class="slide-desc">A smooth, medium roast infused with the toasted, nutty essence of wild hazelnuts and a
-              hint of sweet cream. Our most beloved everyday companion.</p>
-            <div class="slide-notes">
-              <div class="slide-note"><span class="note-dot"></span> Nutty</div>
-              <div class="slide-note"><span class="note-dot"></span> Smooth</div>
-              <div class="slide-note"><span class="note-dot"></span> Creamy</div>
-            </div>
-            <div class="slide-roast-level">
-              <span class="roast-label">Medium Roast</span>
-              <div class="roast-bar-track">
-                <div class="roast-bar-fill" data-width="50%"></div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Slide 2 — Vanilla -->
-      <div class="showcase-slide" data-index="1" data-bg="#18130d" data-ambient="rgba(220,200,160,0.1)">
+      <!-- Slide 1 — Vanilla -->
+      <div class="showcase-slide active" data-index="0" data-bg="#18130d" data-ambient="rgba(220,200,160,0.1)">
         <div class="slide-glow"
           style="background: radial-gradient(ellipse at 30% 50%, rgba(220,200,160,0.08) 0%, transparent 65%);"></div>
         <div class="slide-inner">
@@ -515,7 +489,7 @@
             <div class="slide-flavor-tag">Signature Roast</div>
           </div>
           <div class="slide-text">
-            <span class="slide-number">02</span>
+            <span class="slide-number">01</span>
             <h2 class="slide-title">Vanilla <em>Velvet</em></h2>
             <p class="slide-desc">Pure Madagascar vanilla bean notes paired with a light, floral bean for a delicate and
               sophisticated morning cup. Elegance in every sip.</p>
@@ -534,8 +508,66 @@
         </div>
       </div>
 
-      <!-- Slide 3 — Mocha -->
-      <div class="showcase-slide" data-index="2" data-bg="#140d08" data-ambient="rgba(100,60,30,0.14)">
+      <!-- Slide 2 — Hazelnut -->
+      <div class="showcase-slide" data-index="1" data-bg="#1a120b" data-ambient="rgba(180,130,70,0.12)">
+        <div class="slide-glow"
+          style="background: radial-gradient(ellipse at 30% 50%, rgba(180,130,70,0.1) 0%, transparent 65%);"></div>
+        <div class="slide-inner">
+          <div class="slide-image-wrap">
+            <img src="assets/hazlenut.jpeg" alt="Hazelnut Brewverse Coffee">
+            <div class="slide-flavor-tag">Signature Roast</div>
+          </div>
+          <div class="slide-text">
+            <span class="slide-number">02</span>
+            <h2 class="slide-title">Hazelnut <em>Signature</em></h2>
+            <p class="slide-desc">A smooth, medium roast infused with the toasted, nutty essence of wild hazelnuts and a
+              hint of sweet cream. Our most beloved everyday companion.</p>
+            <div class="slide-notes">
+              <div class="slide-note"><span class="note-dot"></span> Nutty</div>
+              <div class="slide-note"><span class="note-dot"></span> Smooth</div>
+              <div class="slide-note"><span class="note-dot"></span> Creamy</div>
+            </div>
+            <div class="slide-roast-level">
+              <span class="roast-label">Medium Roast</span>
+              <div class="roast-bar-track">
+                <div class="roast-bar-fill" data-width="50%"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 3 — Butterscotch -->
+      <div class="showcase-slide" data-index="2" data-bg="#17100a" data-ambient="rgba(200,160,50,0.11)">
+        <div class="slide-glow"
+          style="background: radial-gradient(ellipse at 30% 50%, rgba(200,160,50,0.09) 0%, transparent 65%);"></div>
+        <div class="slide-inner">
+          <div class="slide-image-wrap">
+            <img src="assets/butterscotch.jpeg" alt="Butterscotch Brewverse Coffee">
+            <div class="slide-flavor-tag">Signature Roast</div>
+          </div>
+          <div class="slide-text">
+            <span class="slide-number">03</span>
+            <h2 class="slide-title">Golden <em>Butterscotch</em></h2>
+            <p class="slide-desc">The ultimate indulgence. Rich caramel and sea salt notes balanced by a hearty,
+              medium-dark bean. A dessert in a cup.</p>
+            <div class="slide-notes">
+              <div class="slide-note"><span class="note-dot"></span> Caramel</div>
+              <div class="slide-note"><span class="note-dot"></span> Salty-Sweet</div>
+              <div class="slide-note"><span class="note-dot"></span> Rich</div>
+            </div>
+            <div class="slide-roast-level">
+              <span class="roast-label">Medium-Dark Roast</span>
+              <div class="roast-bar-track">
+                <div class="roast-bar-fill" data-width="65%"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 4 — Mocha -->
+      <div class="showcase-slide" data-index="3" data-bg="#140d08" data-ambient="rgba(100,60,30,0.14)">
         <div class="slide-glow"
           style="background: radial-gradient(ellipse at 30% 50%, rgba(100,60,30,0.12) 0%, transparent 65%);"></div>
         <div class="slide-inner">
@@ -544,7 +576,7 @@
             <div class="slide-flavor-tag">Signature Roast</div>
           </div>
           <div class="slide-text">
-            <span class="slide-number">03</span>
+            <span class="slide-number">04</span>
             <h2 class="slide-title">Dark Mocha <em>Bloom</em></h2>
             <p class="slide-desc">A bold, dark roast with heavy chocolate undertones and a velvety mouthfeel. Crafted
               for espresso enthusiasts who crave intensity.</p>
@@ -557,35 +589,6 @@
               <span class="roast-label">Dark Roast</span>
               <div class="roast-bar-track">
                 <div class="roast-bar-fill" data-width="85%"></div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Slide 4 — Butterscotch -->
-      <div class="showcase-slide" data-index="3" data-bg="#17100a" data-ambient="rgba(200,160,50,0.11)">
-        <div class="slide-glow"
-          style="background: radial-gradient(ellipse at 30% 50%, rgba(200,160,50,0.09) 0%, transparent 65%);"></div>
-        <div class="slide-inner">
-          <div class="slide-image-wrap">
-            <img src="assets/butterscotch.jpeg" alt="Butterscotch Brewverse Coffee">
-            <div class="slide-flavor-tag">Signature Roast</div>
-          </div>
-          <div class="slide-text">
-            <span class="slide-number">04</span>
-            <h2 class="slide-title">Golden <em>Butterscotch</em></h2>
-            <p class="slide-desc">The ultimate indulgence. Rich caramel and sea salt notes balanced by a hearty,
-              medium-dark bean. A dessert in a cup.</p>
-            <div class="slide-notes">
-              <div class="slide-note"><span class="note-dot"></span> Caramel</div>
-              <div class="slide-note"><span class="note-dot"></span> Salty-Sweet</div>
-              <div class="slide-note"><span class="note-dot"></span> Rich</div>
-            </div>
-            <div class="slide-roast-level">
-              <span class="roast-label">Medium-Dark</span>
-              <div class="roast-bar-track">
-                <div class="roast-bar-fill" data-width="65%"></div>
               </div>
             </div>
           </div>
@@ -791,13 +794,11 @@
         scrub: 0.2,
         onUpdate: (self) => {
           const progress = self.progress;
-          
+
           // Distribute slides across (numSlides-1) transitions
           // Last slide triggers at ~97% progress — near pin end, minimal dead scroll
-          const rawIndex = progress * (numSlides - 1);
-          const activeIndex = rawIndex >= (numSlides - 1) - 0.1
-            ? numSlides - 1
-            : Math.floor(rawIndex);
+          // Linear distribution anchored to extremities
+          const activeIndex = Math.min(numSlides - 1, Math.round(progress * (numSlides - 1)));
 
           // Progress bar — snap to 100% when last slide appears
           if (progressFill) {

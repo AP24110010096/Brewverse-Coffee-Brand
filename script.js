@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
   // 1. Initialize Lenis
   const lenis = new Lenis({
-    duration: 1.2,
+    duration: 1.0, // tightened for premium direct feel
     easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // smooth ease
     direction: 'vertical',
     gestureDirection: 'vertical',
@@ -87,34 +87,70 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     const frameCount = 300; // Updated to 300 to match folder contents
-    // Path to the local ezgif frames in assets folder
-    const currentFrame = index => (
-      `assets/ezgif-frame-${(index + 1).toString().padStart(3, '0')}.jpg`
-    );
+    const currentFrame = index => `assets/ezgif-frame-${(index + 1).toString().padStart(3, '0')}.jpg`;
 
-    const images = [];
+    // Progressive loading array
+    const images = new Array(frameCount).fill(null);
     const imageSeq = { frame: 0 };
+    let renderRequested = false;
 
-    for (let i = 0; i < frameCount; i++) {
-        const img = new Image();
-        img.src = currentFrame(i);
-        images.push(img);
+    function requestRender() {
+      if (!renderRequested) {
+        renderRequested = true;
+        requestAnimationFrame(render);
+      }
     }
 
-    images[0].onload = render;
-
     function render() {
-      if(images[imageSeq.frame]) {
-        const img = images[imageSeq.frame];
+      renderRequested = false;
+      const frameIndex = Math.round(imageSeq.frame);
+      const img = images[frameIndex];
+      if (img) {
         const scale = Math.max(canvas.width / img.width, canvas.height / img.height) || 1;
         const x = (canvas.width / 2) - (img.width / 2) * scale;
         const y = (canvas.height / 2) - (img.height / 2) * scale;
         context.clearRect(0, 0, canvas.width, canvas.height);
-        if (img.complete) {
-            context.drawImage(img, x, y, img.width * scale, img.height * scale);
-        }
+        context.drawImage(img, x, y, img.width * scale, img.height * scale);
       }
     }
+
+    async function loadFrame(index) {
+      if (images[index]) return images[index];
+      try {
+        const img = new Image();
+        await new Promise((resolve, reject) => {
+          img.onload = resolve;
+          img.onerror = reject;
+          img.src = currentFrame(index);
+        });
+
+        // Use the loaded image element to generate the ImageBitmap for GPU offloading
+        if (window.createImageBitmap) {
+          images[index] = await createImageBitmap(img);
+        } else {
+          images[index] = img;
+        }
+
+        // Force render if on current frame
+        if (index === Math.round(imageSeq.frame)) {
+          requestRender();
+        }
+      } catch (e) {
+        // Silently skip
+        console.error("Frame failed:", index, e);
+      }
+    }
+
+    // Init: Load first frame right away, pre-load next 20, then lazy load rest
+    loadFrame(0).then(() => {
+      requestRender();
+      for (let i = 1; i <= 20; i++) {
+        if (i < frameCount) loadFrame(i);
+      }
+      setTimeout(() => {
+        for (let i = 21; i < frameCount; i++) loadFrame(i);
+      }, 800);
+    });
 
     const tl = gsap.timeline({
       scrollTrigger: {
@@ -131,7 +167,14 @@ document.addEventListener("DOMContentLoaded", () => {
       frame: frameCount - 1,
       snap: "frame",
       ease: "none",
-      onUpdate: render,
+      onUpdate: () => {
+        const frameIndex = Math.round(imageSeq.frame);
+        if (!images[frameIndex]) {
+           loadFrame(frameIndex);
+        } else {
+           requestRender();
+        }
+      },
       duration: 100 // Anchor duration mapping to scroll progress
     }, 0);
 
@@ -277,4 +320,42 @@ document.addEventListener("DOMContentLoaded", () => {
       gsap.to(btn, { x: 0, y: 0, duration: 0.6, ease: 'elastic.out(1, 0.4)' });
     });
   });
+
+  // ─── FAQ ACCORDION ──────────────────────────────────────────
+  const faqItems = document.querySelectorAll('.faq-item');
+  faqItems.forEach(item => {
+    const question = item.querySelector('.faq-question');
+    const answer = item.querySelector('.faq-answer');
+    
+    // Add hover state targets for custom cursor
+    if (question && window.matchMedia('(hover: hover)').matches) {
+      question.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
+      question.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
+    }
+
+    if (question && answer) {
+      question.addEventListener('click', () => {
+        const isActive = item.classList.contains('active');
+        
+        // Close all other items
+        faqItems.forEach(otherItem => {
+          if (otherItem !== item && otherItem.classList.contains('active')) {
+            otherItem.classList.remove('active');
+            const otherAnswer = otherItem.querySelector('.faq-answer');
+            if (otherAnswer) otherAnswer.style.maxHeight = null;
+          }
+        });
+
+        // Toggle current item
+        if (isActive) {
+          item.classList.remove('active');
+          answer.style.maxHeight = null;
+        } else {
+          item.classList.add('active');
+          answer.style.maxHeight = answer.scrollHeight + "px";
+        }
+      });
+    }
+  });
+
 });

@@ -744,8 +744,11 @@ footer {
 
 /* ─── SUBSCRIPTION SECTION ───────────────────────────────── */
 .subscription-section {
-  padding-top: 40px;
-  padding-bottom: 120px;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 0 8%;
 }
 
 .subscription-inner {
@@ -795,6 +798,65 @@ footer {
   margin-bottom: 24px;
   line-height: 1.1;
   letter-spacing: -1.5px;
+}
+
+/* ─── FAQ ACCORDION ───────────────────────────────────────── */
+.faq-container {
+  max-width: 900px;
+  margin: 120px auto 0;
+  padding: 0 20px;
+}
+.faq-item {
+  background: #271e16;
+  border: 1px solid rgba(255, 183, 133, 0.08);
+  border-radius: 20px;
+  margin-bottom: 20px;
+  overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+}
+.faq-item:hover {
+  background: #30241a;
+}
+.faq-item.active {
+  border-color: rgba(255, 183, 133, 0.3);
+  background: #30241a;
+}
+.faq-question {
+  padding: 30px;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #f1dfd3;
+  transition: color 0.3s ease;
+}
+.faq-item:hover .faq-question {
+  color: #ffb785;
+}
+.faq-icon {
+  font-size: 1.5rem;
+  color: #ffb785;
+  transition: transform 0.4s ease;
+  font-weight: 400;
+  display: inline-block;
+}
+.faq-item.active .faq-icon {
+  transform: rotate(45deg);
+}
+.faq-answer {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+}
+.faq-answer-inner {
+  padding: 0 30px 30px;
+  font-family: 'Manrope', sans-serif;
+  font-size: 1.05rem;
+  line-height: 1.8;
+  color: rgba(219, 193, 178, 0.8);
 }
 
 .sub-title em {
@@ -971,3 +1033,4 @@ body::after {
   color: transparent;
   animation: none;
 }
+$faqStyles
