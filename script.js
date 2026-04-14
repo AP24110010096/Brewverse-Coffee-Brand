@@ -1,3 +1,9 @@
+// Prevent browser from restoring previous scroll position on refresh
+if ('scrollRestoration' in history) {
+  history.scrollRestoration = 'manual';
+}
+window.scrollTo(0, 0);
+
 document.addEventListener("DOMContentLoaded", () => {
   // 1. Initialize Lenis
   const lenis = new Lenis({
@@ -79,7 +85,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // Disable right-click options (Save image as)
     canvas.addEventListener('contextmenu', e => e.preventDefault());
 
-    const context = canvas.getContext("2d");
+    const context = canvas.getContext("2d", { willReadFrequently: true });
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
 
@@ -89,8 +95,7 @@ document.addEventListener("DOMContentLoaded", () => {
       render();
     });
 
-    const frameCount = 300; // Updated to 300 to match folder contents
-    // Path to the local ezgif frames in assets folder
+    const frameCount = 300;
     const currentFrame = index => (
       `assets/ezgif-frame-${(index + 1).toString().padStart(3, '0')}.jpg`
     );
@@ -98,17 +103,84 @@ document.addEventListener("DOMContentLoaded", () => {
     const images = [];
     const imageSeq = { frame: 0 };
 
-    for (let i = 0; i < frameCount; i++) {
-        const img = new Image();
-        img.src = currentFrame(i);
-        images.push(img);
+    // ─── LOADER ELEMENTS ──────────────────────────────────────
+    const pageLoader = document.getElementById('pageLoader');
+    const loaderFill = document.getElementById('loaderFill');
+    const loaderPercent = document.getElementById('loaderPercent');
+    let loadedCount = 0;
+    let actualPct = 0;
+    let loaderFinished = false;
+
+    // We use a dummy object to tween from 0 to 100 over 2.5s.
+    // This ensures that even if images load instantly from cache, 
+    // the user still sees a smooth 0-100% progress animation.
+    const loaderState = { visualPct: 0 };
+
+    function dismissLoader() {
+      if (loaderFinished) return;
+      loaderFinished = true;
+      render(); // Ensure first frame is painted
+      
+      if (pageLoader) pageLoader.classList.add('loaded');
+      setTimeout(() => { if (pageLoader) pageLoader.remove(); }, 900);
     }
 
-    images[0].onload = render;
+    // Check if user has already seen the loader in this session
+    if (sessionStorage.getItem('brewverse_loaded')) {
+      if (pageLoader) {
+        pageLoader.style.display = 'none';
+        pageLoader.remove();
+      }
+      loaderFinished = true;
+    } else {
+      gsap.to(loaderState, {
+        visualPct: 100,
+        duration: 2.5,
+        ease: "power1.inOut",
+        onUpdate: () => {
+          // The displayed percentage is the minimum of the animated value and the actual loaded value.
+          // If actual loaded is 100 instantly, it follows the 2.5s animation smoothing.
+          // If animation is faster than loading, it waits for actualPct.
+          const displayVal = Math.floor(Math.min(actualPct, loaderState.visualPct));
+          
+          if (loaderFill) loaderFill.style.width = displayVal + '%';
+          if (loaderPercent) loaderPercent.textContent = displayVal + '%';
+
+          // Once both real loading and visual animation hit 100, we dismiss
+          if (displayVal === 100 && actualPct === 100) {
+             sessionStorage.setItem('brewverse_loaded', 'true');
+             // brief pause at 100 for premium feel
+             setTimeout(dismissLoader, 200); 
+          }
+        }
+      });
+    }
+
+    function onFrameLoaded() {
+      loadedCount++;
+      // If loader is already bypassed, ensure the first frame draws as soon as it loads
+      if (loaderFinished && loadedCount === 1) {
+        render();
+      }
+      actualPct = (loadedCount / frameCount) * 100;
+    }
+
+    for (let i = 0; i < frameCount; i++) {
+      const img = new Image();
+      img.onload = onFrameLoaded;
+      img.onerror = onFrameLoaded; // Don't stall on broken frames
+      img.src = currentFrame(i);
+      images.push(img);
+    }
 
     function render() {
-      if(images[imageSeq.frame]) {
-        const img = images[imageSeq.frame];
+      // Use Math.round to get nearest frame instead of GSAP's snap feature,
+      // which eliminates the conflict between Lenis smoothing and GSAP snapping
+      // at the very end of the scroll interactions.
+      const fIndex = Math.round(imageSeq.frame);
+      
+      if(images[fIndex]) {
+        const img = images[fIndex];
         const scale = Math.max(canvas.width / img.width, canvas.height / img.height) || 1;
         const x = (canvas.width / 2) - (img.width / 2) * scale;
         const y = (canvas.height / 2) - (img.height / 2) * scale;
@@ -124,7 +196,7 @@ document.addEventListener("DOMContentLoaded", () => {
         trigger: ".canvas-hero",
         start: "top top",
         end: "+=400%",
-        scrub: 1, // Heavy and smooth
+        scrub: true, // true gives instant 1:1 sync with Lenis (since Lenis handles the smoothing, we don't want GSAP to add its own drag delay on top)
         pin: true
       }
     });
@@ -132,10 +204,9 @@ document.addEventListener("DOMContentLoaded", () => {
     // Animate the image sequence frames
     tl.to(imageSeq, {
       frame: frameCount - 1,
-      snap: "frame",
       ease: "none",
       onUpdate: render,
-      duration: 100 // Anchor duration mapping to scroll progress
+      duration: 100
     }, 0);
 
     // 4. Text Overlay Checkpoint Animations

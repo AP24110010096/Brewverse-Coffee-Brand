@@ -247,6 +247,8 @@
       display: flex;
       align-items: center;
       gap: 16px;
+      margin-left: 4px;
+      /* Optical alignment nudge to match textual flow above */
     }
 
     .roast-label {
@@ -257,6 +259,9 @@
       text-transform: uppercase;
       letter-spacing: 2px;
       white-space: nowrap;
+      min-width: 130px;
+      /* Aligns all roast bars to start at the exact same point! */
+      display: inline-block;
     }
 
     .roast-bar-track {
@@ -272,7 +277,16 @@
       background: linear-gradient(to right, #ffb785, #d97724);
       border-radius: 100px;
       width: 0%;
-      transition: width 1.2s cubic-bezier(0.25, 1, 0.5, 1);
+      /* Transition removed: JS GSAP tween now controls this width and handles text! */
+    }
+
+    .roast-text-pct {
+      font-family: 'Manrope', sans-serif;
+      font-size: 0.75rem;
+      color: #ffb785;
+      font-weight: 700;
+      min-width: 35px;
+      display: inline-block;
     }
 
     /* ─── PROGRESS NAV (Right Side) — hidden, using progress bar instead ── */
@@ -325,7 +339,7 @@
       width: 0%;
       background: linear-gradient(to right, #d97724, #ffb785);
       border-radius: 0 100px 100px 0;
-      transition: width 0.15s linear;
+      transition: width 0.3s ease-out;
     }
 
     /* Scroll hint */
@@ -490,7 +504,7 @@
           </div>
           <div class="slide-text">
             <span class="slide-number">01</span>
-            <h2 class="slide-title">Vanilla <em>Velvet</em></h2>
+            <h2 class="slide-title">Vanilla <br><em>Velvet</em></h2>
             <p class="slide-desc">Pure Madagascar vanilla bean notes paired with a light, floral bean for a delicate and
               sophisticated morning cup. Elegance in every sip.</p>
             <div class="slide-notes">
@@ -501,7 +515,7 @@
             <div class="slide-roast-level">
               <span class="roast-label">Light Roast</span>
               <div class="roast-bar-track">
-                <div class="roast-bar-fill" data-width="30%"></div>
+                <div class="roast-bar-fill" data-width="30"></div>
               </div>
             </div>
           </div>
@@ -530,7 +544,7 @@
             <div class="slide-roast-level">
               <span class="roast-label">Medium Roast</span>
               <div class="roast-bar-track">
-                <div class="roast-bar-fill" data-width="50%"></div>
+                <div class="roast-bar-fill" data-width="50"></div>
               </div>
             </div>
           </div>
@@ -559,7 +573,7 @@
             <div class="slide-roast-level">
               <span class="roast-label">Medium-Dark Roast</span>
               <div class="roast-bar-track">
-                <div class="roast-bar-fill" data-width="65%"></div>
+                <div class="roast-bar-fill" data-width="65"></div>
               </div>
             </div>
           </div>
@@ -588,7 +602,7 @@
             <div class="slide-roast-level">
               <span class="roast-label">Dark Roast</span>
               <div class="roast-bar-track">
-                <div class="roast-bar-fill" data-width="85%"></div>
+                <div class="roast-bar-fill" data-width="85"></div>
               </div>
             </div>
           </div>
@@ -648,12 +662,11 @@
 
   <script src="script.js"></script>
   <script>
-    // ─── PRODUCTS SHOWCASE — CINEMATIC PARALLAX ─────────────
+    // ─── PRODUCTS SHOWCASE — CINEMATIC SCROLL CAROUSEL ─────────────
     document.addEventListener("DOMContentLoaded", () => {
       const container = document.getElementById('showcaseContainer');
       const viewport = document.getElementById('showcaseViewport');
       const slides = document.querySelectorAll('.showcase-slide');
-      const dots = document.querySelectorAll('.progress-dot');
       const scrollHint = document.getElementById('scrollHint');
       const ambient = document.getElementById('showcaseAmbient');
       const counterEl = document.getElementById('counterCurrent');
@@ -663,9 +676,7 @@
 
       if (!container || !viewport || !numSlides) return;
 
-      // (No word-split prep — text animates as unified blocks)
-
-      // ─── ANIMATE SLIDE IN ──────────────────────────────────────
+      // ─── ANIMATE SLIDE IN (luxurious cascading reveal) ──────────
       function animateSlideIn(slide) {
         const img = slide.querySelector('.slide-image-wrap');
         const title = slide.querySelector('.slide-title');
@@ -677,65 +688,66 @@
 
         const tl = gsap.timeline();
 
-        // Image fades in cleanly
         tl.fromTo(img,
-          { opacity: 0, y: 30 },
-          { opacity: 1, y: 0, duration: 0.5, ease: "power3.out" }
+          { opacity: 0, y: 60 },
+          { opacity: 1, y: 0, duration: 1.4, ease: "power3.out" }
         )
-          // Number
           .fromTo(num,
-            { opacity: 0, y: 10 },
-            { opacity: 1, y: 0, duration: 0.3, ease: "power2.out" },
-            "-=0.35"
-          )
-          // Title as one unified block
-          .fromTo(title,
             { opacity: 0, y: 20 },
-            { opacity: 1, y: 0, duration: 0.35, ease: "power3.out" },
-            "-=0.25"
+            { opacity: 1, y: 0, duration: 0.9, ease: "power2.out" },
+            "-=1.1"
           )
-          // Description
+          .fromTo(title,
+            { opacity: 0, y: 30 },
+            { opacity: 1, y: 0, duration: 1.1, ease: "power3.out" },
+            "-=0.8"
+          )
           .fromTo(desc,
-            { opacity: 0, y: 16 },
-            { opacity: 1, y: 0, duration: 0.3, ease: "power3.out" },
-            "-=0.2"
+            { opacity: 0, y: 25 },
+            { opacity: 1, y: 0, duration: 1.0, ease: "power3.out" },
+            "-=0.7"
           )
-          // Notes all together
           .fromTo(notes,
-            { opacity: 0, y: 12 },
-            { opacity: 1, y: 0, duration: 0.25, ease: "power2.out" },
-            "-=0.15"
+            { opacity: 0, y: 18 },
+            { opacity: 1, y: 0, duration: 0.8, ease: "power2.out", stagger: 0.12 },
+            "-=0.6"
           )
-          // Roast level
           .fromTo(roast,
-            { opacity: 0, y: 10 },
-            { opacity: 1, y: 0, duration: 0.25, ease: "power2.out" },
-            "-=0.15"
+            { opacity: 0, y: 14 },
+            { opacity: 1, y: 0, duration: 0.7, ease: "power2.out" },
+            "-=0.5"
           );
 
-        // Animate roast bar fill
+        // Roast bar fill animation after a delay
         if (bar) {
-          const target = bar.dataset.width || '50%';
+          const target = parseInt(bar.dataset.width) || 50;
           bar.style.width = '0%';
-          setTimeout(() => { bar.style.width = target; }, 300);
+
+          tl.to(bar, {
+            width: target + '%',
+            duration: 1.5,
+            ease: "power3.out"
+          }, "-=0.3");
         }
       }
 
-      // ─── HARD RESET A SLIDE (instant, no animation) ─────────────
+      // ─── HARD RESET A SLIDE ─────────────────────────────────────
       function resetSlide(slide) {
         const els = slide.querySelectorAll('.slide-image-wrap, .slide-title, .slide-desc, .slide-note, .slide-roast-level, .slide-number');
         gsap.killTweensOf(els);
         gsap.set(els, { opacity: 0, y: 0, clearProps: "transform" });
         const bar = slide.querySelector('.roast-bar-fill');
-        if (bar) bar.style.width = '0%';
+        if (bar) {
+          gsap.killTweensOf(bar);
+          bar.style.width = '0%';
+        }
       }
 
-      // ─── SWITCH SLIDES ─────────────────────────────────────────
+      // ─── SWITCH SLIDES ──────────────────────────────────────────
       function goToSlide(newIndex) {
         if (newIndex === currentIndex) return;
 
-        // Kill and reset ALL slides instantly
-        slides.forEach((slide, i) => {
+        slides.forEach((slide) => {
           resetSlide(slide);
           slide.classList.remove('active');
         });
@@ -745,23 +757,20 @@
 
         // Background color morph
         const bgColor = newSlide.dataset.bg || '#1a120b';
-        gsap.to(container, { backgroundColor: bgColor, duration: 0.5, ease: 'power2.out', overwrite: true });
+        gsap.to(container, { backgroundColor: bgColor, duration: 1.2, ease: 'power2.out', overwrite: true });
 
         // Ambient glow
         const ambientColor = newSlide.dataset.ambient || 'transparent';
         ambient.style.background = `radial-gradient(ellipse at 40% 50%, ${ambientColor} 0%, transparent 70%)`;
         ambient.classList.add('visible');
 
-        // Animate in new slide
+        // Animate new slide in
         animateSlideIn(newSlide);
 
         currentIndex = newIndex;
 
         // Update counter
-        counterEl.textContent = String(newIndex + 1).padStart(2, '0');
-
-        // Update dots
-        dots.forEach((dot, i) => dot.classList.toggle('active', i === newIndex));
+        if (counterEl) counterEl.textContent = String(newIndex + 1).padStart(2, '0');
 
         // Hide scroll hint on last slide
         if (scrollHint) {
@@ -769,127 +778,66 @@
         }
       }
 
-      // ─── WHEEL-SNAP CAROUSEL (any scroll = next/prev slide) ─────
-      let isLocked = false;       // true while showcase is pinned
-      let isAnimating = false;    // debounce guard during slide transition
-      const DEBOUNCE_MS = 600;    // cooldown between slide changes
-      const lenis = window.__lenis;
+      // ─── SCROLL-DRIVEN CAROUSEL ─────────────────────────────────
+      // Pin the viewport for (numSlides * 100vh) so user scrolls through
+      // each product one screen at a time.
+      let isAnimating = false;
 
-      // Pin the showcase and track when we enter/leave
       ScrollTrigger.create({
         trigger: container,
         start: "top top",
         end: () => `+=${numSlides * 100}vh`,
         pin: viewport,
         pinSpacing: true,
+        onUpdate: (self) => {
+          // Map scroll progress (0–1) to slide index (0–3)
+          // Math.floor gives each slide exactly 25% of scroll distance
+          const targetIndex = Math.min(numSlides - 1, Math.floor(self.progress * numSlides));
+
+          // Update progress bar smoothly
+          if (progressFill) {
+            const pct = (self.progress * 100).toFixed(1);
+            progressFill.style.width = pct + '%';
+          }
+
+          // Switch slide if needed
+          if (targetIndex !== currentIndex && !isAnimating) {
+            isAnimating = true;
+            goToSlide(targetIndex);
+            setTimeout(() => { isAnimating = false; }, 500);
+          }
+        }
+      });
+
+      // ─── INITIAL STATE ──────────────────────────────────────────
+      slides[0].classList.add('active');
+
+      // Initially hide the first slide so it can reveal on scroll
+      gsap.set(slides[0].querySelectorAll('.slide-image-wrap, .slide-title, .slide-desc, .slide-note, .slide-roast-level, .slide-number'), { opacity: 0, y: 60 });
+
+      ScrollTrigger.create({
+        trigger: document.body,
+        start: "top -5px", // Trigger when the user scrolls down just a tiny bit
         onEnter: () => {
-          isLocked = true;
-          if (lenis) lenis.stop();
-        },
-        onLeave: () => {
-          isLocked = false;
-          if (lenis) lenis.start();
-        },
-        onEnterBack: () => {
-          isLocked = true;
-          if (lenis) lenis.stop();
+          animateSlideIn(slides[0]);
         },
         onLeaveBack: () => {
-          isLocked = false;
-          if (lenis) lenis.start();
-        },
+          // Explicitly kill any active entrance animations if the user quickly scrolls back up!
+          const els = slides[0].querySelectorAll('.slide-image-wrap, .slide-title, .slide-desc, .slide-note, .slide-roast-level, .slide-number');
+          gsap.killTweensOf(els);
+          // Reset completely when scrolled back to the absolute top of the page
+          gsap.set(els, { opacity: 0, y: 60 });
+
+          const firstBar = slides[0].querySelector('.roast-bar-fill');
+          if (firstBar) {
+            gsap.killTweensOf(firstBar);
+            firstBar.style.width = '0%';
+          }
+        }
       });
 
-      // Handle wheel events directly
-      function onWheel(e) {
-        if (!isLocked || isAnimating) return;
-
-        const direction = e.deltaY > 0 ? 1 : -1;
-        const nextIndex = currentIndex + direction;
-
-        // At boundaries, release the lock and let the page scroll
-        if (nextIndex < 0 || nextIndex >= numSlides) {
-          isLocked = false;
-          if (lenis) lenis.start();
-          return;
-        }
-
-        // Block page scroll and switch slide
-        e.preventDefault();
-        e.stopPropagation();
-        isAnimating = true;
-
-        goToSlide(nextIndex);
-
-        // Update progress bar
-        if (progressFill) {
-          progressFill.style.width = `${((nextIndex) / (numSlides - 1)) * 100}%`;
-        }
-
-        // Cooldown before allowing next switch
-        setTimeout(() => {
-          isAnimating = false;
-        }, DEBOUNCE_MS);
-      }
-
-      window.addEventListener('wheel', onWheel, { passive: false });
-      container.addEventListener('wheel', onWheel, { passive: false });
-
-      // ─── TOUCH SUPPORT (mobile swipe) ──────────────────────────
-      let touchStartY = 0;
-      container.addEventListener('touchstart', (e) => {
-        touchStartY = e.touches[0].clientY;
-      }, { passive: true });
-
-      container.addEventListener('touchmove', (e) => {
-        if (!isLocked || isAnimating) return;
-
-        const touchDelta = touchStartY - e.touches[0].clientY;
-        if (Math.abs(touchDelta) < 30) return; // minimum swipe threshold
-
-        const direction = touchDelta > 0 ? 1 : -1;
-        const nextIndex = currentIndex + direction;
-
-        if (nextIndex < 0 || nextIndex >= numSlides) return;
-
-        e.preventDefault();
-        isAnimating = true;
-        touchStartY = e.touches[0].clientY; // reset
-
-        goToSlide(nextIndex);
-
-        if (progressFill) {
-          progressFill.style.width = `${((nextIndex) / (numSlides - 1)) * 100}%`;
-        }
-
-        setTimeout(() => {
-          isAnimating = false;
-        }, DEBOUNCE_MS);
-      }, { passive: false });
-
-      // ─── INITIAL STATE ─────────────────────────────────────────
-      animateSlideIn(slides[0]);
-      const firstBar = slides[0].querySelector('.roast-bar-fill');
-      if (firstBar) {
-        setTimeout(() => { firstBar.style.width = firstBar.dataset.width || '50%'; }, 600);
-      }
       ambient.classList.add('visible');
       ambient.style.background = `radial-gradient(ellipse at 40% 50%, ${slides[0].dataset.ambient} 0%, transparent 70%)`;
-
-      // ─── DOT CLICK NAVIGATION ──────────────────────────────────
-      dots.forEach((dot) => {
-        dot.addEventListener('click', () => {
-          const i = parseInt(dot.dataset.index);
-          if (i !== currentIndex && !isAnimating) {
-            isAnimating = true;
-            goToSlide(i);
-            if (progressFill) {
-              progressFill.style.width = `${(i / (numSlides - 1)) * 100}%`;
-            }
-            setTimeout(() => { isAnimating = false; }, DEBOUNCE_MS);
-          }
-        });
-      });
     });
   </script>
 </body>
