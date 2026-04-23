@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@700;800&amp;family=Manrope:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary-fixed-dim": "#e3c19c",
+                        "secondary": "#ffb77d",
+                        "surface-container": "#221f1d",
+                        "on-secondary-fixed": "#2f1500",
+                        "tertiary": "#ffb694",
+                        "outline-variant": "#4d4540",
+                        "on-primary-fixed": "#2a1802",
+                        "tertiary-container": "#320f00",
+                        "surface-dim": "#161311",
+                        "primary-container": "#271601",
+                        "primary": "#e3c19c",
+                        "surface-container-lowest": "#100e0c",
+                        "surface-container-low": "#1e1b19",
+                        "secondary-fixed-dim": "#ffb77d",
+                        "background": "#161311",
+                        "secondary-container": "#d97707",
+                        "on-secondary-fixed-variant": "#6e3900",
+                        "tertiary-fixed": "#ffdbcc",
+                        "surface-bright": "#3c3836",
+                        "on-primary": "#412c12",
+                        "on-error": "#690005",
+                        "inverse-primary": "#745a3b",
+                        "on-background": "#e9e1dd",
+                        "error-container": "#93000a",
+                        "surface-tint": "#e3c19c",
+                        "on-secondary-container": "#432100",
+                        "secondary-fixed": "#ffdcc3",
+                        "error": "#ffb4ab",
+                        "surface-container-highest": "#383432",
+                        "on-secondary": "#4d2600",
+                        "on-tertiary-container": "#b37354",
+                        "on-error-container": "#ffdad6",
+                        "inverse-on-surface": "#33302d",
+                        "on-surface-variant": "#d0c4be",
+                        "on-primary-container": "#9b7d5c",
+                        "tertiary-fixed-dim": "#ffb694",
+                        "on-primary-fixed-variant": "#5a4226",
+                        "on-tertiary-fixed-variant": "#6d391e",
+                        "surface-container-high": "#2d2927",
+                        "inverse-surface": "#e9e1dd",
+                        "primary-fixed": "#ffddb9",
+                        "surface-variant": "#383432",
+                        "on-tertiary-fixed": "#351000",
+                        "surface": "#161311",
+                        "on-surface": "#e9e1dd",
+                        "outline": "#998f89",
+                        "on-tertiary": "#51230a"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Epilogue"],
+                        "body": ["Manrope"],
+                        "label": ["Manrope"]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            background-color: #100e0c;
+            color: #e9e1dd;
+        }
+    </style>
+</head>
+<body class="font-body antialiased">
+<!-- Email Container -->
+<div class="max-w-[600px] mx-auto bg-surface overflow-hidden">
+<!-- TopNavBar Shell Implementation -->
+<header class="bg-stone-950/70 backdrop-blur-2xl sticky top-0 z-50">
+<div class="flex justify-between items-center w-full px-8 py-6">
+<span class="text-2xl font-bold text-[#E3C19C] tracking-tighter uppercase font-headline">The Modern Sommelier</span>
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-[#E3C19C]" data-icon="shopping_bag">shopping_bag</span>
+</div>
+</div>
+</header>
+<!-- Hero Section -->
+<section class="relative h-[400px] flex flex-col justify-end p-10 bg-gradient-to-t from-surface via-surface/60 to-transparent">
+<div class="absolute inset-0 -z-10 overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="Moody atmospheric close-up of dark roasted coffee beans with steam rising in a dimly lit, high-end espresso bar setting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAfxUy-UBfPEcjV_o2E_nZHxA5mgMM69DN2Hi7EJuJknairta1NcYLmJeTAPdtVeL2vuIiz1QS05krUEqY5jv_K0fzLp5iOACYR-gHKa3vg_IvmJmJCUZio372O-4UfZ6AQRT41X1gMV8HRL8jz_gILXndGZUNwA3iCxMJo9JrWCGqyZhyyzE5UIdjLa7HxfxafxKYQCHlxfQI1jOFdAuGCu0vEBZUpR0Kv-UMR-rKZJFobPFpnj87Xv_7Esv7T6oa89aMeNSCWOF-h"/>
+</div>
+<span class="text-primary font-label text-xs uppercase tracking-[0.2em] mb-4">The Morning Edition</span>
+<h1 class="font-headline text-4xl md:text-5xl font-extrabold text-on-surface leading-none tracking-tighter mb-4">
+                Your morning cup is lying to you.
+            </h1>
+</section>
+<!-- The First Sip -->
+<section class="px-8 py-20 bg-surface">
+<div class="max-w-md">
+<span class="text-primary-fixed-dim font-label text-xs uppercase tracking-widest block mb-4">01. The First Sip</span>
+<h2 class="font-headline text-3xl font-bold text-on-surface mb-6">The Ritual.</h2>
+<p class="text-on-surface-variant text-lg leading-relaxed mb-8">
+                    The sun hasn't quite crested the horizon. You reach for the jar, the kettle whistles, and for a moment, the world is still. But that dark liquid in your ceramic mug? It’s a shadow of what coffee is meant to be. We’ve traded the soul of the bean for the convenience of the grind.
+                </p>
+<div class="w-16 h-[2px] bg-secondary-container"></div>
+</div>
+</section>
+<!-- The Investigation -->
+<section class="px-8 py-20 bg-surface-container-low">
+<div class="flex flex-col gap-10">
+<div class="relative">
+<img class="w-full h-72 object-cover rounded-xl grayscale opacity-80" data-alt="Close-up of textured ground coffee and mysterious dark powders on a black stone surface with sharp directional lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuARC-E7GN72_s4V5TPQeIo1C6K9l25g-M7lDkBRqVEBiR2nIkDPypSiG66ELxLhuYpnpzn2zcH7gwH6bthX0M8-IYm51ecOimsoHyMUeG-raLF9foITicXS5HjnDXKIVwe6Ojq-yoBqcZCmatLEwqVit5do_15j1HVMs16Y4ogxPmfLXr3fmfzoeAlCW7nD-f7V-mxa9TRGXuEW4o2s40FBU0HSEtwRwR0v_amN8cnZYlVEHUZs29ue7MspSKAn0xG79dABFPmjLs2O"/>
+<div class="absolute inset-0 bg-primary-container/20 mix-blend-multiply"></div>
+</div>
+<div>
+<span class="text-secondary font-label text-xs uppercase tracking-widest block mb-4">02. The Investigation</span>
+<h2 class="font-headline text-3xl font-bold text-on-surface mb-6">What’s Hiding in Your Instant?</h2>
+<p class="text-on-surface-variant leading-relaxed mb-6">
+                        Beneath the promise of "rich aroma" lies a laboratory of stabilizers and artificial flavor enhancers. Mass-produced instant coffee is designed for shelf-life, not for the palate. We investigated the common supermarket blends and found a lack of transparency that would be unthinkable in the world of fine wine.
+                    </p>
+<ul class="space-y-4">
+<li class="flex items-start gap-4">
+<span class="material-symbols-outlined text-secondary text-sm mt-1" data-icon="science">science</span>
+<span class="text-on-surface-variant text-sm">Synthetic flavor molecules mimicking "hazelnut" or "caramel".</span>
+</li>
+<li class="flex items-start gap-4">
+<span class="material-symbols-outlined text-secondary text-sm mt-1" data-icon="warning">warning</span>
+<span class="text-on-surface-variant text-sm">Chemical stabilizers used to maintain "foam" in dehydrated mixes.</span>
+</li>
+</ul>
+</div>
+</div>
+</section>
+<!-- Why Origin is Everything -->
+<section class="px-8 py-24 bg-surface text-center">
+<div class="max-w-lg mx-auto">
+<span class="text-primary font-label text-xs uppercase tracking-widest block mb-4">03. Terroir &amp; Transparency</span>
+<h2 class="font-headline text-4xl font-bold text-on-surface mb-8">Origin is Everything.</h2>
+<p class="text-on-surface-variant text-lg leading-relaxed mb-12">
+                    A bean is a capsule of the earth it grew in. High-altitude volcanic soil, equatorial rain, and the hands of generational farmers. We treat coffee with the reverence of a Grand Cru wine. No additives. No shortcuts. Just the honest expression of the land.
+                </p>
+<div class="grid grid-cols-2 gap-4">
+<div class="bg-surface-container-high p-6 rounded-xl">
+<span class="text-primary font-headline text-2xl block mb-2">92+</span>
+<span class="text-on-surface-variant text-xs uppercase tracking-tighter">Cupping Score</span>
+</div>
+<div class="bg-surface-container-high p-6 rounded-xl">
+<span class="text-primary font-headline text-2xl block mb-2">100%</span>
+<span class="text-on-surface-variant text-xs uppercase tracking-tighter">Direct Trade</span>
+</div>
+</div>
+</div>
+</section>
+<!-- The Affordability Myth -->
+<section class="p-8">
+<div class="bg-primary-container p-10 rounded-xl relative overflow-hidden">
+<div class="absolute top-0 right-0 p-8 opacity-10">
+<span class="material-symbols-outlined text-[120px]" data-icon="payments">payments</span>
+</div>
+<div class="relative z-10">
+<h2 class="font-headline text-2xl font-bold text-primary mb-4">The Affordability Myth.</h2>
+<p class="text-on-primary-container mb-8 leading-relaxed">
+                        The "cheap" daily cup adds up—not just in dollars, but in the health of the soil and the lives of the farmers. Specialty coffee isn't a luxury; it's an investment in a sustainable ecosystem. When you brew at home, you're getting a $7 cafe experience for pennies on the gram.
+                    </p>
+<a class="inline-block bg-primary text-on-primary px-8 py-3 rounded-full font-bold uppercase text-xs tracking-widest hover:bg-white transition-colors" href="#">Compare the Math</a>
+</div>
+</div>
+</section>
+<!-- This Month at Brewverse -->
+<section class="px-8 py-24 bg-surface-container-lowest">
+<div class="text-center mb-16">
+<h2 class="font-headline text-3xl font-bold text-on-surface">This Month at Brewverse</h2>
+<div class="w-12 h-1 bg-secondary mx-auto mt-4"></div>
+</div>
+<div class="space-y-16">
+<!-- Product 1 -->
+<div class="group">
+<div class="flex flex-col gap-6">
+<div class="relative overflow-hidden rounded-xl h-64 bg-surface-container-low">
+<img class="w-full h-full object-contain transition-transform duration-700 group-hover:scale-105" alt="Vanilla Velvet Coffee" src="assets/vanilla.jpeg" style="background:#1e1b19;"/>
+<div class="absolute top-4 left-4">
+<span class="bg-secondary-container text-on-secondary px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest">Medium Roast</span>
+</div>
+</div>
+<div>
+<h3 class="font-headline text-2xl text-on-surface mb-2">Vanilla Velvet</h3>
+<p class="text-on-surface-variant text-sm mb-4">Pure Madagascar vanilla bean notes paired with a light, floral bean for a delicate and sophisticated morning cup. Elegance in every sip.</p>
+<div class="flex gap-2 mb-6" style="flex-wrap:wrap;">
+  <span style="font-size:0.7rem; padding:4px 10px; border-radius:9999px; background:rgba(255,183,133,0.12); color:#ffb77d; font-family:Manrope,sans-serif; letter-spacing:0.08em; text-transform:uppercase;">Floral</span>
+  <span style="font-size:0.7rem; padding:4px 10px; border-radius:9999px; background:rgba(255,183,133,0.12); color:#ffb77d; font-family:Manrope,sans-serif; letter-spacing:0.08em; text-transform:uppercase;">Sweet</span>
+  <span style="font-size:0.7rem; padding:4px 10px; border-radius:9999px; background:rgba(255,183,133,0.12); color:#ffb77d; font-family:Manrope,sans-serif; letter-spacing:0.08em; text-transform:uppercase;">Aromatic</span>
+  <span style="font-size:0.7rem; padding:4px 10px; border-radius:9999px; background:rgba(227,193,156,0.1); color:#e3c19c; font-family:Manrope,sans-serif; letter-spacing:0.08em; text-transform:uppercase;">Light Roast</span>
+</div>
+<a class="text-secondary font-label text-sm uppercase tracking-widest flex items-center gap-2 group-hover:gap-4 transition-all" href="products.html" target="_top">
+                                View Details <span class="material-symbols-outlined text-sm" data-icon="arrow_forward">arrow_forward</span>
+</a>
+</div>
+</div>
+</div>
+<!-- Product 2 -->
+<div class="group">
+<div class="flex flex-col gap-6">
+<div class="relative overflow-hidden rounded-xl h-64 bg-surface-container-low">
+<img class="w-full h-full object-contain transition-transform duration-700 group-hover:scale-105" alt="Hazelnut Signature Coffee" src="assets/hazlenut.jpeg" style="background:#1e1b19;"/>
+<div class="absolute top-4 left-4">
+<span class="bg-secondary-container text-on-secondary px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest">Dark Roast</span>
+</div>
+</div>
+<div>
+<h3 class="font-headline text-2xl text-on-surface mb-2">Hazelnut Signature</h3>
+<p class="text-on-surface-variant text-sm mb-4">A smooth, medium roast infused with the toasted, nutty essence of wild hazelnuts and a hint of sweet cream. Our most beloved everyday companion.</p>
+<div class="flex gap-2 mb-6" style="flex-wrap:wrap;">
+  <span style="font-size:0.7rem; padding:4px 10px; border-radius:9999px; background:rgba(255,183,133,0.12); color:#ffb77d; font-family:Manrope,sans-serif; letter-spacing:0.08em; text-transform:uppercase;">Nutty</span>
+  <span style="font-size:0.7rem; padding:4px 10px; border-radius:9999px; background:rgba(255,183,133,0.12); color:#ffb77d; font-family:Manrope,sans-serif; letter-spacing:0.08em; text-transform:uppercase;">Smooth</span>
+  <span style="font-size:0.7rem; padding:4px 10px; border-radius:9999px; background:rgba(255,183,133,0.12); color:#ffb77d; font-family:Manrope,sans-serif; letter-spacing:0.08em; text-transform:uppercase;">Creamy</span>
+  <span style="font-size:0.7rem; padding:4px 10px; border-radius:9999px; background:rgba(227,193,156,0.1); color:#e3c19c; font-family:Manrope,sans-serif; letter-spacing:0.08em; text-transform:uppercase;">Medium Roast</span>
+</div>
+<a class="text-secondary font-label text-sm uppercase tracking-widest flex items-center gap-2 group-hover:gap-4 transition-all" href="products.html" target="_top">
+                                View Details <span class="material-symbols-outlined text-sm" data-icon="arrow_forward">arrow_forward</span>
+</a>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Subscription Tease -->
+<section class="px-8 py-20 bg-primary-container text-center">
+<h2 class="font-headline text-2xl font-bold text-primary mb-4">Never Run Low Again</h2>
+<p class="text-on-primary-container mb-8">Get curated roasts delivered to your door every month. Tailored to your palate.</p>
+<button class="bg-primary text-on-primary w-full py-4 rounded-lg font-bold uppercase tracking-widest hover:bg-primary-fixed-dim transition-colors">Start Subscription</button>
+</section>
+<!-- Footer Shell Implementation -->
+<footer class="bg-[#100E0C] w-full px-8 py-16 flex flex-col items-center space-y-8 border-t border-[#4D4540]/15">
+<div class="font-headline font-bold text-[#E3C19C] text-xl uppercase tracking-tighter">The Modern Sommelier</div>
+<div class="flex flex-wrap justify-center gap-6">
+<a class="font-label text-sm text-[#D0C4BE]/60 hover:text-[#E3C19C] transition-colors" href="#">Unsubscribe</a>
+<a class="font-label text-sm text-[#D0C4BE]/60 hover:text-[#E3C19C] transition-colors" href="#">Preference Center</a>
+<a class="font-label text-sm text-[#D0C4BE]/60 hover:text-[#E3C19C] transition-colors" href="#">Privacy Policy</a>
+<a class="font-label text-sm text-[#D0C4BE]/60 hover:text-[#E3C19C] transition-colors" href="#">Contact Us</a>
+</div>
+
+<p class="font-label text-sm leading-relaxed text-[#D0C4BE]/60 text-center">
+                © 2026 Brewverse Coffee. All rights reserved. <br/>
+                Crafting the future of the morning ritual.
+            </p>
+</footer>
+</div>
+</body></html>

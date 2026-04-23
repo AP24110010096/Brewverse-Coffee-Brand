@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@700;800;900&amp;family=Manrope:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-surface-variant": "#d0c4be",
+                    "on-secondary": "#4d2600",
+                    "tertiary-container": "#320f00",
+                    "surface-container-low": "#1e1b19",
+                    "surface-variant": "#383432",
+                    "error-container": "#93000a",
+                    "inverse-surface": "#e9e1dd",
+                    "on-background": "#e9e1dd",
+                    "on-error-container": "#ffdad6",
+                    "background": "#161311",
+                    "surface-dim": "#161311",
+                    "on-surface": "#e9e1dd",
+                    "error": "#ffb4ab",
+                    "surface-container-lowest": "#100e0c",
+                    "secondary-container": "#d97707",
+                    "surface-container-highest": "#383432",
+                    "tertiary-fixed": "#ffdbcc",
+                    "on-tertiary-fixed": "#351000",
+                    "on-secondary-fixed": "#2f1500",
+                    "surface-bright": "#3c3836",
+                    "on-primary-fixed-variant": "#5a4226",
+                    "primary": "#e3c19c",
+                    "primary-container": "#271601",
+                    "tertiary": "#ffb694",
+                    "outline": "#998f89",
+                    "inverse-on-surface": "#33302d",
+                    "on-error": "#690005",
+                    "surface-container-high": "#2d2927",
+                    "surface-tint": "#e3c19c",
+                    "tertiary-fixed-dim": "#ffb694",
+                    "surface": "#161311",
+                    "inverse-primary": "#745a3b",
+                    "on-tertiary-container": "#b37354",
+                    "secondary-fixed-dim": "#ffb77d",
+                    "on-secondary-fixed-variant": "#6e3900",
+                    "on-tertiary": "#51230a",
+                    "on-secondary-container": "#432100",
+                    "secondary": "#ffb77d",
+                    "on-primary": "#412c12",
+                    "outline-variant": "#4d4540",
+                    "on-tertiary-fixed-variant": "#6d391e",
+                    "on-primary-fixed": "#2a1802",
+                    "on-primary-container": "#9b7d5c",
+                    "surface-container": "#221f1d",
+                    "secondary-fixed": "#ffdcc3",
+                    "primary-fixed": "#ffddb9",
+                    "primary-fixed-dim": "#e3c19c"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "fontFamily": {
+                    "headline": ["Epilogue"],
+                    "body": ["Manrope"],
+                    "label": ["Manrope"]
+            }
+          }
+        }
+      }
+    </script>
+<style>
+      .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      }
+      .tonal-shift {
+        background: linear-gradient(180deg, #1E1B19 0%, transparent 100%);
+      }
+      .glass-effect {
+        background: rgba(22, 19, 17, 0.7);
+        backdrop-filter: blur(24px);
+      }
+      .asymmetric-bleed {
+        margin-left: -5%;
+        margin-right: 5%;
+      }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body selection:bg-secondary-container selection:text-on-secondary-container">
+<!-- TopNavBar Shell -->
+<header class="fixed top-0 w-full z-50 tonal-shift bg-gradient-to-b from-[#1E1B19] to-transparent shadow-[0_20px_50px_rgba(39,22,1,0.3)]">
+<nav class="flex justify-between items-center px-12 py-6 max-w-[1920px] mx-auto">
+<div class="text-2xl font-black text-[#E3C19C] tracking-tighter uppercase font-headline">The Modern Sommelier</div>
+<div class="hidden md:flex items-center gap-10">
+<a class="text-[#D0C4BE] font-medium hover:text-[#E3C19C] transition-colors font-headline tracking-tight" href="#">Journal</a>
+<a class="text-[#E3C19C] border-b-2 border-[#E3C19C] pb-1 font-headline tracking-tight" href="#">Brew Guides</a>
+<a class="text-[#D0C4BE] font-medium hover:text-[#E3C19C] transition-colors font-headline tracking-tight" href="#">Shop</a>
+<a class="text-[#D0C4BE] font-medium hover:text-[#E3C19C] transition-colors font-headline tracking-tight" href="#">Roastery</a>
+</div>
+<div class="flex items-center gap-6">
+<button class="hover:bg-[#383432]/50 p-2 rounded-full transition-all duration-300 scale-95 hover:scale-100">
+<span class="material-symbols-outlined text-[#E3C19C]" data-icon="shopping_bag">shopping_bag</span>
+</button>
+<button class="hover:bg-[#383432]/50 p-2 rounded-full transition-all duration-300 scale-95 hover:scale-100">
+<span class="material-symbols-outlined text-[#E3C19C]" data-icon="person">person</span>
+</button>
+</div>
+</nav>
+</header>
+<!-- SideNavBar (Suppressed for immersive article feel, but defined in JSON) -->
+<main>
+<!-- Hero Section -->
+<section class="relative h-screen flex items-end pb-24 px-12 overflow-hidden">
+<div class="absolute inset-0 z-0">
+<img class="w-full h-full object-cover brightness-[0.4]" data-alt="Cinematic close-up of dark espresso coffee being poured into a ceramic cup with moody lighting and warm amber highlights" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA8Rc_m4A79n8e2l3PX_mIi0U29Atw3qRiaw4qr-JWVLWzgVYUQZE4HjkyFltsPNB_RCW5Mjsrv6IOQrWUQKkg13IFGSmqND60e813n_NApJU_0bRiJnAUKeqdPsqaP3ACfrb7TkqkhqSZ2F0rYvBjhfas9lE2E0JndrmlIFkb7caNkeGiX9ofCLgcihKCKFaOiGYt-TBd0SooVI5xrRE1gYucGTEB31NKAlMAIKC4HlGhDWnVOtSkaDvQO6eXESjx2wInajxtxseoL"/>
+<div class="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent"></div>
+</div>
+<div class="relative z-10 max-w-4xl">
+<span class="text-primary font-label text-sm uppercase tracking-widest mb-4 block">Masterclass series 04</span>
+<h1 class="text-7xl md:text-9xl font-headline font-black tracking-tighter text-on-surface leading-none mb-8">Mastering the Perfect Pour</h1>
+<div class="flex items-center gap-6">
+<div class="w-12 h-1px bg-outline-variant"></div>
+<p class="text-on-surface-variant text-xl max-w-xl font-light italic leading-relaxed">
+                        An immersive guide to the physics, the artistry, and the ritual of the pour-over technique.
+                    </p>
+</div>
+</div>
+</section>
+<!-- Essential Kit - Bento Style -->
+<section class="py-32 px-12 max-w-[1440px] mx-auto">
+<div class="mb-20">
+<h2 class="text-primary font-headline text-5xl font-bold tracking-tight mb-4">Essential Kit</h2>
+<div class="w-24 h-1 bg-secondary-container"></div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-12 gap-8 h-auto md:h-[800px]">
+<div class="md:col-span-8 bg-surface-container-low rounded-xl overflow-hidden group relative">
+<img class="w-full h-full object-cover opacity-60 group-hover:scale-105 transition-transform duration-700" data-alt="Overhead shot of minimalist coffee brewing equipment: ceramic dripper, gooseneck kettle, and hand grinder on a dark wood table" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCN2E--GubJ8c_H1lukGYIE27mxNCh8X9E7-53MWqFKlOVKzmyo1p5C6f1quEu9-BazzoJAwVkQJ5qYhg04901seYh-vo8M-HyJlRNEaNLVIU7r3WI-VookwfsW2dr2JjodgBFM1OuA3j37W_TfWIdl8WvhGW2OqJkujegyZClruPlnjB5YPbk4PyfxiyPvOrvKSkoDbBv-GDA4RNx768u37tdAeakyhqc99y0A2hau39K_imZo-p7BaHoMIVv8_TdiSVbFJK8Xdcy1"/>
+<div class="absolute bottom-10 left-10">
+<h3 class="text-3xl font-headline font-bold mb-2">The Architecture</h3>
+<p class="text-on-surface-variant max-w-md">Precision starts with a high-thermal-mass ceramic dripper and a controlled-flow gooseneck kettle.</p>
+</div>
+</div>
+<div class="md:col-span-4 flex flex-col gap-8">
+<div class="h-1/2 bg-surface-container-high rounded-xl p-8 flex flex-col justify-end relative overflow-hidden">
+<div class="absolute top-0 right-0 p-8 opacity-20">
+<span class="material-symbols-outlined text-8xl" data-icon="settings_input_component">settings_input_component</span>
+</div>
+<h3 class="text-2xl font-headline font-bold text-primary mb-2">Calibration</h3>
+<p class="text-sm text-on-surface-variant leading-relaxed">0.1g precision digital scales are non-negotiable for consistency across roasts.</p>
+</div>
+<div class="h-1/2 bg-secondary-container rounded-xl p-8 flex flex-col justify-end text-on-secondary">
+<h3 class="text-2xl font-headline font-bold mb-2">The Medium</h3>
+<p class="text-sm font-medium leading-relaxed">Oxygen-bleached paper filters provide the cleanest clarity of flavor profile.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- The Process Steps - Asymmetric Editorial Layout -->
+<section class="py-32 bg-surface-container-lowest">
+<div class="max-w-[1440px] mx-auto px-12">
+<div class="text-center mb-32">
+<h2 class="text-7xl font-headline font-black uppercase tracking-tighter opacity-10 absolute left-0 right-0">Step by Step</h2>
+<h2 class="text-5xl font-headline font-bold relative z-10 pt-8">The Process</h2>
+</div>
+<!-- Step 1 -->
+<div class="flex flex-col md:flex-row items-center gap-20 mb-48">
+<div class="w-full md:w-3/5 relative">
+<div class="absolute -top-10 -left-10 text-9xl font-headline font-black text-primary opacity-20">01</div>
+<img class="w-full aspect-[4/5] object-cover rounded-xl shadow-2xl" data-alt="Macro photo of fresh coffee beans being ground in a professional burr grinder, particles frozen in motion with warm lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAV6ruJO5grf8WULrvuCbIjjiL0RIfLsnA9UE2DIyuobmuzbmp9CfE8UD4fK_OAXSZZAcxxHvDIxmq03mgprEJq2hW8zjtfgTmRNtiy1SpVKPbHRAoZulDzlGUiABBF6RTFPPkfltY1nhmBMySvnRviM15pkQBX-caZypqqdLkWLVujCtjls4-H0FHWt_BoGJ2EkzkYjIJYFE3uJxvUtuhjGIlXkPLkRBUEm5PS0sSuUnuzwsVVLqcgVVWQqzv9yOZjSgP57WgYVr_w"/>
+</div>
+<div class="w-full md:w-2/5 space-y-6">
+<span class="text-secondary font-label uppercase tracking-widest text-xs">Phase One</span>
+<h3 class="text-4xl font-headline font-bold">The Grind Foundation</h3>
+<p class="text-on-surface-variant text-lg leading-relaxed">
+                            A medium-coarse texture resembling sea salt is paramount. Too fine, and the water stalls; too coarse, and the extraction lacks the soul of the bean. Grind moments before the first drop hits.
+                        </p>
+<div class="bg-surface-container-low p-4 rounded-lg flex items-center gap-4">
+<span class="material-symbols-outlined text-primary" data-icon="local_cafe">local_cafe</span>
+<span class="text-sm font-label uppercase tracking-wider text-primary">Target: 30g Beans</span>
+</div>
+</div>
+</div>
+<!-- Step 2 -->
+<div class="flex flex-col md:flex-row-reverse items-center gap-20 mb-48">
+<div class="w-full md:w-3/5 relative">
+<div class="absolute -top-10 -right-10 text-9xl font-headline font-black text-primary opacity-20">02</div>
+<img class="w-full aspect-[4/5] object-cover rounded-xl shadow-2xl" data-alt="Close-up of hot water being poured from a gooseneck kettle into a coffee dripper, showing the bloom and bubbles forming" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDXjzACLbj4C7reNYWQEhmKaz3W--c6Pf_Fq5OnAGqSaZ3qdPL_csZMsHBquBPBFh8ivkcBQIoGb8IOMOEroJHwQ6TOEVYqt59YJ8YoRoz9WI1LiZiSS4j378I3t2ds9COkabLK74Zg8Hsyd3GHSTR-9mrUUJNjQ7o3zMdjdCIm4emCHl4c-vLgfB3hE4rMoee0viptN7OY4eYjVo0nCG5q5x6ZZRHXXMDaENL0H4D-I4XQD8ziNvvOgv4Plzg_uMcQJjFiBTLvciFx"/>
+</div>
+<div class="w-full md:w-2/5 space-y-6">
+<span class="text-secondary font-label uppercase tracking-widest text-xs">Phase Two</span>
+<h3 class="text-4xl font-headline font-bold">The Sacred Bloom</h3>
+<p class="text-on-surface-variant text-lg leading-relaxed">
+                            Introduce 60g of water at 94°C. Watch as the gases escape, creating a bubbling landscape. This 30-second pause awakens the aromatics and prepares the bed for a uniform extraction.
+                        </p>
+<div class="bg-surface-container-low p-4 rounded-lg flex items-center gap-4">
+<span class="material-symbols-outlined text-primary" data-icon="history">history</span>
+<span class="text-sm font-label uppercase tracking-wider text-primary">Duration: 45 Seconds</span>
+</div>
+</div>
+</div>
+<!-- Step 3 -->
+<div class="flex flex-col md:flex-row items-center gap-20">
+<div class="w-full md:w-3/5 relative">
+<div class="absolute -top-10 -left-10 text-9xl font-headline font-black text-primary opacity-20">03</div>
+<img class="w-full aspect-[16/9] object-cover rounded-xl shadow-2xl" data-alt="Steady stream of water pouring in concentric circles into a coffee dripper, create a dark swirling vortex of coffee and foam" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB6m9ltvOwLJI1dtLdLq52i9Qg9S_B44bJIk0WUpHF5MAQsLdBwBk4vmdt8t92qRGcWMdwQ52oNL3tYEmViiACQvdYapLY7xc6p2KULfVGBzOeAJZMfI48eqmRX1LvTNnFbFsgoM56XX1DfJQfK6cQmSuiiz2UkCpEI5lVB2NIiGDnU-41BpaP8THS12Mc5kPye0_cnhnHCZ-Yk3Nw1yCXYMpoZHhWLKMeqQAKSV0sSNqcpMCOioJpJEuQNMTfFwqQGl6ehVYbxQFb2"/>
+</div>
+<div class="w-full md:w-2/5 space-y-6">
+<span class="text-secondary font-label uppercase tracking-widest text-xs">Phase Three</span>
+<h3 class="text-4xl font-headline font-bold">Concentric Flow</h3>
+<p class="text-on-surface-variant text-lg leading-relaxed">
+                            Maintain a steady, pencil-thin stream. Move in concentric circles from the center outwards, never touching the paper walls. The goal is a flat coffee bed once the water has passed.
+                        </p>
+<div class="bg-surface-container-low p-4 rounded-lg flex items-center gap-4">
+<span class="material-symbols-outlined text-primary" data-icon="public">public</span>
+<span class="text-sm font-label uppercase tracking-wider text-primary">Yield: 500ml Liquid Gold</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Pro-Tip Section - Glassmorphism Highlight -->
+<section class="py-48 px-12 flex justify-center">
+<div class="relative max-w-4xl w-full">
+<div class="absolute -inset-4 bg-gradient-to-r from-primary to-secondary opacity-20 blur-3xl rounded-full"></div>
+<div class="glass-effect p-16 rounded-xl border border-outline-variant/20 relative z-10 overflow-hidden">
+<div class="absolute top-0 right-0 p-8 opacity-5">
+<span class="material-symbols-outlined text-[12rem]" data-icon="local_cafe">local_cafe</span>
+</div>
+<div class="flex flex-col items-center text-center gap-8">
+<span class="bg-secondary-container text-on-secondary px-6 py-2 rounded-full font-label text-sm uppercase tracking-widest">Sommelier Insight</span>
+<h2 class="text-5xl font-headline font-bold text-on-surface">The Temperature Trap</h2>
+<p class="text-on-surface-variant text-xl leading-relaxed max-w-2xl">
+                            "Boiling water is the enemy of nuance. If you don't have a temperature-controlled kettle, wait exactly 90 seconds after boiling before you pour. Those few degrees are the difference between a smoky bitterness and a bright, berry acidity."
+                        </p>
+<div class="pt-8">
+<button class="bg-primary text-on-primary px-10 py-4 font-label font-bold uppercase tracking-widest hover:scale-105 transition-transform duration-300">
+                                View Full Equipment Guide
+                            </button>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-surface-container-lowest py-24 px-12">
+<div class="max-w-[1920px] mx-auto grid grid-cols-1 md:grid-cols-4 gap-20">
+<div class="col-span-1 md:col-span-2">
+<div class="text-3xl font-black text-[#E3C19C] tracking-tighter uppercase font-headline mb-8">The Modern Sommelier</div>
+<p class="text-on-surface-variant max-w-sm leading-relaxed">
+                    A curated digital ecosystem for the modern coffee artisan. Elevating the daily grind into a ritual of excellence.
+                </p>
+</div>
+<div>
+<h4 class="text-primary font-headline font-bold uppercase tracking-widest mb-6">Explore</h4>
+<ul class="space-y-4 text-on-surface-variant">
+<li><a class="hover:text-primary transition-colors" href="#">Masterclasses</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Equipment Shop</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Bean Archive</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Brewing Guides</a></li>
+</ul>
+</div>
+<div>
+<h4 class="text-primary font-headline font-bold uppercase tracking-widest mb-6">Social</h4>
+<ul class="space-y-4 text-on-surface-variant">
+<li><a class="hover:text-primary transition-colors" href="#">Instagram</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">YouTube</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">The Club</a></li>
+</ul>
+</div>
+</div>
+<div class="max-w-[1920px] mx-auto mt-24 pt-8 border-t border-outline-variant/10 flex justify-between items-center text-xs text-outline font-label uppercase tracking-widest">
+<span>© 2024 The Modern Sommelier. All Rights Reserved.</span>
+<div class="flex gap-8">
+<a class="hover:text-on-surface transition-colors" href="#">Privacy</a>
+<a class="hover:text-on-surface transition-colors" href="#">Terms</a>
+</div>
+</div>
+</footer>
+</body></html>

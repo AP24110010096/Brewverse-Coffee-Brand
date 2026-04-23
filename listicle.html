@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Brewverse | 7 Reasons Your Morning Cup Is Lying to You</title>
+  <meta name="description"
+    content="Everything India's instant coffee industry doesn't want you to figure out — and what to do about it.">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Manrope:wght@200;300;400;500;600;700&family=Epilogue:wght@300;400;700;800;900&display=swap"
+    rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <!-- Smooth Scroll & GSAP -->
+  <script src="https://unpkg.com/@studio-freight/lenis@1.0.39/dist/lenis.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+  <style>
+    /* ═══════════════════════════════════════════════════════════
+       LISTICLE — 7 Reasons Your Morning Cup Is Lying to You
+       Liquid Glass + Newsletter/Content First aesthetic
+       ═══════════════════════════════════════════════════════════ */
+
+    /* Sub Navigation — sticky glass bar (matches press release) */
+    .sub-nav-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 32px;
+      margin: 0 auto;
+      max-width: 100%;
+      padding: 20px 40px;
+      position: sticky;
+      top: 68px;
+      z-index: 100;
+      background: rgba(26, 18, 11, 0.85);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(255, 183, 133, 0.06);
+      margin-bottom: 40px;
+    }
+
+    .sub-nav-item {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: rgba(219, 193, 178, 0.4);
+      text-decoration: none;
+      transition: color 0.3s ease;
+      cursor: pointer;
+    }
+
+    .sub-nav-item:hover,
+    .sub-nav-item.active {
+      color: #e9e1dd;
+    }
+
+    /* ─── Hero — full-viewport cinematic ─── */
+    .listicle-hero {
+      position: relative;
+      height: 100vh;
+      min-height: 600px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      text-align: center;
+    }
+
+    .listicle-hero-bg {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+    }
+
+    .listicle-hero-bg img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.4;
+    }
+
+    .listicle-hero-gradient {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at center, rgba(39, 22, 1, 0.4) 0%, #161311 100%);
+      z-index: 1;
+    }
+
+    .listicle-hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 900px;
+      padding: 0 40px;
+    }
+
+    .listicle-kicker {
+      font-family: 'Manrope', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.3em;
+      color: #e3c19c;
+      margin-bottom: 32px;
+      display: block;
+    }
+
+    .listicle-headline {
+      font-family: 'Epilogue', sans-serif;
+      font-size: clamp(2.8rem, 7vw, 6rem);
+      font-weight: 900;
+      color: #e9e1dd;
+      line-height: 0.9;
+      letter-spacing: -3px;
+      margin-bottom: 32px;
+    }
+
+    .listicle-headline em {
+      color: #e3c19c;
+      font-style: italic;
+      text-decoration: underline;
+      text-decoration-color: rgba(227, 193, 156, 0.3);
+      text-underline-offset: 8px;
+      text-decoration-thickness: 1px;
+    }
+
+    .listicle-lead {
+      font-family: 'Manrope', sans-serif;
+      font-size: 1.25rem;
+      font-weight: 300;
+      color: rgba(208, 196, 190, 0.85);
+      line-height: 1.6;
+      max-width: 600px;
+      margin: 0 auto 48px;
+    }
+
+    .hero-scroll-hint {
+      color: #e3c19c;
+      font-size: 2.5rem;
+      animation: bounce-down 2s ease-in-out infinite;
+    }
+
+    @keyframes bounce-down {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(12px); }
+    }
+
+    /* ─── Listicle items ─── */
+    .listicle-body {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 100px 40px 60px;
+    }
+
+    .listicle-article {
+      position: relative;
+      margin-bottom: 100px;
+    }
+
+    .listicle-article:last-child {
+      margin-bottom: 0;
+    }
+
+    /* Standard text item */
+    .listicle-row {
+      display: flex;
+      gap: 48px;
+      align-items: flex-start;
+    }
+
+    .listicle-row.reverse {
+      flex-direction: row-reverse;
+    }
+
+    .listicle-num {
+      font-family: 'Epilogue', sans-serif;
+      font-size: clamp(5rem, 10vw, 10rem);
+      font-weight: 900;
+      color: rgba(77, 69, 64, 0.2);
+      line-height: 0.8;
+      user-select: none;
+      flex-shrink: 0;
+    }
+
+    .listicle-text {
+      flex: 1;
+      padding-top: 32px;
+    }
+
+    .listicle-badge {
+      display: inline-block;
+      padding: 5px 14px;
+      border-radius: 99px;
+      font-family: 'Manrope', sans-serif;
+      font-size: 0.65rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      margin-bottom: 20px;
+    }
+
+    .badge-primary {
+      background: rgba(39, 22, 1, 0.6);
+      color: #e3c19c;
+    }
+
+    .badge-secondary {
+      background: rgba(217, 119, 7, 0.15);
+      color: #d97707;
+    }
+
+    .badge-tertiary {
+      background: rgba(50, 15, 0, 0.6);
+      color: #ffb694;
+    }
+
+    .listicle-title {
+      font-family: 'Epilogue', sans-serif;
+      font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+      font-weight: 700;
+      color: #e9e1dd;
+      line-height: 1.1;
+      margin-bottom: 20px;
+    }
+
+    .listicle-desc {
+      font-family: 'Manrope', sans-serif;
+      font-size: 1.05rem;
+      line-height: 1.8;
+      color: rgba(208, 196, 190, 0.85);
+      margin-bottom: 32px;
+    }
+
+    .listicle-divider {
+      height: 1px;
+      width: 100%;
+      background: rgba(77, 69, 64, 0.15);
+    }
+
+    /* Image + text layout for item 4 */
+    .listicle-media-row {
+      display: flex;
+      gap: 48px;
+      align-items: center;
+    }
+
+    .listicle-media-img {
+      flex: 1;
+      border-radius: 12px;
+      overflow: hidden;
+      aspect-ratio: 1;
+      box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5);
+    }
+
+    .listicle-media-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .listicle-media-text {
+      flex: 1;
+    }
+
+    .listicle-media-text .listicle-num {
+      font-size: 4rem;
+      margin-bottom: 12px;
+    }
+
+    /* ─── CTA — Liquid Glass Card ─── */
+    .listicle-cta-section {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 40px 40px 120px;
+    }
+
+    .listicle-cta {
+      position: relative;
+      border-radius: 12px;
+      background: rgba(30, 27, 25, 0.8);
+      border: 1px solid rgba(77, 69, 64, 0.1);
+      padding: 80px;
+      overflow: hidden;
+    }
+
+    .listicle-cta::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 33%;
+      height: 100%;
+      opacity: 0.1;
+      background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBGvi86YuaWVmOG9myxKiWwDW7O2V51TAKogIM1cdtzebuOgO_oGKHeKBsSPSUDIB4mf7Cwtx3PdW6dBlraR8f0mBRffRt_16JURKWsB0Gra6a8JZ4aR079bKxIHkD1G1Mr3Hi_UG_PDeTl_sx_e8wZmYN3NTlzoDTtydmoSIy2BsyB2tHoMFu_dV7oZt6QTPYHL5SMY5nMLD8h9Q8TnCEjuQBHDWrsxWKZJ2n96Q06tJklbIcDRf4lHiRnST3tktUMGRUeD9zq9gnE');
+      background-size: cover;
+      background-position: center;
+      filter: grayscale(100%);
+      transition: filter 0.7s ease;
+      pointer-events: none;
+    }
+
+    .listicle-cta:hover::before {
+      filter: grayscale(0%);
+    }
+
+    .cta-inner {
+      position: relative;
+      z-index: 1;
+      max-width: 600px;
+    }
+
+    .cta-title {
+      font-family: 'Epilogue', sans-serif;
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      font-weight: 900;
+      color: #e9e1dd;
+      line-height: 1;
+      letter-spacing: -2px;
+      margin-bottom: 24px;
+    }
+
+    .cta-desc {
+      font-family: 'Manrope', sans-serif;
+      font-size: 1.15rem;
+      line-height: 1.7;
+      color: rgba(208, 196, 190, 0.85);
+      font-weight: 300;
+      margin-bottom: 40px;
+    }
+
+    .cta-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .cta-btn {
+      padding: 18px 40px;
+      font-family: 'Epilogue', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .cta-btn-fill {
+      background: #e3c19c;
+      color: #412c12;
+    }
+
+    .cta-btn-fill:hover {
+      background: #fff;
+    }
+
+    .cta-btn-outline {
+      background: transparent;
+      color: #e3c19c;
+      border: 1px solid rgba(77, 69, 64, 0.3);
+    }
+
+    .cta-btn-outline:hover {
+      border-color: #e3c19c;
+    }
+
+    /* ─── Responsive ─── */
+    @media (max-width: 768px) {
+      .listicle-row,
+      .listicle-row.reverse {
+        flex-direction: column;
+        gap: 0;
+      }
+
+      .listicle-num {
+        font-size: 5rem;
+      }
+
+      .listicle-text {
+        padding-top: 0;
+      }
+
+      .listicle-media-row {
+        flex-direction: column;
+        gap: 32px;
+      }
+
+      .listicle-hero-content {
+        padding: 0 24px;
+      }
+
+      .listicle-headline {
+        letter-spacing: -1px;
+      }
+
+      .listicle-cta {
+        padding: 48px 32px;
+      }
+
+      .listicle-cta::before {
+        display: none;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Custom Cursor -->
+  <div id="cursor-dot"></div>
+  <div id="cursor-ring"></div>
+
+  <header>
+    <div class="logo">Brewverse</div>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="products.html">Products</a>
+      <a href="persona.html">Customer Persona</a>
+      <a href="content-calendar.html">Content Calendar</a>
+      <a href="creative-portfolio.html" aria-current="page">Creative Portfolio</a>
+      <a href="about.html">About</a>
+    </nav>
+  </header>
+
+  <section class="section">
+
+    <div class="sub-nav-container gsap-reveal">
+      <a href="creative-portfolio.html" class="sub-nav-item">PRESS RELEASE</a>
+      <a href="flyer.html" class="sub-nav-item">BRAND FLYER</a>
+      <a href="articles.html" class="sub-nav-item">ARTICLES</a>
+      <a href="listicle.html" class="sub-nav-item active">LISTICLES</a>
+      <a href="competitor-analysis.html" class="sub-nav-item">COMPETITOR ANALYSIS</a>
+      <a href="case-studies.html" class="sub-nav-item">CASE STUDIES</a>
+      <a href="tutorial-article.html" class="sub-nav-item">TUTORIAL ARTICLE</a>
+      <a href="#" class="sub-nav-item">OPINION PIECES</a>
+      <a href="newsletters.html" class="sub-nav-item">NEWSLETTERS</a>
+    </div>
+
+    <!-- ═══ Hero ═══ -->
+    <div class="listicle-hero" id="listicleHero">
+      <div class="listicle-hero-bg">
+        <img
+          src="https://lh3.googleusercontent.com/aida-public/AB6AXuAHBaS9FBkfaTppbhvoBlQoXAIIxnUvwciRiDB6t2Z6nBAteEVPfkSeFB8DgWFLj5yciOhkqXsuRvaWWbAGF6hD_JVNmREYk9VQg2Jj63OZnRyrtJ5T61xnlOLx_Wh46sMWpDOT4j6b8dF9BTZnYc3HPeHtKPS8xzODCNQ7ZVbgiiXQMSyJLFVyHpg0xssPUe0J2dXUPlGoekL5MBR_q8ZX7K8V2uQiJrdh_EAKM8vszTvADj9ZStm9QGNtvRGKzPvuuWOeQuJBE5_O"
+          alt="Dramatic cinematic macro shot of steam rising from freshly brewed coffee">
+      </div>
+      <div class="listicle-hero-gradient"></div>
+      <div class="listicle-hero-content">
+        <span class="listicle-kicker gsap-reveal">Editorial • Issue 012</span>
+        <h1 class="listicle-headline gsap-reveal">7 Reasons Your Morning<br>Cup Is <em>Lying</em> to You.</h1>
+        <p class="listicle-lead gsap-reveal">
+          Everything India's instant coffee industry doesn't want you to figure out — and what to do about it.
+        </p>
+        <div class="gsap-reveal">
+          <span class="material-symbols-outlined hero-scroll-hint">expand_more</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ Listicle Content ═══ -->
+    <div class="listicle-body">
+
+      <!-- 01 -->
+      <article class="listicle-article gsap-reveal">
+        <div class="listicle-row">
+          <div class="listicle-num">01</div>
+          <div class="listicle-text">
+            <span class="listicle-badge badge-primary">The Preservation Lie</span>
+            <h2 class="listicle-title">Instant Isn't "Fresh" – It's Processed Debris</h2>
+            <p class="listicle-desc">
+              Most commercial instant coffee brands rely on freeze-drying technology that strips the bean of its natural
+              essential oils. What you're drinking isn't coffee; it's the ghost of a bean, resurrected with artificial
+              acidity.
+            </p>
+            <div class="listicle-divider"></div>
+          </div>
+        </div>
+      </article>
+
+      <!-- 02 -->
+      <article class="listicle-article gsap-reveal">
+        <div class="listicle-row reverse">
+          <div class="listicle-num">02</div>
+          <div class="listicle-text">
+            <span class="listicle-badge badge-secondary">Origin Obscurity</span>
+            <h2 class="listicle-title">The "Single Origin" Shell Game</h2>
+            <p class="listicle-desc">
+              Mass producers often blend inferior Robusta beans with high-grade Arabica to cut costs, masking the bitter
+              finish with heavy roasting profiles. True transparency means knowing the specific farm, not just the
+              country.
+            </p>
+            <div class="listicle-divider"></div>
+          </div>
+        </div>
+      </article>
+
+      <!-- 03 -->
+      <article class="listicle-article gsap-reveal">
+        <div class="listicle-row">
+          <div class="listicle-num">03</div>
+          <div class="listicle-text">
+            <span class="listicle-badge badge-tertiary">Roasting Ethics</span>
+            <h2 class="listicle-title">The Charred Cover-Up</h2>
+            <p class="listicle-desc">
+              A dark roast shouldn't taste like ash. Large-scale roasters push temperatures too high to mask defects in
+              low-quality beans, creating a uniform, burnt flavor profile that obscures the unique terroir of the coffee.
+            </p>
+            <div class="listicle-divider"></div>
+          </div>
+        </div>
+      </article>
+
+      <!-- 04 — Image variant -->
+      <article class="listicle-article gsap-reveal">
+        <div class="listicle-media-row">
+          <div class="listicle-media-img">
+            <img
+              src="https://lh3.googleusercontent.com/aida-public/AB6AXuBoU27ye4RrsKP_FC4U1h7kO8XEQaupSAjiySfvXBVRp6r9Z55ax9Wx-SotLTFYOR58ZyvfQKdKB1Oclz4XiTMG7mV6GtIgRegS8j5vYIujPaWYJsXo3KozgEIG15I1TdvWV_Pf_8YSuTrIm5zIIVbNKCDYxA18cZ2pPnnlXR07jVs2eSuX-KEaJGAuHeQET_yKvzw4GU5TmvH-_Poz61HsmDAWyxS89hGi-W-ShJp7tyRzxxrCjkKXLUAl29BQXWFFMV71aCMrTigm"
+              alt="Extreme close up of coffee grounds blooming during a pour over brew process">
+          </div>
+          <div class="listicle-media-text">
+            <div class="listicle-num">04</div>
+            <span class="listicle-badge badge-primary">Bloom Secrets</span>
+            <h2 class="listicle-title">If it doesn't bloom, it's dead.</h2>
+            <p class="listicle-desc">
+              The "bloom" is the release of CO2 when hot water hits fresh grounds. If your morning coffee remains flat
+              and static, it's a sign the beans were roasted months or even years ago.
+            </p>
+          </div>
+        </div>
+      </article>
+
+      <!-- 05 -->
+      <article class="listicle-article gsap-reveal">
+        <div class="listicle-row">
+          <div class="listicle-num">05</div>
+          <div class="listicle-text">
+            <span class="listicle-badge badge-secondary">Shelf Life Deception</span>
+            <h2 class="listicle-title">Oxygen: The Silent Thief</h2>
+            <p class="listicle-desc">
+              Pre-ground coffee loses up to 60% of its aroma within 15 minutes of being exposed to air. Commercial bags
+              on supermarket shelves have often been oxidized for weeks before they reach your kitchen.
+            </p>
+            <div class="listicle-divider"></div>
+          </div>
+        </div>
+      </article>
+
+      <!-- 06 -->
+      <article class="listicle-article gsap-reveal">
+        <div class="listicle-row reverse">
+          <div class="listicle-num">06</div>
+          <div class="listicle-text">
+            <span class="listicle-badge badge-primary">The Water Myth</span>
+            <h2 class="listicle-title">Boiling Water is Killing the Soul</h2>
+            <p class="listicle-desc">
+              Pouring 100°C water directly onto coffee grounds scours the delicate flavor notes, leaving only the
+              bitter, harsh chemical compounds. The sommelier approach requires a precise 92-96°C range.
+            </p>
+            <div class="listicle-divider"></div>
+          </div>
+        </div>
+      </article>
+
+      <!-- 07 -->
+      <article class="listicle-article gsap-reveal">
+        <div class="listicle-row">
+          <div class="listicle-num">07</div>
+          <div class="listicle-text">
+            <span class="listicle-badge badge-tertiary">The Grinder Gap</span>
+            <h2 class="listicle-title">Blade Grinders are Sensory Sabotage</h2>
+            <p class="listicle-desc">
+              Blade grinders smash beans into uneven chunks, causing uneven extraction. A burr grinder—the tool of the
+              sommelier—crushes beans with surgical precision to unlock the hidden sugar browning notes.
+            </p>
+            <div class="listicle-divider"></div>
+          </div>
+        </div>
+      </article>
+
+    </div>
+
+    <!-- ═══ CTA ═══ -->
+    <div class="listicle-cta-section">
+      <div class="listicle-cta gsap-reveal">
+        <div class="cta-inner">
+          <h2 class="cta-title">This month at Brewverse.</h2>
+          <p class="cta-desc">
+            Don't settle for lies. Join our collective of modern sommeliers and rediscover the ritual of a perfect pour.
+            Our curated monthly subscription brings the lab to your doorstep.
+          </p>
+          <div class="cta-actions">
+            <button class="cta-btn cta-btn-fill">Join the Ritual</button>
+            <button class="cta-btn cta-btn-outline">Explore The Lab</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <div class="footer-logo">Brewverse</div>
+        <p class="footer-copy">© 2026 Brewverse Coffee. The Modern Sommelier Experience.</p>
+      </div>
+      <div class="footer-links">
+        <a href="#">Instagram</a>
+        <a href="#">TikTok</a>
+        <a href="#">Twitter</a>
+        <a href="#">Privacy</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+
+</html>

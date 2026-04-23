@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Brewverse | Editorial — The Philosophy of the Pour</title>
+  <meta name="description" content="An editorial deep-dive into the art and philosophy of the pour-over — terroir, extraction, and the mindfulness of coffee.">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Manrope:wght@400;500;700&family=Epilogue:wght@300;400;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script src="https://unpkg.com/@studio-freight/lenis@1.0.39/dist/lenis.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <style>
+    /* Sub Navigation */
+    .sub-nav-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 32px;
+      margin: 0 auto;
+      max-width: 100%;
+      padding: 20px 40px;
+      position: sticky;
+      top: 68px;
+      z-index: 100;
+      background: rgba(26, 18, 11, 0.85);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(255, 183, 133, 0.06);
+      margin-bottom: 40px;
+    }
+
+    .sub-nav-item {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: rgba(219, 193, 178, 0.4);
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .sub-nav-item:hover,
+    .sub-nav-item.active {
+      color: #e9e1dd;
+    }
+
+    /* ─── Article container ─── */
+    .article-container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 40px;
+    }
+
+    /* ─── Hero Banner ─── */
+    .article-hero {
+      position: relative;
+      height: 520px;
+      border-radius: 16px;
+      overflow: hidden;
+      margin-bottom: 64px;
+      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6);
+    }
+
+    .article-hero img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.45;
+      mix-blend-mode: luminosity;
+    }
+
+    .article-hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, transparent, rgba(22, 19, 17, 0.6), #161311);
+    }
+
+    .article-hero-content {
+      position: absolute;
+      bottom: 60px;
+      left: 0;
+      right: 0;
+      text-align: center;
+      z-index: 2;
+      padding: 0 32px;
+    }
+
+    .article-kicker {
+      font-family: 'Manrope', sans-serif;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.35em;
+      color: #e3c19c;
+      margin-bottom: 20px;
+    }
+
+    .article-headline {
+      font-family: 'Epilogue', sans-serif;
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
+      font-weight: 900;
+      color: #e9e1dd;
+      line-height: 0.92;
+      letter-spacing: -2px;
+      margin-bottom: 24px;
+    }
+
+    .article-meta {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      font-family: 'Manrope', sans-serif;
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: rgba(208, 196, 190, 0.6);
+    }
+
+    .article-meta-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: #ffb694;
+    }
+
+    /* ─── Drop cap ─── */
+    .drop-cap::first-letter {
+      float: left;
+      font-size: 5rem;
+      line-height: 0.82;
+      padding-top: 0.4rem;
+      padding-right: 0.6rem;
+      font-family: 'Epilogue', sans-serif;
+      font-weight: 800;
+      color: #e3c19c;
+    }
+
+    /* ─── Text body ─── */
+    .article-body {
+      max-width: 720px;
+      margin: 0 auto;
+    }
+
+    .article-lead {
+      font-family: 'Manrope', sans-serif;
+      font-size: 1.35rem;
+      font-weight: 300;
+      line-height: 1.75;
+      color: rgba(208, 196, 190, 0.85);
+      font-style: italic;
+      margin-bottom: 80px;
+    }
+
+    .article-section-number {
+      font-family: 'Epilogue', sans-serif;
+      font-size: 2.5rem;
+      font-weight: 800;
+      color: #e3c19c;
+      margin-bottom: 8px;
+    }
+
+    .article-section-title {
+      font-family: 'Epilogue', sans-serif;
+      font-size: clamp(1.6rem, 3vw, 2.2rem);
+      font-weight: 700;
+      color: #e9e1dd;
+      letter-spacing: -0.5px;
+      margin-bottom: 28px;
+    }
+
+    .article-text {
+      font-family: 'Manrope', sans-serif;
+      font-size: 1.05rem;
+      line-height: 1.85;
+      color: rgba(208, 196, 190, 0.85);
+      margin-bottom: 24px;
+    }
+
+    /* ─── Inline image ─── */
+    .article-inline-img {
+      width: 100%;
+      border-radius: 12px;
+      overflow: hidden;
+      margin: 48px 0;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+    }
+
+    .article-inline-img img {
+      width: 100%;
+      height: 400px;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* ─── Pull quote ─── */
+    .article-quote {
+      border-top: 1px solid rgba(77, 69, 64, 0.2);
+      border-bottom: 1px solid rgba(77, 69, 64, 0.2);
+      padding: 80px 0;
+      margin: 80px 0;
+      text-align: center;
+    }
+
+    .article-quote-icon {
+      font-size: 3rem;
+      color: #ffb77d;
+      margin-bottom: 28px;
+    }
+
+    .article-quote-text {
+      font-family: 'Epilogue', sans-serif;
+      font-size: clamp(1.5rem, 3.5vw, 2.5rem);
+      font-weight: 300;
+      font-style: italic;
+      color: #e3c19c;
+      line-height: 1.3;
+      max-width: 700px;
+      margin: 0 auto 24px;
+    }
+
+    .article-quote-source {
+      font-family: 'Manrope', sans-serif;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      color: rgba(179, 115, 84, 0.8);
+    }
+
+    /* ─── Bento Grid ─── */
+    .bento-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      margin: 64px 0 80px;
+    }
+
+    .bento-card {
+      background: #1e1b19;
+      border-radius: 12px;
+      padding: 36px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      aspect-ratio: 1;
+      border: 1px solid rgba(77, 69, 64, 0.08);
+      transition: background 0.3s ease;
+    }
+
+    .bento-card:hover {
+      background: #2d2927;
+    }
+
+    .bento-icon {
+      font-size: 2rem;
+      margin-bottom: 16px;
+    }
+
+    .bento-icon.amber { color: #ffb77d; }
+    .bento-icon.gold { color: #e3c19c; }
+
+    .bento-title {
+      font-family: 'Epilogue', sans-serif;
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: #e9e1dd;
+      margin-bottom: 8px;
+    }
+
+    .bento-desc {
+      font-family: 'Manrope', sans-serif;
+      font-size: 0.85rem;
+      color: rgba(208, 196, 190, 0.7);
+      line-height: 1.6;
+    }
+
+    @media (max-width: 768px) {
+      .bento-grid {
+        grid-template-columns: 1fr;
+      }
+      .bento-card { aspect-ratio: auto; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Custom Cursor -->
+  <div id="cursor-dot"></div>
+  <div id="cursor-ring"></div>
+
+  <header>
+    <div class="logo">Brewverse</div>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="products.html">Products</a>
+      <a href="persona.html">Customer Persona</a>
+      <a href="content-calendar.html">Content Calendar</a>
+      <a href="creative-portfolio.html" aria-current="page">Creative Portfolio</a>
+      <a href="about.html">About</a>
+    </nav>
+  </header>
+
+  <section class="section">
+
+    <div class="sub-nav-container gsap-reveal">
+      <a href="creative-portfolio.html" class="sub-nav-item">PRESS RELEASE</a>
+      <a href="flyer.html" class="sub-nav-item">BRAND FLYER</a>
+      <a href="articles.html" class="sub-nav-item active">ARTICLES</a>
+      <a href="listicle.html" class="sub-nav-item">LISTICLES</a>
+      <a href="competitor-analysis.html" class="sub-nav-item">COMPETITOR ANALYSIS</a>
+      <a href="case-studies.html" class="sub-nav-item">CASE STUDIES</a>
+      <a href="tutorial-article.html" class="sub-nav-item">TUTORIAL ARTICLE</a>
+      <a href="#" class="sub-nav-item">OPINION PIECES</a>
+      <a href="newsletters.html" class="sub-nav-item">NEWSLETTERS</a>
+    </div>
+
+    <div class="article-container">
+
+      <!-- Hero Banner -->
+      <div class="article-hero gsap-reveal">
+        <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuB7L7PJlkMseY7yv4ThROOGc-DXXF4hu59DeOBron1k554vROmLW26pK8LBPIEgBr9Mvs7cqadwKRlQy6gO3qMbMjoJ3XUq0IZRhG7nvQwxaOKssAHlUqoDCsGuOakmodS9XyHlivtD_7cSGKY3PqYzKbJ0bPJESWWvgMutd2VgekEz4Z5PwzmgZ5WTXQdGhE2UDsp1vZFzFULbjFCx3Uv0u4WBk-IxzT1jcYmAhbkx6rCcf454y6Juamd1lEAbSCD_s0ydGqhLUwUj" alt="Coffee beans hero">
+        <div class="article-hero-overlay"></div>
+        <div class="article-hero-content">
+          <div class="article-kicker">Editorial Volume IV</div>
+          <h1 class="article-headline">The Philosophy<br>of the Pour</h1>
+          <div class="article-meta">
+            <span>By Brewverse Editorial</span>
+            <div class="article-meta-dot"></div>
+            <span>12 Min Read</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Article Body -->
+      <div class="article-body">
+
+        <!-- Lead Paragraph -->
+        <p class="article-lead drop-cap gsap-reveal">
+          Terroir is a silent architect. It resides in the volcanic soils of Ethiopia and the misty highlands of Panama, dictating the very soul of the bean before a single flame ever touches it. To understand coffee is to understand the dialogue between earth and atmosphere.
+        </p>
+
+        <!-- Section 01 -->
+        <div class="gsap-reveal">
+          <div class="article-section-number">01</div>
+          <h2 class="article-section-title">The Sanctity of Origin</h2>
+          <p class="article-text">
+            In the world of the sommelier, we often speak of the "voice of the land." In coffee, this voice is frequently muffled by the roar of the dark roast. Yet, for those who seek the light, the terroir provides a symphony of complexity. It is the mineral composition of the soil, the steepness of the incline, and the exact proximity to the equator.
+          </p>
+          <p class="article-text">
+            When we pour, we are not merely hydrating grinds; we are releasing the history of a specific hillside. The philosophy of the pour requires a pause — a moment of reverence for the thousands of hands and years of geological shifts that culminated in this singular extraction.
+          </p>
+        </div>
+
+        <!-- Inline Image -->
+        <div class="article-inline-img gsap-reveal">
+          <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDFgJWc_BaIaPJb5BIEzSKR5ZVWRI15rH02q51T2HDBUbPQUhi8C_s79pXVouyw6Q0EQsJuRywo8U8rMPsulUOX2deBxugbewS18fBwLpKlQrySK1rH8T9BFFjRqUb5MtfG7ApRsRP62AhbIqGt1gnM5U4Iib1g5mDhtQ58XNoyYQ6iDli8r8sjs7cGBllcXZ1TKEbV0dNQuIUNM0dXzwvBX7nxWmBnZLtGI-MUCh35EjWOXcKsrrt2vS8L0Y3Po_ihIoTi9MQtfa2O" alt="Hand pouring hot water into a ceramic dripper">
+        </div>
+
+        <!-- Pull Quote -->
+        <div class="article-quote gsap-reveal">
+          <div class="article-quote-icon">❝</div>
+          <p class="article-quote-text">"Precision is the bridge between the bean's potential and the palate's epiphany."</p>
+          <div class="article-quote-source">— The Sommelier's Creed</div>
+        </div>
+
+        <!-- Section 02: Elements of Extraction -->
+        <div class="gsap-reveal">
+          <div class="article-section-number">02</div>
+          <h2 class="article-section-title">Elements of Extraction</h2>
+        </div>
+
+        <div class="bento-grid">
+          <div class="bento-card gsap-reveal">
+            <div class="bento-icon amber">🌡️</div>
+            <div>
+              <div class="bento-title">Thermal Stability</div>
+              <div class="bento-desc">The delicate dance of 92°C to 96°C to preserve enzymatic volatile compounds.</div>
+            </div>
+          </div>
+          <div class="bento-card gsap-reveal">
+            <div class="bento-icon gold">⏱️</div>
+            <div>
+              <div class="bento-title">Temporal Flow</div>
+              <div class="bento-desc">Understanding the bloom — the degassing phase that prepares the bed for true saturation.</div>
+            </div>
+          </div>
+          <div class="bento-card gsap-reveal">
+            <div class="bento-icon amber">⚖️</div>
+            <div>
+              <div class="bento-title">Precise Ratio</div>
+              <div class="bento-desc">The 1:16 golden ratio, an architectural foundation for sensory clarity.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Section 03 -->
+        <div class="gsap-reveal">
+          <div class="article-section-number">03</div>
+          <h2 class="article-section-title">The Act of Presence</h2>
+          <p class="article-text">
+            Deep focus reading, much like a slow pour-over, cannot be rushed. It requires an environment of stillness. As the modern world accelerates toward automation and instant gratification, the ritual of the manual brew stands as a defiant act of presence.
+          </p>
+        </div>
+
+        <!-- Second Inline Image -->
+        <div class="article-inline-img gsap-reveal">
+          <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCOva3ktZkH9vDjk-q_xLfO8eJAkAVlj7SozItQwCKtZ9Ha6_RvggrO6F4bc6SjIDz9pxEhcVEHAw4Bu0ufHpxCfS8Sfd8go16jNBALR5scrsWdnzxbu53xQe38EfFCJwuZXjkggkQQTXrRoBjPMYRaLI1QmoJrCUh9TQs7snFUESTN_DTXz7RJhd21q3GOvjn2LIbQjclljnasNPB9YIvkw_mFfMchUObEof4L727H-ChNbbc92z1y-pWznj1FHgBlzH_tzHoMPIX_" alt="Minimalist espresso bar interior">
+        </div>
+
+        <div class="gsap-reveal">
+          <p class="article-text">
+            Ultimately, the philosophy of the pour is a philosophy of mindfulness. It is about acknowledging that complexity is not something to be simplified, but something to be experienced. When we taste the notes of jasmine, stone fruit, or dark chocolate, we are not tasting additives; we are tasting the truth of a place and a time.
+          </p>
+          <p class="article-text" style="margin-bottom: 100px;">
+            In the quiet hours of the morning, when the only sound is the rhythmic hiss of the kettle and the slow drip of the extraction, we find ourselves connected to something larger. We find the Brewverse.
+          </p>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <div class="footer-logo">Brewverse</div>
+        <p class="footer-copy">© 2026 Brewverse Coffee. The Modern Sommelier Experience.</p>
+      </div>
+      <div class="footer-links">
+        <a href="#">Instagram</a>
+        <a href="#">TikTok</a>
+        <a href="#">Twitter</a>
+        <a href="#">Privacy</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+
+</html>

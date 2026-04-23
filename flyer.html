@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Brewverse | Brand Flyer</title>
+  <meta name="description" content="Brewverse – The Modern Sommelier Experience. Discover our signature blends.">
+  
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800;900&family=Manrope:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="style.css">
+  
+  <!-- Smooth Scroll & GSAP -->
+  <script src="https://unpkg.com/@studio-freight/lenis@1.0.39/dist/lenis.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+  <style>
+    /* ═══════════════════════════════════════════════════════════
+       BRAND FLYER — Premium Bento Card
+       ═══════════════════════════════════════════════════════════ */
+
+    /* Sub Navigation */
+    .sub-nav-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 32px;
+      margin: 0 auto;
+      max-width: 100%;
+      padding: 20px 40px;
+      position: sticky;
+      top: 68px;
+      z-index: 100;
+      background: rgba(26, 18, 11, 0.85);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(255, 183, 133, 0.06);
+      margin-bottom: 40px;
+    }
+    .sub-nav-item {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: rgba(219, 193, 178, 0.4);
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+    .sub-nav-item:hover, .sub-nav-item.active {
+      color: #e9e1dd;
+    }
+
+
+    .flyer-wrapper {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+      background: #161311;
+      padding: 80px 24px;
+    }
+
+    /* Ambient Blobs */
+    .ambient-blob {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(140px);
+      pointer-events: none;
+      z-index: 0;
+    }
+    .blob-1 {
+      top: -10%;
+      left: -10%;
+      width: 50vw;
+      height: 50vw;
+      background: rgba(39, 22, 1, 0.35);
+    }
+    .blob-2 {
+      bottom: -10%;
+      right: -10%;
+      width: 40vw;
+      height: 40vw;
+      background: rgba(217, 119, 7, 0.12);
+    }
+
+    /* ─── Flyer Card ─────────────────────────────────────── */
+    .flyer-card {
+      position: relative;
+      z-index: 10;
+      width: 100%;
+      max-width: 1100px;
+      background: #1e1b19;
+      border-radius: 20px;
+      box-shadow: 0 40px 100px -20px rgba(0, 0, 0, 0.5);
+      border: 1px solid rgba(255, 183, 133, 0.06);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    @media (min-width: 900px) {
+      .flyer-card {
+        flex-direction: row;
+        min-height: 580px;
+      }
+    }
+
+    .flyer-col {
+      padding: 44px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+    }
+
+    .flyer-side-col {
+      flex: 1;
+      z-index: 10;
+    }
+
+    /* ─── Center Column ──────────────────────────────────── */
+    .flyer-center-col {
+      flex: 1.15;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 44px 20px;
+      z-index: 5;
+    }
+
+
+
+    /* ─── Typography ─────────────────────────────────────── */
+    .flyer-label {
+      font-family: 'Manrope', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.3em;
+      color: #e3c19c;
+      margin-bottom: 20px;
+    }
+    .flyer-h2 {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 2rem;
+      font-weight: 800;
+      color: #e9e1dd;
+      line-height: 1.1;
+      margin-bottom: 28px;
+    }
+
+    /* ─── Blend List ──────────────────────────────────────── */
+    .blend-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+    }
+    .blend-item { cursor: default; }
+    .blend-item-title {
+      font-family: 'Manrope', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: #ffb77d;
+      margin-bottom: 6px;
+      transition: color 0.3s ease;
+    }
+    .blend-item:hover .blend-item-title { color: #e3c19c; }
+    .blend-item-desc {
+      font-family: 'Manrope', sans-serif;
+      font-size: 0.88rem;
+      color: #d0c4be;
+      line-height: 1.6;
+    }
+    .flyer-est {
+      font-family: 'Manrope', sans-serif;
+      font-size: 0.6rem;
+      text-transform: uppercase;
+      letter-spacing: 0.25em;
+      color: rgba(77, 69, 64, 0.7);
+      margin-top: 40px;
+    }
+    @media (max-width: 899px) {
+      .flyer-est { display: none; }
+    }
+
+    /* ─── Center: Headline + Image ────────────────────────── */
+    .center-headline-container {
+      position: absolute;
+      top: 32px;
+      left: 0;
+      width: 100%;
+      text-align: center;
+      z-index: 20;
+    }
+    .center-headline {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: clamp(2.2rem, 4.5vw, 3.5rem);
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: -2px;
+      color: #e9e1dd;
+      line-height: 0.9;
+      text-shadow: 0 12px 30px rgba(0,0,0,0.4);
+    }
+
+    .flyer-image-container {
+      position: relative;
+      z-index: 10;
+      width: 160%;
+      flex-shrink: 0;
+      max-width: none;
+      margin-top: 20px;
+      display: flex;
+      justify-content: center;
+      perspective: 1200px;
+    }
+    .flyer-image {
+      width: 100%;
+      height: auto;
+      filter: drop-shadow(0 30px 50px rgba(0, 0, 0, 0.5));
+    }
+
+    .flyer-badge {
+      position: relative;
+      z-index: 30;
+      background: #d97707;
+      color: #4d2600;
+      padding: 10px 22px;
+      border-radius: 100px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 0.78rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      box-shadow: 0 8px 24px rgba(217, 119, 7, 0.25);
+      margin-top: 20px;
+    }
+    .flyer-badge .material-symbols-outlined {
+      font-size: 1.1rem;
+      font-variation-settings: 'FILL' 1;
+    }
+
+    /* ─── Right Column ────────────────────────────────────── */
+    .flyer-right-col { text-align: right; }
+    .why-list {
+      display: flex;
+      flex-direction: column;
+      gap: 36px;
+    }
+    .why-item {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 10px;
+    }
+    .why-icon { color: #ffb77d; font-size: 1.8rem; }
+    .why-title {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: #e9e1dd;
+    }
+    .why-desc {
+      font-family: 'Manrope', sans-serif;
+      font-size: 0.88rem;
+      color: #d0c4be;
+      line-height: 1.6;
+      max-width: 220px;
+    }
+
+    /* Decorative corners */
+    .deco-tr {
+      position: absolute; top: 0; right: 0;
+      width: 120px; height: 120px;
+      background: rgba(217, 119, 7, 0.03);
+      border-bottom-left-radius: 100%;
+      pointer-events: none;
+    }
+    .deco-bl {
+      position: absolute; bottom: 0; left: 0;
+      width: 160px; height: 160px;
+      background: rgba(39, 22, 1, 0.05);
+      border-top-right-radius: 100%;
+      pointer-events: none;
+    }
+
+    /* ─── Responsive ─────────────────────────────────────── */
+    @media (max-width: 899px) {
+      .flyer-card { padding: 24px; gap: 36px; }
+      .flyer-col { padding: 0; }
+      .flyer-right-col { text-align: left; }
+      .why-item { align-items: flex-start; }
+      .center-headline { font-size: 2.8rem; }
+      .flyer-label-spacer { display: none; }
+    }
+
+    /* ─── GSAP initial hide ──────────────────────────────── */
+    .fl-anim { opacity: 0; visibility: hidden; }
+  </style>
+</head>
+<body>
+
+<!-- Custom Cursor -->
+<div id="cursor-dot"></div>
+<div id="cursor-ring"></div>
+
+<header>
+  <div class="logo">Brewverse</div>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="products.html">Products</a>
+    <a href="persona.html">Customer Persona</a>
+    <a href="content-calendar.html">Content Calendar</a>
+    <a href="creative-portfolio.html" aria-current="page">Creative Portfolio</a>
+    <a href="about.html">About</a>
+  </nav>
+</header>
+
+<section class="section">
+  <div class="sub-nav-container gsap-reveal">
+    <a href="creative-portfolio.html" class="sub-nav-item">PRESS RELEASE</a>
+    <a href="flyer.html" class="sub-nav-item active">BRAND FLYER</a>
+    <a href="articles.html" class="sub-nav-item">ARTICLES</a>
+    <a href="listicle.html" class="sub-nav-item">LISTICLES</a>
+    <a href="competitor-analysis.html" class="sub-nav-item">COMPETITOR ANALYSIS</a>
+    <a href="case-studies.html" class="sub-nav-item">CASE STUDIES</a>
+    <a href="tutorial-article.html" class="sub-nav-item">TUTORIAL ARTICLE</a>
+    <a href="#" class="sub-nav-item">OPINION PIECES</a>
+    <a href="newsletters.html" class="sub-nav-item">NEWSLETTERS</a>
+  </div>
+</section>
+
+<main class="flyer-wrapper">
+  <!-- Ambient Blobs -->
+  <div class="ambient-blob blob-1"></div>
+  <div class="ambient-blob blob-2"></div>
+
+  <!-- Flyer Card -->
+  <div class="flyer-card fl-anim" id="flyerCard">
+
+    <!-- Left Column: Blends -->
+    <div class="flyer-col flyer-side-col">
+      <div>
+        <span class="flyer-label fl-anim">The Curation</span>
+        <h2 class="flyer-h2 fl-anim">Our Signature<br>Blends</h2>
+        <ul class="blend-list">
+          <li class="blend-item fl-anim">
+            <h3 class="blend-item-title">Midnight Ethos</h3>
+            <p class="blend-item-desc">Deep, dark charcoal notes with a velvet-smooth finish.</p>
+          </li>
+          <li class="blend-item fl-anim">
+            <h3 class="blend-item-title">Amber Horizon</h3>
+            <p class="blend-item-desc">A golden medium roast featuring hints of caramel and spiced oak.</p>
+          </li>
+          <li class="blend-item fl-anim">
+            <h3 class="blend-item-title">Floral Genesis</h3>
+            <p class="blend-item-desc">A light, architectural roast with jasmine and citrus acidity.</p>
+          </li>
+        </ul>
+      </div>
+      <div class="flyer-est fl-anim">Est. 2026 / Artisanal Brew Standards</div>
+    </div>
+
+    <!-- Center Column: Hero -->
+    <div class="flyer-col flyer-center-col">
+
+      <div class="center-headline-container">
+        <h1 class="center-headline fl-anim" id="flyerHeadline">Brewverse</h1>
+      </div>
+
+      <div class="flyer-image-container fl-anim" id="flyerImg">
+        <img src="assets/coffeenobg.png" alt="Brewverse Premium Coffee" class="flyer-image">
+      </div>
+
+      <div class="flyer-badge fl-anim" id="flyerBadge">
+        <span class="material-symbols-outlined">verified</span>
+        Sommelier Certified
+      </div>
+    </div>
+
+    <!-- Right Column: Why -->
+    <div class="flyer-col flyer-side-col flyer-right-col">
+      <div>
+        <span class="flyer-label flyer-label-spacer fl-anim">&nbsp;</span>
+        <h2 class="flyer-h2 fl-anim">Why<br>Brewverse?</h2>
+        <div class="why-list">
+          <div class="why-item fl-anim">
+            <span class="material-symbols-outlined why-icon">handyman</span>
+            <h3 class="why-title">100% Artisanal</h3>
+            <p class="why-desc">Small batch roasted by masters of the dark art.</p>
+          </div>
+          <div class="why-item fl-anim">
+            <span class="material-symbols-outlined why-icon">eco</span>
+            <h3 class="why-title">Ethical Sourcing</h3>
+            <p class="why-desc">Direct-trade relationships that honor the farmer.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Decorative corners -->
+    <div class="deco-tr"></div>
+    <div class="deco-bl"></div>
+  </div>
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <div class="footer-logo">Brewverse</div>
+      <p class="footer-copy">© 2026 Brewverse Coffee. The Modern Sommelier Experience.</p>
+    </div>
+    <div class="footer-links">
+      <a href="#">Instagram</a>
+      <a href="#">TikTok</a>
+      <a href="#">Twitter</a>
+      <a href="#">Privacy</a>
+    </div>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+
+    // ─── Premium Flyer Animation ────────────────────────────
+    const card = document.getElementById('flyerCard');
+    const headline = document.getElementById('flyerHeadline');
+    const img = document.getElementById('flyerImg');
+    const badge = document.getElementById('flyerBadge');
+    if (!card) return;
+
+    // Collect animated elements
+    const leftLabel = card.querySelector('.flyer-side-col:first-child .flyer-label');
+    const leftH2 = card.querySelector('.flyer-side-col:first-child .flyer-h2');
+    const blendItems = card.querySelectorAll('.blend-item');
+    const estLine = card.querySelector('.flyer-est');
+    const rightSpacer = card.querySelector('.flyer-label-spacer');
+    const rightH2 = card.querySelector('.flyer-right-col .flyer-h2');
+    const whyItems = card.querySelectorAll('.why-item');
+
+    // Phase 1: Card fades in gently
+    const tl = gsap.timeline({ delay: 0.3 });
+
+    tl.to(card, {
+      autoAlpha: 1,
+      duration: 1.2,
+      ease: "power2.out"
+    });
+
+    // Phase 2: Headline drops in from above
+    tl.fromTo(headline, 
+      { y: -40, autoAlpha: 0 },
+      { y: 0, autoAlpha: 1, duration: 1, ease: "power3.out" },
+      "-=0.5"
+    );
+
+    // Phase 3: Coffee image sweeps in with a 3D twist (sync with headline)
+    tl.fromTo(img,
+      { y: 80, autoAlpha: 0, rotationY: -20, rotationZ: -5, scale: 0.85 },
+      { y: 0, autoAlpha: 1, rotationY: 0, rotationZ: 0, scale: 1, duration: 1.6, ease: "power3.out" },
+      "<"
+    );
+
+    // Phase 4: Badge fades in gently
+    tl.to(badge, {
+      autoAlpha: 1,
+      duration: 0.8,
+      ease: "power2.out"
+    }, "-=0.4");
+
+    // Phase 5: Left column text cascades in
+    tl.to([leftLabel, leftH2], {
+      autoAlpha: 1,
+      y: 0,
+      duration: 0.8,
+      stagger: 0.1,
+      ease: "power3.out"
+    }, "-=0.8");
+
+    // Set initial y offset for text elements
+    gsap.set([leftLabel, leftH2], { y: 20 });
+    gsap.set([rightH2], { y: 20 });
+
+    // Blend items slide in one by one from left
+    tl.fromTo(blendItems,
+      { x: -20, autoAlpha: 0 },
+      { x: 0, autoAlpha: 1, duration: 0.7, stagger: 0.12, ease: "power2.out" },
+      "-=0.5"
+    );
+
+    // Phase 6: Right column — same cascade
+    tl.to([rightSpacer, rightH2], {
+      autoAlpha: 1,
+      y: 0,
+      duration: 0.8,
+      stagger: 0.1,
+      ease: "power3.out"
+    }, "-=0.8");
+
+    tl.fromTo(whyItems,
+      { x: 20, autoAlpha: 0 },
+      { x: 0, autoAlpha: 1, duration: 0.7, stagger: 0.12, ease: "power2.out" },
+      "-=0.5"
+    );
+
+    // Phase 7: Est. line fades in last
+    tl.to(estLine, {
+      autoAlpha: 1,
+      duration: 0.6,
+      ease: "power2.out"
+    }, "-=0.3");
+
+    // Cinematic 3D continuous float (like Apple product pages)
+    tl.add(() => {
+      // Main up/down + Z tilt
+      gsap.to(img, {
+        y: -18,
+        rotationZ: 2,
+        duration: 4.5,
+        ease: "sine.inOut",
+        yoyo: true,
+        repeat: -1
+      });
+      // Desynced 3D rotations for realistic floating
+      gsap.to(img, {
+        rotationY: 10,
+        rotationX: 4,
+        scale: 1.02,
+        duration: 5.2,
+        ease: "power1.inOut",
+        yoyo: true,
+        repeat: -1
+      });
+    });
+
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Brewverse | Tutorial — Visual Masterclass</title>
+  <meta name="description" content="An immersive guide to the physics, the artistry, and the ritual of the pour-over technique.">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Manrope:wght@400;500;700&family=Epilogue:wght@300;400;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <!-- Smooth Scroll & GSAP -->
+  <script src="https://unpkg.com/@studio-freight/lenis@1.0.39/dist/lenis.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  
+  <style>
+    /* UX Pro Rules applied: Smooth transitions (150-300ms), cursor-pointer */
+    /* Sub Navigation */
+    .sub-nav-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 32px;
+      margin: 0 auto;
+      max-width: 100%;
+      padding: 20px 40px;
+      position: sticky;
+      top: 68px;
+      z-index: 100;
+      background: rgba(26, 18, 11, 0.85);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(255, 183, 133, 0.06);
+      margin-bottom: 40px;
+    }
+
+    .sub-nav-item {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: rgba(219, 193, 178, 0.4);
+      text-decoration: none;
+      transition: color 0.3s ease;
+      cursor: pointer;
+    }
+
+    .sub-nav-item:hover,
+    .sub-nav-item.active {
+      color: #e9e1dd;
+    }
+
+    /* ─── Tutorial Container ─── */
+    .tutorial-container {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 0 40px;
+    }
+
+    /* ─── Hero Banner ─── */
+    .tutorial-hero {
+      position: relative;
+      height: 70vh;
+      min-height: 500px;
+      border-radius: 16px;
+      overflow: hidden;
+      margin-bottom: 80px;
+      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6);
+      display: flex;
+      align-items: flex-end;
+      padding: 80px;
+    }
+
+    .tutorial-hero img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.4;
+      z-index: 1;
+    }
+
+    .tutorial-hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, #161311, transparent);
+      z-index: 2;
+    }
+
+    .tutorial-hero-content {
+      position: relative;
+      z-index: 3;
+      max-width: 800px;
+    }
+
+    .tutorial-kicker {
+      font-family: 'Manrope', sans-serif;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.35em;
+      color: #e3c19c;
+      margin-bottom: 16px;
+      display: block;
+    }
+
+    .tutorial-headline {
+      font-family: 'Epilogue', sans-serif;
+      font-size: clamp(3rem, 7vw, 6rem);
+      font-weight: 900;
+      color: #e9e1dd;
+      line-height: 1;
+      letter-spacing: -2px;
+      margin-bottom: 24px;
+    }
+
+    .tutorial-lead {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+
+    .tutorial-line {
+      width: 48px;
+      height: 1px;
+      background: rgba(153, 143, 137, 0.5);
+    }
+
+    .tutorial-lead p {
+      font-family: 'Manrope', sans-serif;
+      font-size: 1.25rem;
+      font-weight: 300;
+      font-style: italic;
+      color: rgba(208, 196, 190, 0.8);
+      max-width: 500px;
+      line-height: 1.6;
+    }
+
+    /* ─── Bento Grid (Essential Kit) ─── */
+    .bento-section {
+      margin-bottom: 120px;
+    }
+    
+    .bento-header {
+      margin-bottom: 60px;
+    }
+
+    .bento-header h2 {
+      font-family: 'Epilogue', sans-serif;
+      font-size: 3rem;
+      font-weight: 700;
+      color: #e3c19c;
+      letter-spacing: -1px;
+      margin-bottom: 16px;
+    }
+    
+    .bento-header-line {
+      width: 80px;
+      height: 4px;
+      background: #d97707;
+      border-radius: 2px;
+    }
+
+    .bento-grid {
+      display: grid;
+      grid-template-columns: 8fr 4fr;
+      gap: 32px;
+      min-height: 500px;
+    }
+    
+    .bento-card {
+      border-radius: 16px;
+      overflow: hidden;
+      position: relative;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      cursor: pointer;
+    }
+
+    .bento-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+    }
+
+    .bento-main {
+      background: #1e1b19;
+    }
+
+    .bento-main img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.6;
+      transition: transform 0.7s ease;
+    }
+    
+    .bento-main:hover img {
+      transform: scale(1.05);
+    }
+
+    .bento-main-content {
+      position: absolute;
+      bottom: 40px;
+      left: 40px;
+      z-index: 2;
+    }
+    
+    .bento-main-content h3 {
+      font-family: 'Epilogue', sans-serif;
+      font-size: 2rem;
+      font-weight: 700;
+      color: #e9e1dd;
+      margin-bottom: 8px;
+    }
+
+    .bento-main-content p {
+      font-family: 'Manrope', sans-serif;
+      color: rgba(208, 196, 190, 0.8);
+      max-width: 400px;
+      line-height: 1.6;
+    }
+
+    .bento-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+    }
+
+    .bento-item-1 {
+      flex: 1;
+      background: #2d2927;
+      border-radius: 16px;
+      padding: 32px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      position: relative;
+    }
+
+    .bento-item-1 .material-symbols-outlined {
+      position: absolute;
+      top: 32px;
+      right: 32px;
+      font-size: 5rem;
+      color: rgba(255,255,255,0.05);
+    }
+
+    .bento-item-2 {
+      flex: 1;
+      background: #d97707;
+      border-radius: 16px;
+      padding: 32px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      color: #432100;
+    }
+
+    .bento-item h3 {
+      font-family: 'Epilogue', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    
+    .bento-item-1 h3 { color: #e3c19c; }
+
+    .bento-item p {
+      font-family: 'Manrope', sans-serif;
+      font-size: 0.9rem;
+      line-height: 1.6;
+    }
+    
+    .bento-item-1 p { color: rgba(208, 196, 190, 0.8); }
+
+    /* ─── Step by Step Process ─── */
+    .process-section {
+      background: #100e0c;
+      padding: 120px 40px;
+      margin: 0 -40px;
+    }
+    
+    .process-header {
+      text-align: center;
+      margin-bottom: 120px;
+      position: relative;
+    }
+
+    .process-header-bg {
+      font-family: 'Epilogue', sans-serif;
+      font-size: clamp(3rem, 8vw, 6rem);
+      font-weight: 900;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.03);
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: -20px;
+    }
+
+    .process-header-title {
+      font-family: 'Epilogue', sans-serif;
+      font-size: 3rem;
+      font-weight: 700;
+      color: #e9e1dd;
+      position: relative;
+      z-index: 2;
+    }
+
+    .process-step {
+      display: flex;
+      align-items: center;
+      gap: 80px;
+      margin-bottom: 150px;
+    }
+
+    .process-step:last-child {
+      margin-bottom: 0;
+    }
+    
+    .process-step.reverse {
+      flex-direction: row-reverse;
+    }
+
+    .process-img-wrapper {
+      flex: 3;
+      position: relative;
+    }
+
+    .process-number {
+      position: absolute;
+      font-family: 'Epilogue', sans-serif;
+      font-size: 8rem;
+      font-weight: 900;
+      color: #e3c19c;
+      opacity: 0.2;
+      z-index: 0;
+    }
+
+    .process-step:not(.reverse) .process-number {
+      top: -40px;
+      left: -40px;
+    }
+    
+    .process-step.reverse .process-number {
+      top: -40px;
+      right: -40px;
+    }
+
+    .process-img-wrapper img {
+      width: 100%;
+      border-radius: 12px;
+      position: relative;
+      z-index: 1;
+      aspect-ratio: 4/5;
+      object-fit: cover;
+      box-shadow: 0 30px 60px rgba(0,0,0,0.6);
+    }
+    
+    .process-step:nth-child(4) .process-img-wrapper img {
+      aspect-ratio: 16/9;
+    }
+
+    .process-step:nth-child(4) .process-number {
+      top: -60px;
+    }
+
+    .process-content {
+      flex: 2;
+    }
+    
+    .process-phase {
+      font-family: 'Manrope', sans-serif;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      color: #ffb77d;
+      margin-bottom: 12px;
+      display: block;
+    }
+
+    .process-title {
+      font-family: 'Epilogue', sans-serif;
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: #e9e1dd;
+      margin-bottom: 24px;
+    }
+
+    .process-desc {
+      font-family: 'Manrope', sans-serif;
+      font-size: 1.1rem;
+      line-height: 1.8;
+      color: rgba(208, 196, 190, 0.85);
+      margin-bottom: 32px;
+    }
+    
+    .process-metric {
+      background: #1e1b19;
+      padding: 16px 24px;
+      border-radius: 8px;
+      display: inline-flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .process-metric .material-symbols-outlined {
+      color: #e3c19c;
+    }
+
+    .process-metric span {
+      font-family: 'Manrope', sans-serif;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      font-weight: 600;
+      color: #e3c19c;
+    }
+
+    /* ─── Glassmorphism Insight (UX Pro Rule: Stable Hover, contrast) ─── */
+    .insight-section {
+      padding: 160px 0;
+      display: flex;
+      justify-content: center;
+      margin-bottom: 80px;
+    }
+
+    .insight-card {
+      position: relative;
+      max-width: 900px;
+      width: 100%;
+      background: rgba(22, 19, 17, 0.7);
+      backdrop-filter: blur(24px);
+      border: 1px solid rgba(77, 69, 64, 0.2);
+      border-radius: 16px;
+      padding: 64px;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    .insight-card::before {
+      content: '';
+      position: absolute;
+      inset: -20px;
+      background: linear-gradient(to right, #e3c19c, #ffb77d);
+      opacity: 0.05;
+      filter: blur(40px);
+      z-index: -1;
+    }
+
+    .insight-icon {
+      position: absolute;
+      top: 0;
+      right: 0;
+      padding: 32px;
+      opacity: 0.05;
+      font-size: 12rem;
+      color: #fff;
+    }
+    
+    .insight-badge {
+      background: #d97707;
+      color: #432100;
+      padding: 8px 24px;
+      border-radius: 99px;
+      font-family: 'Manrope', sans-serif;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      font-weight: 700;
+      display: inline-block;
+      margin-bottom: 32px;
+    }
+
+    .insight-title {
+      font-family: 'Epilogue', sans-serif;
+      font-size: 3rem;
+      font-weight: 700;
+      color: #e9e1dd;
+      margin-bottom: 32px;
+    }
+
+    .insight-desc {
+      font-family: 'Manrope', sans-serif;
+      font-size: 1.25rem;
+      line-height: 1.7;
+      color: rgba(208, 196, 190, 0.9);
+      max-width: 700px;
+      margin: 0 auto 48px;
+    }
+
+    .insight-btn {
+      background: #e3c19c;
+      color: #412c12;
+      padding: 16px 40px;
+      border: none;
+      border-radius: 4px;
+      font-family: 'Manrope', sans-serif;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      cursor: pointer;
+      transition: transform 0.2s ease, background 0.2s ease;
+    }
+
+    .insight-btn:hover {
+      transform: scale(1.02);
+      background: #ffddb9;
+    }
+
+    @media (max-width: 900px) {
+      .bento-grid { grid-template-columns: 1fr; }
+      .process-step, .process-step.reverse { flex-direction: column; gap: 40px; }
+      .process-number { font-size: 5rem; top: -20px; }
+      .tutorial-hero { padding: 40px; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Custom Cursor -->
+  <div id="cursor-dot"></div>
+  <div id="cursor-ring"></div>
+
+  <header>
+    <div class="logo">Brewverse</div>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="products.html">Products</a>
+      <a href="persona.html">Customer Persona</a>
+      <a href="content-calendar.html">Content Calendar</a>
+      <a href="creative-portfolio.html" aria-current="page">Creative Portfolio</a>
+      <a href="about.html">About</a>
+    </nav>
+  </header>
+
+  <section class="section">
+
+    <div class="sub-nav-container gsap-reveal">
+      <a href="creative-portfolio.html" class="sub-nav-item">PRESS RELEASE</a>
+      <a href="flyer.html" class="sub-nav-item">BRAND FLYER</a>
+      <a href="articles.html" class="sub-nav-item">ARTICLES</a>
+      <a href="listicle.html" class="sub-nav-item">LISTICLES</a>
+      <a href="competitor-analysis.html" class="sub-nav-item">COMPETITOR ANALYSIS</a>
+      <a href="case-studies.html" class="sub-nav-item">CASE STUDIES</a>
+      <a href="tutorial-article.html" class="sub-nav-item active">TUTORIAL ARTICLE</a>
+      <a href="#" class="sub-nav-item">OPINION PIECES</a>
+      <a href="newsletters.html" class="sub-nav-item">NEWSLETTERS</a>
+    </div>
+
+    <div class="tutorial-container">
+      
+      <!-- Hero -->
+      <div class="tutorial-hero gsap-reveal">
+        <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuA8Rc_m4A79n8e2l3PX_mIi0U29Atw3qRiaw4qr-JWVLWzgVYUQZE4HjkyFltsPNB_RCW5Mjsrv6IOQrWUQKkg13IFGSmqND60e813n_NApJU_0bRiJnAUKeqdPsqaP3ACfrb7TkqkhqSZ2F0rYvBjhfas9lE2E0JndrmlIFkb7caNkeGiX9ofCLgcihKCKFaOiGYt-TBd0SooVI5xrRE1gYucGTEB31NKAlMAIKC4HlGhDWnVOtSkaDvQO6eXESjx2wInajxtxseoL" alt="Dark espresso coffee being poured">
+        <div class="tutorial-hero-overlay"></div>
+        <div class="tutorial-hero-content">
+          <span class="tutorial-kicker">Masterclass series 04</span>
+          <h1 class="tutorial-headline">Mastering the<br>Perfect Pour</h1>
+          <div class="tutorial-lead">
+            <div class="tutorial-line"></div>
+            <p>An immersive guide to the physics, the artistry, and the ritual of the pour-over technique.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Essential Kit -->
+      <div class="bento-section gsap-reveal">
+        <div class="bento-header">
+          <h2>Essential Kit</h2>
+          <div class="bento-header-line"></div>
+        </div>
+        
+        <div class="bento-grid">
+          <div class="bento-card bento-main">
+            <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCN2E--GubJ8c_H1lukGYIE27mxNCh8X9E7-53MWqFKlOVKzmyo1p5C6f1quEu9-BazzoJAwVkQJ5qYhg04901seYh-vo8M-HyJlRNEaNLVIU7r3WI-VookwfsW2dr2JjodgBFM1OuA3j37W_TfWIdl8WvhGW2OqJkujegyZClruPlnjB5YPbk4PyfxiyPvOrvKSkoDbBv-GDA4RNx768u37tdAeakyhqc99y0A2hau39K_imZo-p7BaHoMIVv8_TdiSVbFJK8Xdcy1" alt="Coffee brewing equipment">
+            <div class="bento-main-content">
+              <h3>The Architecture</h3>
+              <p>Precision starts with a high-thermal-mass ceramic dripper and a controlled-flow gooseneck kettle.</p>
+            </div>
+          </div>
+          <div class="bento-stack">
+            <div class="bento-card bento-item bento-item-1">
+              <span class="material-symbols-outlined">settings_input_component</span>
+              <h3>Calibration</h3>
+              <p>0.1g precision digital scales are non-negotiable for consistency across roasts.</p>
+            </div>
+            <div class="bento-card bento-item bento-item-2">
+              <h3>The Medium</h3>
+              <p>Oxygen-bleached paper filters provide the cleanest clarity of flavor profile.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Process -->
+    <div class="process-section">
+      <div class="tutorial-container">
+        
+        <div class="process-header gsap-reveal">
+          <div class="process-header-bg">Step by Step</div>
+          <h2 class="process-header-title">The Process</h2>
+        </div>
+
+        <div class="process-step gsap-reveal">
+          <div class="process-img-wrapper">
+            <div class="process-number">01</div>
+            <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuAV6ruJO5grf8WULrvuCbIjjiL0RIfLsnA9UE2DIyuobmuzbmp9CfE8UD4fK_OAXSZZAcxxHvDIxmq03mgprEJq2hW8zjtfgTmRNtiy1SpVKPbHRAoZulDzlGUiABBF6RTFPPkfltY1nhmBMySvnRviM15pkQBX-caZypqqdLkWLVujCtjls4-H0FHWt_BoGJ2EkzkYjIJYFE3uJxvUtuhjGIlXkPLkRBUEm5PS0sSuUnuzwsVVLqcgVVWQqzv9yOZjSgP57WgYVr_w" alt="Coffee grinding">
+          </div>
+          <div class="process-content">
+            <span class="process-phase">Phase One</span>
+            <h3 class="process-title">The Grind Foundation</h3>
+            <p class="process-desc">A medium-coarse texture resembling sea salt is paramount. Too fine, and the water stalls; too coarse, and the extraction lacks the soul of the bean. Grind moments before the first drop hits.</p>
+            <div class="process-metric">
+              <span style="font-size: 1.5rem;">☕</span>
+              <span>Target: 30g Beans</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="process-step reverse gsap-reveal">
+          <div class="process-img-wrapper">
+            <div class="process-number">02</div>
+            <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDXjzACLbj4C7reNYWQEhmKaz3W--c6Pf_Fq5OnAGqSaZ3qdPL_csZMsHBquBPBFh8ivkcBQIoGb8IOMOEroJHwQ6TOEVYqt59YJ8YoRoz9WI1LiZiSS4j378I3t2ds9COkabLK74Zg8Hsyd3GHSTR-9mrUUJNjQ7o3zMdjdCIm4emCHl4c-vLgfB3hE4rMoee0viptN7OY4eYjVo0nCG5q5x6ZZRHXXMDaENL0H4D-I4XQD8ziNvvOgv4Plzg_uMcQJjFiBTLvciFx" alt="Pouring hot water">
+          </div>
+          <div class="process-content">
+            <span class="process-phase">Phase Two</span>
+            <h3 class="process-title">The Sacred Bloom</h3>
+            <p class="process-desc">Introduce 60g of water at 94°C. Watch as the gases escape, creating a bubbling landscape. This 30-second pause awakens the aromatics and prepares the bed for a uniform extraction.</p>
+            <div class="process-metric">
+              <span style="font-size: 1.5rem;">⏳</span>
+              <span>Duration: 45 Seconds</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="process-step gsap-reveal">
+          <div class="process-img-wrapper">
+            <div class="process-number">03</div>
+            <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuB6m9ltvOwLJI1dtLdLq52i9Qg9S_B44bJIk0WUpHF5MAQsLdBwBk4vmdt8t92qRGcWMdwQ52oNL3tYEmViiACQvdYapLY7xc6p2KULfVGBzOeAJZMfI48eqmRX1LvTNnFbFsgoM56XX1DfJQfK6cQmSuiiz2UkCpEI5lVB2NIiGDnU-41BpaP8THS12Mc5kPye0_cnhnHCZ-Yk3Nw1yCXYMpoZHhWLKMeqQAKSV0sSNqcpMCOioJpJEuQNMTfFwqQGl6ehVYbxQFb2" alt="Concentric water pouring">
+          </div>
+          <div class="process-content">
+            <span class="process-phase">Phase Three</span>
+            <h3 class="process-title">Concentric Flow</h3>
+            <p class="process-desc">Maintain a steady, pencil-thin stream. Move in concentric circles from the center outwards, never touching the paper walls. The goal is a flat coffee bed once the water has passed.</p>
+            <div class="process-metric">
+              <span style="font-size: 1.5rem;">🌍</span>
+              <span>Yield: 500ml Liquid Gold</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Insight Glass Card -->
+    <div class="tutorial-container gsap-reveal">
+      <div class="insight-section">
+        <div class="insight-card">
+          <span class="insight-icon" style="font-family: sans-serif; opacity: 0.1;">☕</span>
+          <div class="insight-badge">Sommelier Insight</div>
+          <h2 class="insight-title">The Temperature Trap</h2>
+          <p class="insight-desc">"Boiling water is the enemy of nuance. If you don't have a temperature-controlled kettle, wait exactly 90 seconds after boiling before you pour. Those few degrees are the difference between a smoky bitterness and a bright, berry acidity."</p>
+
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <div class="footer-logo">Brewverse</div>
+        <p class="footer-copy">© 2026 Brewverse Coffee. The Modern Sommelier Experience.</p>
+      </div>
+      <div class="footer-links">
+        <a href="#">Instagram</a>
+        <a href="#">TikTok</a>
+        <a href="#">Twitter</a>
+        <a href="#">Privacy</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+
+</html>

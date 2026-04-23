@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Brewverse | Creative Portfolio</title>
+  <meta name="description" content="Brewverse press release – redefining artisanal coffee for a new generation.">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Manrope:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <!-- Smooth Scroll & GSAP -->
+  <script src="https://unpkg.com/@studio-freight/lenis@1.0.39/dist/lenis.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <style>
+    /* Sub Navigation */
+    .sub-nav-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 32px;
+      margin: 0 auto;
+      max-width: 100%;
+      padding: 20px 40px;
+      position: sticky;
+      top: 68px;
+      z-index: 100;
+      background: rgba(26, 18, 11, 0.85);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(255, 183, 133, 0.06);
+      margin-bottom: 40px;
+    }
+    .sub-nav-item {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: rgba(219, 193, 178, 0.4);
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+    .sub-nav-item:hover, .sub-nav-item.active {
+      color: #e9e1dd;
+    }
+
+    .pr-container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 40px;
+    }
+    
+    .pr-grid {
+      display: grid;
+      grid-template-columns: 1fr 340px;
+      gap: 60px;
+      align-items: start;
+    }
+    
+    @media (max-width: 900px) {
+      .pr-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .pr-header {
+      margin-bottom: 60px;
+      text-align: left;
+    }
+    .pr-title {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      color: #e9e1dd;
+      font-weight: 800;
+      line-height: 1.1;
+      margin-bottom: 24px;
+      letter-spacing: -1px;
+    }
+    .pr-subtitle {
+      font-family: 'Manrope', sans-serif;
+      font-size: 1.25rem;
+      color: #ffb785;
+      font-weight: 600;
+      line-height: 1.5;
+      margin-bottom: 40px;
+    }
+
+    .pr-main-col p {
+      font-family: 'Manrope', sans-serif;
+      font-size: 1.1rem;
+      color: rgba(219, 193, 178, 0.85);
+      line-height: 1.8;
+      margin-bottom: 24px;
+    }
+    .pr-main-col p strong {
+      color: #e9e1dd;
+    }
+
+    /* Quote Block */
+    .pr-quote-container {
+      background: #1a1816;
+      border-left: 2px solid #e3c19c;
+      padding: 40px;
+      margin: 40px 0;
+    }
+    .pr-quote-icon {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 3rem;
+      color: rgba(219, 193, 178, 0.3);
+      line-height: 1;
+      margin-bottom: 10px;
+    }
+    .pr-quote-text {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 2.2rem;
+      font-weight: 800;
+      color: #e9e1dd;
+      font-style: italic;
+      line-height: 1.25;
+      letter-spacing: -0.5px;
+    }
+
+    /* Sidebar */
+    .pr-sidebar {
+      background: #1a1816;
+      padding: 40px 30px;
+    }
+    .sidebar-header {
+      font-family: 'Manrope', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: #d97707;
+      margin-bottom: 24px;
+    }
+    .sidebar-list {
+      list-style-type: none;
+      padding-left: 0;
+      margin-bottom: 0;
+    }
+    .sidebar-list li {
+      font-family: 'Manrope', sans-serif;
+      font-size: 0.95rem;
+      color: #e9e1dd;
+      margin-bottom: 24px;
+      padding-left: 16px;
+      position: relative;
+      line-height: 1.5;
+    }
+    .sidebar-list li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 8px;
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background-color: #e9e1dd;
+    }
+    .sidebar-image-box {
+      margin-top: 40px;
+      width: 100%;
+      min-height: 240px;
+      background: #100e0c;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: rgba(219, 193, 178, 0.3);
+      font-family: 'Manrope', sans-serif;
+      font-size: 0.85rem;
+    }
+    .sidebar-img-caption {
+      text-align: center;
+      font-family: 'Manrope', sans-serif;
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: rgba(219, 193, 178, 0.4);
+      margin-top: 16px;
+    }
+
+    /* Media Inquiries */
+    .pr-media-container {
+      margin-top: 100px;
+      margin-bottom: 60px;
+    }
+    .pr-media-title {
+      font-family: 'Manrope', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: #d97707;
+      margin-bottom: 32px;
+    }
+    .media-item {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+    .media-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: #1a1816;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: rgba(219, 193, 178, 0.5);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 0.9rem;
+    }
+    .media-text {
+      font-family: 'Manrope', sans-serif;
+      font-size: 1.05rem;
+      color: #e9e1dd;
+    }
+    .media-text a {
+      color: #e9e1dd;
+      text-decoration: none;
+      border-bottom: 1px solid rgba(233, 225, 221, 0.4);
+      padding-bottom: 2px;
+      transition: all 0.3s ease;
+    }
+    .media-text a:hover {
+      border-bottom-color: #ffb77d;
+      color: #ffb77d;
+    }
+
+  </style>
+</head>
+<body>
+
+<!-- Custom Cursor -->
+<div id="cursor-dot"></div>
+<div id="cursor-ring"></div>
+
+<header>
+  <div class="logo">Brewverse</div>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="products.html">Products</a>
+    <a href="persona.html">Customer Persona</a>
+    <a href="content-calendar.html">Content Calendar</a>
+    <a href="creative-portfolio.html" aria-current="page">Creative Portfolio</a>
+    <a href="about.html">About</a>
+  </nav>
+</header>
+
+<section class="section">
+  
+  <div class="sub-nav-container gsap-reveal">
+    <a href="creative-portfolio.html" class="sub-nav-item active">PRESS RELEASE</a>
+    <a href="flyer.html" class="sub-nav-item">BRAND FLYER</a>
+    <a href="articles.html" class="sub-nav-item">ARTICLES</a>
+    <a href="listicle.html" class="sub-nav-item">LISTICLES</a>
+    <a href="competitor-analysis.html" class="sub-nav-item">COMPETITOR ANALYSIS</a>
+    <a href="case-studies.html" class="sub-nav-item">CASE STUDIES</a>
+    <a href="tutorial-article.html" class="sub-nav-item">TUTORIAL ARTICLE</a>
+    <a href="#" class="sub-nav-item">OPINION PIECES</a>
+    <a href="newsletters.html" class="sub-nav-item">NEWSLETTERS</a>
+  </div>
+
+  <div class="pr-container">
+    
+    <div class="pr-header gsap-reveal">
+      <div style="font-family: 'Manrope', sans-serif; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.2em; color: rgba(255,183,133,0.6); margin-bottom: 16px;">Press Release / Sommelier Edition</div>
+      <h1 class="pr-title">Brewverse Enters the Market, Redefining Artisanal Coffee for a New Generation</h1>
+      <div class="pr-subtitle">A lifestyle-first coffee brand built for creators, students & ambitious professionals who refuse to settle for ordinary.</div>
+      <div class="pr-hero-image gsap-reveal" style="margin-top: 40px; border-radius: 12px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
+        <img src="assets/unnamed.png" alt="Brewverse Lifestyle" style="width: 100%; display: block; object-fit: cover;">
+      </div>
+    </div>
+
+    <div class="pr-grid">
+      <!-- Main Content Column -->
+      <div class="pr-main-col">
+        <p class="gsap-reveal">
+          <strong>VIJAYAWADA, April 13, 2026</strong> — Brewverse, a new lifestyle-driven flavoured coffee brand, officially enters the premium beverage space today with a bold mission: to bring the craft of artisanal coffee into everyday rituals. Meticulously sourced, expertly roasted, and built with a design-forward identity, Brewverse offers four signature flavours — Hazelnut, Vanilla, Mocha, and Butterscotch — crafted for the modern, taste-conscious consumer.
+        </p>
+        
+        <figure class="pr-quote-container gsap-reveal">
+          <div class="pr-quote-icon">"</div>
+          <blockquote class="pr-quote-text">
+            "Our goal is not to just sell coffee – it's to craft an experience."
+          </blockquote>
+        </figure>
+
+        <p class="gsap-reveal">
+          The brand emerges from a clear cultural gap: premium coffee has long been confined to high-end cafés and niche importers. Brewverse dismantles that barrier, delivering barista-grade flavour profiles that fit naturally into dorm rooms, studio apartments, and busy offices alike.
+        </p>
+        
+        <p class="gsap-reveal">
+          Every bean in the Brewverse range is sourced from high-altitude origins and roasted to highlight vibrant, distinct tasting notes. The result is a cup that speaks for itself — no gimmicks, no compromise.
+        </p>
+
+        <p class="gsap-reveal">
+          The launch comes backed by a full creative and marketing ecosystem, including a digitally-native brand presence, content calendar, and customer-first persona mapping — designed by a founding team that understands the modern consumer intimately.
+        </p>
+
+        <div class="pr-media-container gsap-reveal">
+          <div class="pr-media-title">For Media Inquiries</div>
+          
+          <div class="media-item">
+            <div class="media-icon">@</div>
+            <div class="media-text">
+              <a href="mailto:press@brewverse.co">press@brewverse.co</a>
+            </div>
+          </div>
+
+          <div class="media-item">
+            <div class="media-icon">↗</div>
+            <div class="media-text">
+              <a href="#">brewverse.coffee</a> / <a href="#">@brewverse</a>
+            </div>
+          </div>
+
+          <div class="media-item">
+            <div class="media-icon">↓</div>
+            <div class="media-text" style="color: rgba(233, 225, 221, 0.8);">
+              High-res assets available on request
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Right Sidebar Column -->
+      <div class="pr-sidebar">
+        <div class="sidebar-header gsap-reveal">Key Highlights</div>
+        <ul class="sidebar-list">
+          <li class="gsap-reveal">Targets students, creators & young professionals with refined taste preferences</li>
+          <li class="gsap-reveal">4 Signature Flavours — Hazelnut, Vanilla, Mocha, Butterscotch</li>
+          <li class="gsap-reveal">Artisanal roasting process highlighting origin-specific tasting notes</li>
+          <li class="gsap-reveal">Digital-first brand with full website, content strategy & community presence</li>
+          <li class="gsap-reveal">Premium positioning at an accessible everyday price point</li>
+        </ul>
+
+        <!-- Image Placeholder -->
+        <div class="sidebar-image-box gsap-reveal" style="padding: 0; overflow: hidden; display: block; border-radius: 8px;">
+          <img src="assets/unnamed (1).png" alt="Coffee Beans" style="width: 100%; height: 100%; object-fit: cover; display: block;">
+        </div>
+        <div class="sidebar-img-caption gsap-reveal">Sommelier Selection 2026</div>
+
+      </div>
+    </div> <!-- end pr-grid -->
+
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <div class="footer-logo">Brewverse</div>
+      <p class="footer-copy">© 2026 Brewverse Coffee. The Modern Sommelier Experience.</p>
+    </div>
+    <div class="footer-links">
+      <a href="#">Instagram</a>
+      <a href="#">TikTok</a>
+      <a href="#">Twitter</a>
+      <a href="#">Privacy</a>
+    </div>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
