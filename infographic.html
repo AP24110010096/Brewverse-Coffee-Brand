@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Brewverse | The Truth About Coffee in India</title>
+  <meta name="description" content="An objective analysis of the domestic coffee landscape, uncovering the structural issues of purity and the prevalence of fillers.">
+  
+  <script>
+    window.tailwind = window.tailwind || {};
+    window.tailwind.config = {
+      corePlugins: { preflight: false },
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "surface-container-high": "#2d2927",
+            "on-tertiary-fixed": "#351000",
+            "on-primary": "#412c12",
+            "on-surface-variant": "#d0c4be",
+            "inverse-on-surface": "#33302d",
+            "surface-variant": "#383432",
+            "surface-bright": "#3c3836",
+            "secondary": "#ffb77d",
+            "on-surface": "#e9e1dd",
+            "inverse-surface": "#e9e1dd",
+            "inverse-primary": "#745a3b",
+            "on-background": "#e9e1dd",
+            "surface-tint": "#e3c19c",
+            "primary-container": "#271601",
+            "tertiary-fixed-dim": "#ffb694",
+            "on-error-container": "#ffdad6",
+            "on-error": "#690005",
+            "on-secondary-fixed": "#2f1500",
+            "on-tertiary": "#51230a",
+            "on-primary-fixed-variant": "#5a4226",
+            "on-secondary-container": "#432100",
+            "secondary-fixed-dim": "#ffb77d",
+            "surface": "#161311",
+            "surface-container-lowest": "#100e0c",
+            "surface-container": "#221f1d",
+            "surface-container-low": "#1e1b19",
+            "on-secondary": "#4d2600",
+            "outline": "#998f89",
+            "surface-dim": "#161311",
+            "on-tertiary-fixed-variant": "#6d391e",
+            "secondary-container": "#d97707",
+            "tertiary": "#ffb694",
+            "primary-fixed-dim": "#e3c19c",
+            "tertiary-fixed": "#ffdbcc",
+            "error-container": "#93000a",
+            "on-tertiary-container": "#b37354",
+            "error": "#ffb4ab",
+            "surface-container-highest": "#383432",
+            "on-secondary-fixed-variant": "#6e3900",
+            "background": "#161311",
+            "outline-variant": "#4d4540",
+            "primary-fixed": "#ffddb9",
+            "tertiary-container": "#320f00",
+            "primary": "#e3c19c",
+            "secondary-fixed": "#ffdcc3",
+            "on-primary-fixed": "#2a1802",
+            "on-primary-container": "#9b7d5c"
+          },
+          fontFamily: {
+            "headline": ["Epilogue"],
+            "display": ["Epilogue"],
+            "body": ["Manrope"],
+            "label": ["Manrope"]
+          }
+        }
+      }
+    }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Manrope:wght@300;400;500;600;700&family=Epilogue:wght@300;400;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <link rel="stylesheet" href="style.css">
+  
+  <script src="https://unpkg.com/@studio-freight/lenis@1.0.39/dist/lenis.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  
+  <style>
+    /* Prevent Tailwind from overriding global styling for header/footer */
+    html { 
+      font-size: 100% !important; 
+      -webkit-text-size-adjust: 100% !important; 
+      text-size-adjust: 100% !important; 
+      -webkit-font-smoothing: auto !important;
+      -moz-osx-font-smoothing: auto !important;
+    }
+    body { background-color: #1a120b !important; color: #e9e1dd !important; font-family: 'Manrope', sans-serif !important; margin: 0 !important; }
+    header { padding: 22px 8% !important; }
+    
+    .logo { font-size: 1.4rem !important; }
+    nav a { font-size: 0.7rem !important; }
+    
+    .epilogue { font-family: 'Epilogue', sans-serif; }
+    .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24; }
+
+    /* Sub Navigation */
+    .sub-nav-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 32px;
+      margin: 0 auto;
+      max-width: 1080px;
+      padding: 20px 40px !important;
+      position: sticky;
+      top: 68px;
+      z-index: 100;
+      background: rgba(26, 18, 11, 0.85);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(255, 183, 133, 0.06);
+    }
+    .sub-nav-item {
+      font-family: 'Plus Jakarta Sans', sans-serif !important;
+      font-size: 0.75rem !important;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: rgba(219, 193, 178, 0.4);
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+    .sub-nav-item:hover, .sub-nav-item.active {
+      color: #e9e1dd !important;
+    }
+  </style>
+</head>
+<body>
+
+<!-- Custom Cursor -->
+<div id="cursor-dot"></div>
+<div id="cursor-ring"></div>
+
+<header>
+  <div class="logo">Brewverse</div>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="products.html">Products</a>
+    <a href="persona.html">Customer Persona</a>
+    <a href="content-calendar.html">Content Calendar</a>
+    <a href="creative-portfolio.html" aria-current="page">Creative Portfolio</a>
+    <a href="about.html">About</a>
+  </nav>
+</header>
+
+<div style="padding: 140px 8% 40px; background: #1a120b;">
+  <div class="sub-nav-container">
+    <a href="creative-portfolio.html" class="sub-nav-item">PRESS RELEASE</a>
+    <a href="flyer.html" class="sub-nav-item">BRAND FLYER</a>
+    <a href="articles.html" class="sub-nav-item">ARTICLES</a>
+    <a href="listicle.html" class="sub-nav-item">LISTICLES</a>
+    <a href="competitor-analysis.html" class="sub-nav-item">COMPETITOR ANALYSIS</a>
+    <a href="case-studies.html" class="sub-nav-item">CASE STUDIES</a>
+    <a href="tutorial-article.html" class="sub-nav-item">TUTORIAL ARTICLE</a>
+    <a href="infographic.html" class="sub-nav-item active">INFOGRAPHIC</a>
+    <a href="newsletters.html" class="sub-nav-item">NEWSLETTERS</a>
+  </div>
+</div>
+
+<main>
+  <!-- Hero Section -->
+  <section class="relative min-h-[819px] flex items-center pt-16 pb-24 overflow-hidden">
+    <div class="absolute inset-0 z-0">
+      <div class="absolute inset-0 bg-gradient-to-b from-primary-container/30 to-surface"></div>
+      <img class="w-full h-full object-cover opacity-40" alt="Moody atmospheric close-up of dark roasted coffee beans" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDy7HlP9oeQWkW5lW-aD5wOCAWqBJ3oIFpMulsSN9m4JznjwC08vP-4IVtH4XPqfQjnRlbX2mMUKoceAwhKL9U3x3CH8uhHUE__eL0C4FRVbAUBVaSvWk8OuHAxA_EpWg_P-iJYde1sECdNmoUIISFT1uzlyaCb3QBIdpFbwDL0KlejIAsgpLq_UP3w2CavrWuQc-oiCVfTOg6IHIT0jTvk1bv-Bc_wunOtF6oVEg_jUuFieBf4GKcnrqCahzFDuWyak29b6UlpAF9T">
+    </div>
+    <div class="relative z-10 max-w-screen-xl mx-auto px-8 w-full gsap-reveal">
+      <h1 class="epilogue text-[3.5rem] md:text-[5rem] font-bold leading-[1.1] tracking-tighter text-on-surface mb-8 max-w-4xl">
+        The Truth About <span class="text-primary">Coffee in India</span>.
+      </h1>
+      <p class="max-w-2xl text-on-surface-variant text-lg md:text-xl leading-relaxed font-light mb-12">
+        An objective analysis of the domestic coffee landscape, uncovering the structural issues of purity, the prevalence of fillers, and the widening gap between commodity and specialty grades.
+      </p>
+    </div>
+  </section>
+
+  <!-- Section 1: The Adulteration Crisis -->
+  <section class="py-32 bg-surface" id="crisis">
+    <div class="max-w-screen-xl mx-auto px-8">
+      <div class="grid md:grid-cols-2 gap-24 items-start">
+        <div class="space-y-12 gsap-reveal">
+          <div>
+            <span class="text-primary text-sm font-semibold tracking-widest uppercase">Analysis 01</span>
+            <h2 class="epilogue text-4xl font-bold mt-4 mb-8">The Adulteration Crisis</h2>
+            <p class="text-on-surface-variant leading-relaxed text-lg">
+              In the high-volume domestic market, the purity of coffee is frequently compromised to reduce manufacturing costs. Fillers are not just additives; they are industrial shortcuts that dilute the sensory profile of the bean.
+            </p>
+          </div>
+          <div class="grid gap-8">
+            <div class="bg-surface-container-low p-8 rounded-xl group hover:bg-surface-container-high transition-colors">
+              <h3 class="text-primary font-bold text-xl mb-3">Chicory Substitution</h3>
+              <p class="text-on-surface-variant font-light">The most common additive, often making up to 40% of commercial blends. Derived from roots, it provides a heavy, bitter body but lacks any caffeine or complex acidity.</p>
+            </div>
+            <div class="bg-surface-container-low p-8 rounded-xl group hover:bg-surface-container-high transition-colors">
+              <h3 class="text-primary font-bold text-xl mb-3">Roasted Corn & Grains</h3>
+              <p class="text-on-surface-variant font-light">Industrial fillers used in lower-tier instant coffees to add bulk. These starches carbonize during roasting, masking the taste of moldy or defective beans.</p>
+            </div>
+          </div>
+        </div>
+        <div class="relative h-[600px] bg-surface-container-low rounded-xl overflow-hidden shadow-2xl gsap-reveal">
+          <img class="w-full h-full object-cover grayscale contrast-125 opacity-70" alt="Macro photography showing the contrast between pure dark roasted coffee beans and lighter fibrous root fragments of chicory" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCpSk8OxG8aXDwe-CRmb9lSMlHyyIRfwDBOh8Ep0x3cq2l33APxNKsPEezRYjMJ4-rPvmsWBB2lbTRFR5PNYKSq-fDRzA5w795GBK7nI3fzE2gejPxKZ_o0aYWI1SA0zK_infgVnWm6O9Twjq9GuQFliS9Xk_bm3IvUu0D0cn4s9ZrzvTBK1sGMoP0xgfIHmVQHivwMe2-KoQIehaJXJlUnkvephpwJtv1oA-88AJ_9akb_6wKhVkA3P-W0ws2eRGghM32yni2M0DBn">
+          <div class="absolute inset-0 bg-gradient-to-t from-surface to-transparent"></div>
+          <div class="absolute bottom-8 left-8 right-8">
+            <div class="bg-secondary-container/20 backdrop-blur-md p-6 rounded-lg">
+              <p class="text-secondary font-bold text-lg">Did you know?</p>
+              <p class="text-on-surface text-sm">FSSAI allows up to 49% chicory in 'Coffee-Chicory Mixtures', but many unbranded sellers exceed this limit illegally.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 2: Verification Protocol -->
+  <section class="py-32 bg-surface-container-lowest" id="protocol">
+    <div class="max-w-screen-xl mx-auto px-8">
+      <div class="text-center mb-24 gsap-reveal">
+        <span class="text-primary text-sm font-semibold tracking-widest uppercase">Standard Operating Procedure</span>
+        <h2 class="epilogue text-5xl font-bold mt-4">Verification Protocol</h2>
+        <p class="text-stone-500 mt-6 max-w-2xl mx-auto">Scientific methods for the discerning consumer to validate product purity at home without specialized lab equipment.</p>
+      </div>
+      <div class="grid md:grid-cols-3 gap-8">
+        <!-- Protocol 1 -->
+        <div class="flex flex-col h-full bg-surface-container-low p-10 rounded-xl outline outline-variant/10 hover:outline-primary/50 transition-all gsap-reveal">
+          <div class="mb-8">
+            <span class="material-symbols-outlined text-primary text-4xl">search_check</span>
+          </div>
+          <h4 class="epilogue text-2xl font-bold mb-4">Label Check</h4>
+          <p class="text-on-surface-variant font-light leading-relaxed mb-8">
+            Pure coffee must state "100% Arabica" or "100% Robusta". Avoid ambiguous terms like "Freshly Ground Blend" without percentage disclosures.
+          </p>
+          <div class="mt-auto pt-6 border-t border-outline-variant/20">
+            <span class="text-xs uppercase tracking-tighter text-stone-500">Visual Inspection</span>
+          </div>
+        </div>
+        <!-- Protocol 2 -->
+        <div class="flex flex-col h-full bg-surface-container-low p-10 rounded-xl outline outline-variant/10 hover:outline-primary/50 transition-all gsap-reveal" style="transition-delay: 0.1s">
+          <div class="mb-8">
+            <span class="material-symbols-outlined text-primary text-4xl">opacity</span>
+          </div>
+          <h4 class="epilogue text-2xl font-bold mb-4">The Cold Water Test</h4>
+          <p class="text-on-surface-variant font-light leading-relaxed mb-8">
+            Sprinkle grounds onto cold water. Pure coffee floats; chicory and additives contain sugars that absorb water instantly and sink, leaving a brown trail.
+          </p>
+          <div class="mt-auto pt-6 border-t border-outline-variant/20">
+            <span class="text-xs uppercase tracking-tighter text-stone-500">Buoyancy Analysis</span>
+          </div>
+        </div>
+        <!-- Protocol 3 -->
+        <div class="flex flex-col h-full bg-surface-container-low p-10 rounded-xl outline outline-variant/10 hover:outline-primary/50 transition-all gsap-reveal" style="transition-delay: 0.2s">
+          <div class="mb-8">
+            <span class="material-symbols-outlined text-primary text-4xl">touch_app</span>
+          </div>
+          <h4 class="epilogue text-2xl font-bold mb-4">The Texture Rub</h4>
+          <p class="text-on-surface-variant font-light leading-relaxed mb-8">
+            Rub coffee between your fingers. Pure coffee is dry and slightly gritty. Adulterated coffee feels greasy or sticky due to the higher starch and sugar content.
+          </p>
+          <div class="mt-auto pt-6 border-t border-outline-variant/20">
+            <span class="text-xs uppercase tracking-tighter text-stone-500">Tactile Verification</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 3: Market Distribution -->
+  <section class="py-32 bg-surface" id="gap">
+    <div class="max-w-screen-xl mx-auto px-8">
+      <div class="flex flex-col md:flex-row gap-20 items-center">
+        <div class="w-full md:w-1/2 gsap-reveal">
+          <span class="text-primary text-sm font-semibold tracking-widest uppercase">Data Visualisation</span>
+          <h2 class="epilogue text-4xl font-bold mt-4 mb-8">The Quality Gap</h2>
+          <div class="space-y-8">
+            <div class="space-y-2">
+              <div class="flex justify-between items-end">
+                <span class="text-on-surface font-semibold">Commodity Grade</span>
+                <span class="epilogue text-4xl font-bold text-stone-600">82%</span>
+              </div>
+              <div class="w-full h-4 bg-surface-container-highest rounded-full overflow-hidden">
+                <div class="bg-stone-600 h-full w-[82%]"></div>
+              </div>
+              <p class="text-stone-500 text-sm">Industrial mass-market coffee with high defect counts and standard commercial processing.</p>
+            </div>
+            <div class="space-y-2">
+              <div class="flex justify-between items-end">
+                <span class="text-on-surface font-semibold">Specialty Grade</span>
+                <span class="epilogue text-4xl font-bold text-primary">18%</span>
+              </div>
+              <div class="w-full h-4 bg-surface-container-highest rounded-full overflow-hidden">
+                <div class="bg-primary h-full w-[18%] shadow-[0_0_20px_rgba(227,193,156,0.3)]"></div>
+              </div>
+              <p class="text-stone-500 text-sm">SCA rated (80+) coffee, ethically sourced, fully traceable, and chemically pure.</p>
+            </div>
+          </div>
+        </div>
+        <div class="w-full md:w-1/2 p-8 bg-surface-container-low rounded-2xl relative overflow-hidden group gsap-reveal">
+          <div class="absolute -top-24 -right-24 w-64 h-64 bg-primary/10 rounded-full blur-3xl group-hover:bg-primary/20 transition-all duration-700"></div>
+          <div class="relative z-10">
+            <h5 class="epilogue text-xl font-bold mb-6">Market Insight</h5>
+            <p class="text-on-surface-variant font-light italic leading-loose">
+              "The domestic Indian market is currently undergoing a 'Third Wave' revolution. While 82% remains trapped in the commodity cycle of high-caffeine robustas and chicory blends, the 18% specialty segment is growing at 12% CAGR, driven by a new generation of informed sommelier-style consumers."
+            </p>
+            <div class="mt-8 flex items-center gap-4">
+              <div class="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center">
+                <span class="material-symbols-outlined text-primary text-sm">monitoring</span>
+              </div>
+              <div>
+                <p class="text-xs font-bold text-on-surface uppercase">Domestic Trade Report</p>
+                <p class="text-[10px] text-stone-500">Statistical Audit 2023-24</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-stamp">
+      <svg class="footer-stamp-svg" viewBox="0 0 100 100">
+        <defs>
+          <path id="stampCircle" d="M 50,50 m -35,0 a 35,35 0 1,1 70,0 a 35,35 0 1,1 -70,0" />
+        </defs>
+        <text>
+          <textPath href="#stampCircle" startOffset="0%" textLength="210">BREWVERSE COFFEE &#8226; EST 2026 &#8226;</textPath>
+        </text>
+      </svg>
+      <div class="footer-stamp-center">
+        <img src="assets/logo.png" alt="Brewverse Logo" class="footer-stamp-logo">
+      </div>
+    </div>
+    <div class="footer-links">
+      <a href="#">Instagram</a>
+      <a href="#">TikTok</a>
+      <a href="#">Twitter</a>
+      <a href="#">Privacy</a>
+    </div>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
