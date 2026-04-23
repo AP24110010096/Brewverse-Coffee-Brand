@@ -145,8 +145,15 @@
     }
 
     @keyframes bounce-down {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(12px); }
+
+      0%,
+      100% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(12px);
+      }
     }
 
     /* ─── Listicle items ─── */
@@ -372,6 +379,7 @@
 
     /* ─── Responsive ─── */
     @media (max-width: 768px) {
+
       .listicle-row,
       .listicle-row.reverse {
         flex-direction: column;
@@ -451,7 +459,6 @@
       </div>
       <div class="listicle-hero-gradient"></div>
       <div class="listicle-hero-content">
-        <span class="listicle-kicker gsap-reveal">Editorial • Issue 012</span>
         <h1 class="listicle-headline gsap-reveal">7 Reasons Your Morning<br>Cup Is <em>Lying</em> to You.</h1>
         <p class="listicle-lead gsap-reveal">
           Everything India's instant coffee industry doesn't want you to figure out — and what to do about it.
@@ -508,7 +515,8 @@
             <h2 class="listicle-title">The Charred Cover-Up</h2>
             <p class="listicle-desc">
               A dark roast shouldn't taste like ash. Large-scale roasters push temperatures too high to mask defects in
-              low-quality beans, creating a uniform, burnt flavor profile that obscures the unique terroir of the coffee.
+              low-quality beans, creating a uniform, burnt flavor profile that obscures the unique terroir of the
+              coffee.
             </p>
             <div class="listicle-divider"></div>
           </div>
@@ -612,7 +620,8 @@
             <path id="stampCircle" d="M 50,50 m -35,0 a 35,35 0 1,1 70,0 a 35,35 0 1,1 -70,0" />
           </defs>
           <text>
-            <textPath href="#stampCircle" startOffset="0%" textLength="210">BREWVERSE COFFEE &#8226; EST 2026 &#8226;</textPath>
+            <textPath href="#stampCircle" startOffset="0%" textLength="210">BREWVERSE COFFEE &#8226; EST 2026 &#8226;
+            </textPath>
           </text>
         </svg>
         <div class="footer-stamp-center">
@@ -632,7 +641,3 @@
 </body>
 
 </html>
-
-
-
-
