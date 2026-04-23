@@ -758,20 +758,46 @@ footer {
   flex-wrap: wrap;
 }
 
-.footer-logo {
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  font-weight: 800;
-  font-size: 1.3rem;
-  color: #ffb785;
-  margin-bottom: 8px;
+.footer-stamp {
+  position: relative;
+  width: 85px;
+  height: 85px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.footer-copy {
-  font-size: 0.75rem;
-  text-transform: uppercase;
-  letter-spacing: 1.5px;
-  color: rgba(255, 183, 133, 0.4);
-  line-height: 1.5;
+.footer-stamp-svg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  animation: spinStamp 10s linear infinite;
+  fill: #e3c19c;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 11.5px;
+  font-weight: 800;
+}
+
+@keyframes spinStamp {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.footer-stamp-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+  width: 100%;
+  height: 100%;
+}
+
+.footer-stamp-logo {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
 }
 
 .footer-links {
