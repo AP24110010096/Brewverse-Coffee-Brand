@@ -703,6 +703,11 @@ nav a:hover::after {
   color: rgba(219, 193, 178, 0.8);
 }
 
+.customerpersona {
+  overflow: hidden;
+  border-radius: 20px;
+}
+
 .customerpersona img {
   width: 100%;
   height: auto;
@@ -722,6 +727,11 @@ nav a:hover::after {
   gap: 50px;
   align-items: center;
   margin-top: 60px;
+}
+
+.calendar-visual {
+  overflow: hidden;
+  border-radius: 24px;
 }
 
 .calendar-visual img {
@@ -1182,4 +1192,397 @@ body::after {
   animation: none;
 }
 
-$faqStyles
+
+/* ═══════════════════════════════════════════════════════════════
+   STITCH TESTIMONIALS — Asymmetric Bento Grid Clone
+   ═══════════════════════════════════════════════════════════════ */
+.stitch-testimonials {
+  background: #161311;
+  padding: 128px 0 0;
+  position: relative;
+}
+
+/* ─── Hero Header (split layout) ─────────────────────────── */
+.stitch-test-hero {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 48px;
+  align-items: end;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 32px 80px;
+}
+
+.stitch-kicker {
+  display: block;
+  font-family: 'Manrope', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: #e3c19c;
+  margin-bottom: 16px;
+}
+
+.stitch-hero-title {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: clamp(2.8rem, 5.5vw, 4.5rem);
+  font-weight: 900;
+  color: #e9e1dd;
+  line-height: 1.1;
+  letter-spacing: -3px;
+}
+
+.stitch-hero-desc {
+  font-family: 'Manrope', sans-serif;
+  font-size: 1.05rem;
+  color: #d0c4be;
+  line-height: 1.7;
+  max-width: 360px;
+  padding-bottom: 16px;
+}
+
+/* ─── Bento Grid Container ───────────────────────────────── */
+.stitch-bento-grid {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 32px 128px;
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+}
+
+.stitch-bento-row-1 {
+  display: grid;
+  grid-template-columns: 7fr 5fr;
+  gap: 48px;
+}
+
+.stitch-bento-row-2 {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 48px;
+}
+
+/* ─── Card Base ──────────────────────────────────────────── */
+.stitch-card {
+  background: #1e1b19;
+  border-radius: 12px;
+  padding: 40px;
+  transition: background 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.stitch-card:hover {
+  background: #2d2927;
+}
+
+/* ─── Featured Card (Elena R.) ───────────────────────────── */
+.stitch-card--featured {
+  position: relative;
+  overflow: hidden;
+  padding: 48px;
+  min-height: 420px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.stitch-card-quote-bg {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 32px;
+  font-size: 8rem;
+  color: #e9e1dd;
+  opacity: 0.04;
+  line-height: 1;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.stitch-card--featured:hover .stitch-card-quote-bg {
+  opacity: 0.08;
+}
+
+.stitch-card-inner {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.stitch-stars {
+  color: #ffb77d;
+  font-size: 1rem;
+  letter-spacing: 3px;
+  margin-bottom: 24px;
+}
+
+.stitch-stars--sm {
+  font-size: 0.8rem;
+  letter-spacing: 2px;
+  margin-bottom: 0;
+}
+
+.stitch-blockquote {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: clamp(1.6rem, 2.5vw, 2.2rem);
+  font-weight: 700;
+  color: #e9e1dd;
+  line-height: 1.3;
+  margin-bottom: 32px;
+}
+
+/* ─── Side Stack ─────────────────────────────────────────── */
+.stitch-side-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+}
+
+/* ─── Badge ──────────────────────────────────────────────── */
+.stitch-badge {
+  display: inline-block;
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: #d97707;
+  color: #4d2600;
+  font-family: 'Manrope', sans-serif;
+  font-size: 0.7rem;
+  font-weight: 700;
+  align-self: flex-start;
+}
+
+/* ─── Card Text ──────────────────────────────────────────── */
+.stitch-card-text-italic {
+  font-family: 'Manrope', sans-serif;
+  font-size: 1.1rem;
+  color: #d0c4be;
+  line-height: 1.7;
+  font-style: italic;
+}
+
+.stitch-card-text {
+  font-family: 'Manrope', sans-serif;
+  font-size: 0.95rem;
+  color: #d0c4be;
+  line-height: 1.7;
+}
+
+/* ─── Author Block ───────────────────────────────────────── */
+.stitch-author {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.stitch-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  object-fit: cover;
+  filter: grayscale(100%);
+  transition: filter 0.3s ease;
+  flex-shrink: 0;
+}
+
+.stitch-avatar:hover {
+  filter: grayscale(0%);
+}
+
+.stitch-avatar--lg {
+  width: 64px;
+  height: 64px;
+}
+
+.stitch-author-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.stitch-author-name {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #e9e1dd;
+}
+
+.stitch-author-name--primary {
+  font-size: 1.2rem;
+  color: #e3c19c;
+}
+
+.stitch-author-role {
+  font-family: 'Manrope', sans-serif;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: #d0c4be;
+  opacity: 0.7;
+}
+
+/* ─── Compact Card (Julian K.) ───────────────────────────── */
+.stitch-card--compact {
+  padding: 32px;
+}
+
+.stitch-compact-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 20px;
+}
+
+.stitch-cafe-icon {
+  font-size: 1.4rem;
+  color: #e3c19c;
+}
+
+/* ─── Subscription Card (Never Miss a Roast in bento) ────── */
+.stitch-sub-card {
+  position: relative;
+  overflow: hidden;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 48px 40px;
+}
+
+.stitch-sub-card .sub-bg-shape {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(100px);
+  pointer-events: none;
+}
+
+.stitch-sub-card .shape-1 {
+  width: 300px;
+  height: 300px;
+  background: rgba(217, 119, 36, 0.12);
+  top: -60px;
+  right: -60px;
+}
+
+.stitch-sub-card .shape-2 {
+  width: 250px;
+  height: 250px;
+  background: rgba(255, 183, 133, 0.08);
+  bottom: -50px;
+  left: -50px;
+}
+
+.stitch-sub-card .sub-title {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: clamp(1.8rem, 3vw, 2.4rem);
+  font-weight: 800;
+  color: #f1dfd3;
+  margin-bottom: 16px;
+}
+
+.stitch-sub-card .sub-text {
+  margin-bottom: 28px;
+  max-width: 400px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.stitch-sub-card .sub-form {
+  max-width: 420px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* ─── Editorial Quote Section ────────────────────────────── */
+.stitch-editorial-quote {
+  padding: 128px 0;
+  background: #100e0c;
+  text-align: center;
+}
+
+.stitch-editorial-inner {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 32px;
+}
+
+.stitch-editorial-star {
+  display: block;
+  font-size: 2rem;
+  color: #ffb694;
+  margin-bottom: 32px;
+}
+
+.stitch-editorial-text {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  font-weight: 700;
+  color: #e9e1dd;
+  line-height: 1.25;
+  letter-spacing: -2px;
+  font-style: italic;
+}
+
+.stitch-editorial-divider {
+  width: 96px;
+  height: 1px;
+  background: rgba(77, 69, 64, 0.3);
+  margin: 48px auto;
+}
+
+.stitch-editorial-label {
+  font-family: 'Manrope', sans-serif;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: #e3c19c;
+}
+
+/* ─── Responsive ─────────────────────────────────────────── */
+@media (max-width: 900px) {
+  .stitch-test-hero {
+    grid-template-columns: 1fr;
+    gap: 24px;
+    padding-bottom: 48px;
+  }
+
+  .stitch-bento-row-1 {
+    grid-template-columns: 1fr;
+  }
+
+  .stitch-bento-row-2 {
+    grid-template-columns: 1fr;
+  }
+
+  .stitch-card--featured {
+    min-height: auto;
+  }
+
+  .stitch-blockquote {
+    font-size: 1.4rem;
+  }
+
+  .stitch-cta-banner {
+    min-height: 400px;
+  }
+
+  .stitch-cta-overlay {
+    background: linear-gradient(to top, #161311 20%, rgba(22,19,17,0.8) 60%, transparent 100%);
+    align-items: flex-end;
+    padding: 32px;
+  }
+
+  .stitch-cta-form {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .stitch-cta-input {
+    border-right: 1px solid rgba(255, 183, 133, 0.15);
+  }
+}

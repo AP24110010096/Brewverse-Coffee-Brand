@@ -125,8 +125,18 @@ document.addEventListener("DOMContentLoaded", () => {
       setTimeout(() => { if (pageLoader) pageLoader.remove(); }, 900);
     }
 
+    // ── Safety net: force-dismiss after 5s no matter what ──────
+    // Prevents loader from ever getting permanently stuck
+    const loaderSafetyTimeout = setTimeout(() => {
+      if (!loaderFinished) {
+        sessionStorage.setItem('brewverse_loaded', 'true');
+        dismissLoader();
+      }
+    }, 5000);
+
     // Check if user has already seen the loader in this session
     if (sessionStorage.getItem('brewverse_loaded')) {
+      clearTimeout(loaderSafetyTimeout);
       if (pageLoader) {
         pageLoader.style.display = 'none';
         pageLoader.remove();
@@ -138,19 +148,19 @@ document.addEventListener("DOMContentLoaded", () => {
         duration: 2.5,
         ease: "power1.inOut",
         onUpdate: () => {
-          // The displayed percentage is the minimum of the animated value and the actual loaded value.
-          // If actual loaded is 100 instantly, it follows the 2.5s animation smoothing.
-          // If animation is faster than loading, it waits for actualPct.
           const displayVal = Math.floor(Math.min(actualPct, loaderState.visualPct));
           
           if (loaderFill) loaderFill.style.width = displayVal + '%';
           if (loaderPercent) loaderPercent.textContent = displayVal + '%';
 
-          // Once both real loading and visual animation hit 100, we dismiss
-          if (displayVal === 100 && actualPct === 100) {
-             sessionStorage.setItem('brewverse_loaded', 'true');
-             // brief pause at 100 for premium feel
-             setTimeout(dismissLoader, 200); 
+          // When both the visual animation AND real loading hit 100, dismiss
+          if (displayVal >= 99 && actualPct >= 99) {
+            // Push to 100% visually before dismissing
+            if (loaderFill) loaderFill.style.width = '100%';
+            if (loaderPercent) loaderPercent.textContent = '100%';
+            sessionStorage.setItem('brewverse_loaded', 'true');
+            clearTimeout(loaderSafetyTimeout);
+            setTimeout(dismissLoader, 200);
           }
         }
       });
@@ -236,54 +246,49 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // 5. Scroll Reveals for all .gsap-reveal elements
-  const revealElements = document.querySelectorAll('.gsap-reveal:not(.hero-actions)');
+  // 5. Scroll Reveals — using autoAlpha so reverse never snap-hides
+  // Exclude .customerpersona and .calendar-visual — they get a clip-path wipe below
+  const revealElements = document.querySelectorAll(
+    '.gsap-reveal:not(.hero-actions)'
+  );
   
   revealElements.forEach((el) => {
     gsap.fromTo(el, 
-      {
-        opacity: 0,
-        y: 40,
-        visibility: 'hidden'
-      },
-      {
-        scrollTrigger: {
-          trigger: el,
-          start: "top 85%", // Trigger when element is 85% down the viewport
-          toggleActions: "play none none reverse"
-        },
-        opacity: 1,
-        y: 0,
-        visibility: 'visible',
-        duration: 1,
-        ease: "power3.out"
-      }
-    );
-  });
-  
-  // Legacy support for cards if any are missed
-  const legacyElements = document.querySelectorAll(
-    ".product-card:not(.gsap-reveal), .team-card:not(.gsap-reveal), .page-link-card:not(.gsap-reveal), .calendar-visual img:not(.gsap-reveal), .customerpersona img:not(.gsap-reveal)"
-  );
-  legacyElements.forEach(el => {
-      gsap.fromTo(el, 
-      {
-        opacity: 0,
-        y: 40
-      },
+      { autoAlpha: 0, y: 40 },
       {
         scrollTrigger: {
           trigger: el,
           start: "top 85%",
           toggleActions: "play none none reverse"
         },
-        opacity: 1,
+        autoAlpha: 1,
         y: 0,
         duration: 1,
         ease: "power3.out"
       }
     );
-  })
+  });
+
+  // Legacy support — also use autoAlpha to avoid snap-hide on reverse
+  const legacyElements = document.querySelectorAll(
+    ".product-card:not(.gsap-reveal), .team-card:not(.gsap-reveal), .page-link-card:not(.gsap-reveal)"
+  );
+  legacyElements.forEach(el => {
+    gsap.fromTo(el, 
+      { autoAlpha: 0, y: 40 },
+      {
+        scrollTrigger: {
+          trigger: el,
+          start: "top 85%",
+          toggleActions: "play none none reverse"
+        },
+        autoAlpha: 1,
+        y: 0,
+        duration: 1,
+        ease: "power3.out"
+      }
+    );
+  });
 
   // ─── CUSTOM CURSOR (Premium) ────────────────────────────────
   const dot  = document.getElementById('cursor-dot');
